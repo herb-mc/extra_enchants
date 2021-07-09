@@ -32,7 +32,7 @@ public class Lifesteal extends Enchantment {
     @Override
     public void onTargetDamaged(LivingEntity user, Entity target, int level) {
         if(target instanceof LivingEntity && ((LivingEntity) target).canTakeDamage()) {
-            float lastDamage = (float) (0.05 * level * Objects.requireNonNull(((LivingEntity) target).getDamageTracker().getMostRecentDamage()).getDamage());
+            float lastDamage = (float) (0.04 * level * Objects.requireNonNull(((LivingEntity) target).getDamageTracker().getMostRecentDamage()).getDamage());
             if(lastDamage > 3.0f)  lastDamage = 3.0f;
             user.heal(lastDamage);
         }
