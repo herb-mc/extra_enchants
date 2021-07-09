@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "extra_enchants",
+  "version": "0.0.1",
+  "accessWidener" : "aw.accesswidener",
+  "name": "Extra Enchants",
+  "description": "Lots of new enchantments",
+  "authors": [
+    "herb#7066"
+  ],
+  "contact": {
+    "homepage": "",
+    "sources": ""
+  },
+
+  "license": "CC0-1.0",
+  "icon": "assets/extra_enchants/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.herb_mc.extra_enchants.ExtraEnchantsMod"
+    ],
+    "mm:early_risers": [
+      "com.herb_mc.extra_enchants.chocoasm.EarlyRiser"
+    ]
+  },
+  "mixins": [
+    "extra_enchants.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.11.3",
+    "fabric": "*",
+    "minecraft": "1.17.x",
+    "java": ">=16"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}

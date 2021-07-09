@@ -1,0 +1,24 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.herbmc.extra_enchants.mixin",
+  "compatibilityLevel": "JAVA_16",
+  "mixins": [
+    "com.herb_mc.extra_enchants.mixin.ArrowEntityInterfaceMixin",
+    "com.herb_mc.extra_enchants.mixin.ArrowEntityMixin",
+    "com.herb_mc.extra_enchants.mixin.EnchantmentHelperMixin",
+    "com.herb_mc.extra_enchants.mixin.EntityInterfaceMixin",
+    "com.herb_mc.extra_enchants.mixin.HorseBaseEntityInterfaceMixin",
+    "com.herb_mc.extra_enchants.mixin.ItemMixin",
+    "com.herb_mc.extra_enchants.mixin.LivingEntityInterfaceMixin",
+    "com.herb_mc.extra_enchants.mixin.LivingEntityMixin",
+    "com.herb_mc.extra_enchants.mixin.PlayerEntityMixin",
+    "com.herb_mc.extra_enchants.mixin.ProjectileEntityMixin",
+    "com.herb_mc.extra_enchants.mixin.SwoopGoalMixin"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
