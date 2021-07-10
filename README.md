@@ -25,7 +25,7 @@ The effect scales infinitely, but levels beyond 4 may result in visual bugs and 
 - Incompatible enchantments: All Protection-type enchants
 - Max level: 3<details><summary>Detailed description</summary>
 Extra damage is added directly. The precise formula for determining the amount of damage added is the following:\
-(maxhealth-remhealth) * (lvl^2) / (2 \* lvl^2 + 4)\
+![berserk](https://latex.codecogs.com/gif.latex?%28maxhealth-remhealth%29%20*%20%5Cfrac%7Blevel%5E2%7D%7B2%20*%20level%5E2%20&plus;%204%7D)\
 This equates to about 16.7% of lost health at level 1, 33.3% of lost health at level 2, and 40.9% of lost health at level 3.\
 The effect scales infinitely, and damage added approaches but never reaches 50% of lost health.</details>
 
@@ -41,8 +41,7 @@ Effect technically scales infinitely, but horse jump mechanics have an upper lim
 - Compatible equipment: Axes
 - Incompatible enchantments: Damage increasing enchantments
 - Max level: 4<details><summary>Detailed description</summary>The amount of armor ignored scales with level, with diminishing returns. The precise formula for determining the percentage ignored is the following:\
-1.8 * (lvl / (2 * lvl + 4))\
-![link work?](https://latex.codecogs.com/gif.latex?1.8%20*%20%5Cfrac%7Blevel%7D%7B2%20*%20level%20&plus;%204%7D)\
+![cleaving](https://latex.codecogs.com/gif.latex?1.8%20*%20%5Cfrac%7Blevel%7D%7B2%20*%20level%20&plus;%204%7D)\
 This equates to 30% armor ignored at level 1, 45% armor ignored at level 2, 54% armor ignored at level 3, and 60% armor ignored at level 4.\
 Effect scales infinitely, and armor ignored approaches but never reaches 90%.</details>
 
