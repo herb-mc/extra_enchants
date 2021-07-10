@@ -22,7 +22,7 @@ public class Cleaving extends Enchantment {
 
     @Override
     public int getMaxLevel() {
-        return 3;
+        return 4;
     }
 
     @Override

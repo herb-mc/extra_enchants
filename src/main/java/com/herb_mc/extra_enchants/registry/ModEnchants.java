@@ -25,6 +25,7 @@ public class ModEnchants {
     public static Enchantment LIFESTEAL = new Lifesteal(Enchantment.Rarity.UNCOMMON, EnchantmentTarget.WEAPON, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
     public static Enchantment SURFACE_SKIMMER = new SurfaceSkimmer(Enchantment.Rarity.UNCOMMON, HORSE_ARMOR, new EquipmentSlot[]{EquipmentSlot.CHEST});
     public static Enchantment SWIFTNESS = new Swiftness(Enchantment.Rarity.UNCOMMON, HORSE_ARMOR, new EquipmentSlot[]{EquipmentSlot.CHEST});
+    public static Enchantment TOUGH = new Tough(Enchantment.Rarity.UNCOMMON, EnchantmentTarget.ARMOR_LEGS, new EquipmentSlot[]{EquipmentSlot.LEGS});
     public static Enchantment WARDING = new Warding(Enchantment.Rarity.UNCOMMON, HORSE_ARMOR, new EquipmentSlot[]{EquipmentSlot.CHEST});
     public static Enchantment WEIGHTED = new Weighted(Enchantment.Rarity.RARE, EnchantmentTarget.ARMOR_CHEST, new EquipmentSlot[]{EquipmentSlot.CHEST});
 
@@ -41,6 +42,7 @@ public class ModEnchants {
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "lifesteal"), LIFESTEAL);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "surface_skimmer"), SURFACE_SKIMMER);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "swiftness"), SWIFTNESS);
+        Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "tough"), TOUGH);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "arrow_speed"), ARROW_SPEED);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "warding"), WARDING);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "weighted"), WEIGHTED);

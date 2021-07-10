@@ -1,6 +1,6 @@
 # Extra Enchants
 
-Adds 14 new enchantments with functions ranging from utility to offense. Currently only compatible with version 1.17.
+Adds 15 enchantments with functions ranging from utility to offense. Currently only compatible with version 1.17.
 
 Latest version requires Fabric API
 
@@ -40,10 +40,10 @@ Effect technically scales infinitely, but horse jump mechanics have an upper lim
 - Ignores a portion of enemy armor.
 - Compatible equipment: Axes
 - Incompatible enchantments: Damage increasing enchantments
-- Max level: 3<details><summary>Detailed description</summary>The amount of armor ignored scales with level, with diminishing returns. The precise formula for determining the percentage ignored is the following:\
-lvl / (2 * lvl + 6)
-This equates to 12.5% armor ignored at level 1, 20% armor ignored at level 2, and 25% armor ignored at level 3.\
-Effect scales infinitely, and armor ignored approaches but never reaches 50%.</details>
+- Max level: 4<details><summary>Detailed description</summary>The amount of armor ignored scales with level, with diminishing returns. The precise formula for determining the percentage ignored is the following:\
+1.8 * (lvl / (2 * lvl + 4))\
+This equates to 30% armor ignored at level 1, 45% armor ignored at level 2, 54% armor ignored at level 3, and 60% armor ignored at level 4.\
+Effect scales infinitely, and armor ignored approaches but never reaches 90%.</details>
 
 ### *Dextrous*
 - Increases attack speed.
@@ -91,6 +91,13 @@ The effect does not scale. (yet)</details>
 - Incompatible enchantments: Bounding, Surface Skimmer
 - Max level: 3<details><summary>Detailed description</summary>Increases horse speed by 10% per level.\
 The effect scales infinitely.</details>
+
+### *Tough*
+- Decreases incoming damage.
+- Compatible equipment: Leggings
+- Incompatible enchantments: Damage reduction-type enchantments
+- Max level: 4<details><summary>Detailed description</summary>Decreases incoming damage by 3% per level before armor is applied. May be more effective than protection in certain circumstances.\
+  The effect scales infinitely.</details>
 
 ### *Warding*
 - User scares away phantoms.
