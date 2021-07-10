@@ -42,6 +42,7 @@ Effect technically scales infinitely, but horse jump mechanics have an upper lim
 - Incompatible enchantments: Damage increasing enchantments
 - Max level: 4<details><summary>Detailed description</summary>The amount of armor ignored scales with level, with diminishing returns. The precise formula for determining the percentage ignored is the following:\
 1.8 * (lvl / (2 * lvl + 4))\
+![link work?](https://latex.codecogs.com/gif.latex?1.8%20*%20%5Cfrac%7Blevel%7D%7B2%20*%20level%20&plus;%204%7D)\
 This equates to 30% armor ignored at level 1, 45% armor ignored at level 2, 54% armor ignored at level 3, and 60% armor ignored at level 4.\
 Effect scales infinitely, and armor ignored approaches but never reaches 90%.</details>
 
