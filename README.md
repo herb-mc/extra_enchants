@@ -2,6 +2,8 @@
 
 Adds 14 new enchantments with functions ranging from utility to offense. Currently only compatible with version 1.17.
 
+Latest version requires Fabric API
+
 ## Enchantment List
 
 ### *Architect*
