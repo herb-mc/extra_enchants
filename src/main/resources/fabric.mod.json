@@ -14,7 +14,7 @@
   },
 
   "license": "CC0-1.0",
-  "icon": "assets/extra_enchants/icon.png",
+  "icon": "assets/extra_enchants/icon.gif",
 
   "environment": "*",
   "entrypoints": {

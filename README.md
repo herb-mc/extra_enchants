@@ -2,7 +2,7 @@
 
 Adds 15 enchantments with functions ranging from utility to offense. Currently only compatible with version 1.17.
 
-Latest version requires Fabric API
+Requires Fabric Loader 0.11.6 and Fabric API 0.36.0+1.17
 
 ## Enchantment List
 

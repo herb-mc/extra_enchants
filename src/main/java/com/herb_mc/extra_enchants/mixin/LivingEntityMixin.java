@@ -63,10 +63,8 @@ public abstract class LivingEntityMixin implements LivingEntityInterfaceMixin, E
             index = 1
     )
     private float armor(float armor) {
-        System.out.println(level);
-        float mult = 1.0F - (float) (1.8D * (level / (2.0D * level + 4.0D)));
-        System.out.println(mult);
-        return armor * mult;
+        double mult = 1.0D - (float) (1.8D * (level / (2.0D * level + 4.0D)));
+        return (float) (armor * mult);
     }
 
     @Inject(at = @At("HEAD"), method = "tick")

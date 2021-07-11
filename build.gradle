@@ -23,10 +23,10 @@ repositories {
 }
 
 dependencies {
-	minecraft "com.mojang:minecraft:1.17"
-	mappings "net.fabricmc:yarn:1.17+build.13:v2"
-	modImplementation "net.fabricmc:fabric-loader:0.11.6"
-	modImplementation "net.fabricmc.fabric-api:fabric-api:0.36.0+1.17"
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	mappings "net.fabricmc:yarn:${project.yarn_build}:v2"
+	modImplementation "net.fabricmc:fabric-loader:${project.fabric_loader_version}"
+	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 	modImplementation "com.github.Chocohead:Fabric-ASM:${project.fabric_asm_version}"
 	include "com.github.Chocohead:Fabric-ASM:${project.fabric_asm_version}"
 	include modImplementation("com.jamieswhiteshirt:reach-entity-attributes:${project.reach_entity_version}")
