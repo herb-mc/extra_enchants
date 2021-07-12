@@ -1,6 +1,6 @@
 # Extra Enchants
 
-Adds 15 enchantments with functions ranging from utility to offense. Currently only compatible with version 1.17.
+Adds 17 enchantments with functions ranging from utility to offense. Currently only compatible with version 1.17.
 
 Requires Fabric Loader 0.11.6 and Fabric API 0.36.0+1.17
 
@@ -72,6 +72,12 @@ The effect scales infinitely. At higher levels, due to explosion mechanics, it i
 - Max level 3: <details><summary>Detailed description</summary>Inflicts 40 extra ticks, or 2 seconds, of Glowing 20 (no particle) per tick.\
 The effect scales infinitely.</details>
 
+### *Leaping*
+- Increases jump height.
+- Compatible equipment: Boots
+- Max level: 2<details><summary>Detailed description</summary>Increases jump velocity by 0.07 per level. Approximately +0.5 blocks of jump height up until level 8.\
+The effect scales infinitely.</details>
+
 ### *Lifesteal*
 - Drains a small amount of health upon dealing damage.
 - Compatible equipment: Swords
@@ -111,3 +117,10 @@ The effect does not scale.</details>
 - Incompatible enchantments: Dextrous, Thorns
 - Max level: 2<details><summary>Detailed description</summary>+20% damage, -15% attack speed per level.\
 Effect scales infinitely.</details>
+
+### *Windstep*
+- Increases step height, allowing the user to instantly walk up 1 block tall inclines.
+- Compatible equipment: Boots
+- Incompatible enchantments: Feather Falling
+- Max level: 1<details><summary>Detailed description</summary>+0.4 step height. (default is 0.6 for entities other than horses)\
+  Effect scales infinitely.</details>
