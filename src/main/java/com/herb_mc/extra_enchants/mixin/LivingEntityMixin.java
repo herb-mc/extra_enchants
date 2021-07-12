@@ -3,7 +3,6 @@ package com.herb_mc.extra_enchants.mixin;
 import com.herb_mc.extra_enchants.interfaces.AttributeModifierInterface;
 import com.herb_mc.extra_enchants.registry.ModEnchants;
 import com.herb_mc.extra_enchants.interfaces.GlobalUUIDInterface;
-import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
@@ -19,6 +18,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import net.minecraft.block.BedBlock;
 
 import java.util.Random;
 
@@ -27,9 +27,9 @@ import static net.minecraft.enchantment.EnchantmentHelper.getEquipmentLevel;
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin implements LivingEntityInterfaceMixin, EntityInterfaceMixin, HorseBaseEntityInterfaceMixin, AttributeModifierInterface, GlobalUUIDInterface {
 
-    @Shadow protected abstract void fall(double heightDifference, boolean onGround, BlockState landedState, BlockPos landedPosition);
+    @Shadow public abstract int getArmor();
 
-    private LivingEntity thisEntity = (LivingEntity) (Object) this;
+    private final LivingEntity thisEntity = (LivingEntity) (Object) this;
 
     private boolean init = false;
     private float STEP_HEIGHT;
@@ -96,11 +96,19 @@ public abstract class LivingEntityMixin implements LivingEntityInterfaceMixin, E
     @ModifyArg(
             method = "applyArmorToDamage",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/DamageUtil;getDamageLeft(FFF)F"),
-            index = 1
-    )
+            index = 1)
     private float armor(float armor) {
         double mult = 1.0D - (float) (1.8D * (level / (2.0D * level + 4.0D)));
         return (float) (armor * mult);
+    }
+
+    @Inject(
+            method = "jump",
+            at = @At("TAIL"))
+    private void changeVelocity(CallbackInfo info) {
+        int i = EnchantmentHelper.getEquipmentLevel(ModEnchants.LUNGING,thisEntity);
+        float mult = (float) (1 + 0.1 * i);
+        if(i > 0) thisEntity.setVelocity(thisEntity.getVelocity().x * mult, thisEntity.getVelocity().y, thisEntity.getVelocity().z * mult);
     }
 
     @Inject(at = @At("HEAD"), method = "tick")
@@ -110,6 +118,9 @@ public abstract class LivingEntityMixin implements LivingEntityInterfaceMixin, E
             thisEntity.stepHeight = STEP_HEIGHT;
             if (i > 0) thisEntity.stepHeight += i * 0.4F;
         }
+        i = getEquipmentLevel(ModEnchants.BARBARIC, thisEntity);
+        removeAttribute(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, BARBARIC_ATTACK_DAMAGE_BOOST_ID);
+        if(i > 0) modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, 20 - this.getArmor(), BARBARIC_ATTACK_DAMAGE_BOOST_ID, "bar_attack_damage", 0.04, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
         i = getEquipmentLevel(ModEnchants.BERSERK, thisEntity);
         removeAttribute(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, BERSERK_ATTACK_DAMAGE_BOOST_ID);
         if (i > 0) modAttributeExtended(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, i, BERSERK_ATTACK_DAMAGE_BOOST_ID, "ber_attack_damage", (thisEntity.getMaxHealth() - thisEntity.getHealth()), 2.0, 2.0, 1.0, 2.0, 0.0, 4.0, 0.0, EntityAttributeModifier.Operation.ADDITION);

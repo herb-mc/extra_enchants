@@ -6,9 +6,9 @@ import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.EquipmentSlot;
 
-public class Windstep extends Enchantment {
+public class Terraforming extends Enchantment {
 
-    public Windstep(Rarity weight, EnchantmentTarget type, EquipmentSlot[] equipmentSlots) {
+    public Terraforming(Rarity weight, EnchantmentTarget type, EquipmentSlot[] equipmentSlots) {
         super(weight, type, equipmentSlots);
     }
 
@@ -30,7 +30,7 @@ public class Windstep extends Enchantment {
     @Override
     protected boolean canAccept(Enchantment other)
     {
-        return super.canAccept(other) && other != Enchantments.FEATHER_FALLING && other != ModEnchants.LEAPING && other != ModEnchants.LUNGING;
+        return super.canAccept(other) && other != Enchantments.FORTUNE && other != Enchantments.SILK_TOUCH;
     }
 
 }

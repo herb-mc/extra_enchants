@@ -1,5 +1,6 @@
 package com.herb_mc.extra_enchants.enchantments;
 
+import com.herb_mc.extra_enchants.registry.ModEnchants;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.Entity;
@@ -37,6 +38,12 @@ public class Lifesteal extends Enchantment {
             user.heal(lastDamage);
         }
         super.onTargetDamaged(user, target, level);
+    }
+
+    @Override
+    protected boolean canAccept(Enchantment other)
+    {
+        return super.canAccept(other) && other != ModEnchants.BARBARIC;
     }
 
 }

@@ -6,31 +6,31 @@ import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.EquipmentSlot;
 
-public class Windstep extends Enchantment {
+public class Lunging extends Enchantment {
 
-    public Windstep(Rarity weight, EnchantmentTarget type, EquipmentSlot[] equipmentSlots) {
+    public Lunging(Rarity weight, EnchantmentTarget type, EquipmentSlot[] equipmentSlots) {
         super(weight, type, equipmentSlots);
     }
 
     @Override
     public int getMinPower(int level) {
-        return 20;
+        return 15 + (level - 1) * 10;
     }
 
     @Override
     public int getMaxLevel() {
-        return 1;
+        return 2;
     }
 
     @Override
     public int getMaxPower(int level) {
-        return 50;
+        return this.getMinPower(level) + 15;
     }
 
     @Override
     protected boolean canAccept(Enchantment other)
     {
-        return super.canAccept(other) && other != Enchantments.FEATHER_FALLING && other != ModEnchants.LEAPING && other != ModEnchants.LUNGING;
+        return super.canAccept(other) && other != Enchantments.FEATHER_FALLING && other != ModEnchants.WINDSTEP && other != ModEnchants.LEAPING;
     }
 
 }

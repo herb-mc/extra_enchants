@@ -18,22 +18,22 @@ public interface AttributeModifierInterface {
         }
     }
 
-    default void modAttributeBase(LivingEntity entity, EntityAttribute entityAttribute, int lvl, UUID uuid, String str, double base, EntityAttributeModifier.Operation operation) {
+    default void modAttributeBase(LivingEntity entity, EntityAttribute entityAttribute, int inVar, UUID uuid, String str, double base, EntityAttributeModifier.Operation operation) {
         EntityAttributeInstance instance = entity.getAttributeInstance(entityAttribute);
         if (instance != null) {
             instance.addTemporaryModifier(new EntityAttributeModifier(uuid,
                     str,
-                    base * lvl,
+                    base * inVar,
                     operation));
         }
     }
 
-    default void modAttributeExtended(LivingEntity entity, EntityAttribute entityAttribute, int lvl, UUID uuid, String str, double mult, double numerPower, double denomPower, double numerMult, double denomMult, double numerConst, double denomConst, double fConst, EntityAttributeModifier.Operation operation) {
+    default void modAttributeExtended(LivingEntity entity, EntityAttribute entityAttribute, int inVar, UUID uuid, String str, double mult, double numerPower, double denomPower, double numerMult, double denomMult, double numerConst, double denomConst, double fConst, EntityAttributeModifier.Operation operation) {
         EntityAttributeInstance instance = entity.getAttributeInstance(entityAttribute);
         if (instance != null) {
             instance.addTemporaryModifier(new EntityAttributeModifier(uuid,
                     str,
-                    mult * (numerMult * Math.pow(lvl, numerPower) + numerConst) / (denomMult * Math.pow(lvl, denomPower) + denomConst) + fConst,
+                    mult * (numerMult * Math.pow(inVar, numerPower) + numerConst) / (denomMult * Math.pow(inVar, denomPower) + denomConst) + fConst,
                     operation));
         }
     }

@@ -30,7 +30,7 @@ public class Leaping extends Enchantment {
     @Override
     protected boolean canAccept(Enchantment other)
     {
-        return super.canAccept(other) && other != Enchantments.FEATHER_FALLING && other != ModEnchants.WINDSTEP;
+        return super.canAccept(other) && other != Enchantments.FEATHER_FALLING && other != ModEnchants.WINDSTEP && other != ModEnchants.LUNGING;
     }
 
 }

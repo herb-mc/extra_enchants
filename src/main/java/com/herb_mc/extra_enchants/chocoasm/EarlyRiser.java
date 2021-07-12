@@ -13,6 +13,7 @@ public class EarlyRiser implements Runnable {
         String enchantmentTarget = remapper.mapClassName("intermediary", "net.minecraft.class_1886");
         ClassTinkerers.enumBuilder(enchantmentTarget).addEnumSubclass("AXE", "com.herb_mc.extra_enchants.chocoasm.Axe").build();
         ClassTinkerers.enumBuilder(enchantmentTarget).addEnumSubclass("HORSE_ARMOR", "com.herb_mc.extra_enchants.chocoasm.HorseArmor").build();
+        ClassTinkerers.enumBuilder(enchantmentTarget).addEnumSubclass("WEAPONS", "com.herb_mc.extra_enchants.chocoasm.Weapons").build();
     }
 
 }

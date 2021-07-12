@@ -1,6 +1,7 @@
 {
   "enchantment.extra_enchants.architect": "Architect",
   "enchantment.extra_enchants.arrow_speed": "Arrow Speed",
+  "enchantment.extra_enchants.barbaric": "Barbaric",
   "enchantment.extra_enchants.berserk": "Berserk",
   "enchantment.extra_enchants.bounding": "Bounding",
   "enchantment.extra_enchants.cleaving": "Cleaving",
@@ -10,8 +11,10 @@
   "enchantment.extra_enchants.exposing": "Exposing",
   "enchantment.extra_enchants.leaping": "Leaping",
   "enchantment.extra_enchants.lifesteal": "Lifesteal",
+  "enchantment.extra_enchants.lunging": "Lunging",
   "enchantment.extra_enchants.surface_skimmer": "Surface Skimmer",
   "enchantment.extra_enchants.swiftness": "Swiftness",
+  "enchantment.extra_enchants.terraforming": "Terraforming",
   "enchantment.extra_enchants.tough": "Tough",
   "enchantment.extra_enchants.warding": "Warding",
   "enchantment.extra_enchants.weighted": "Weighted",

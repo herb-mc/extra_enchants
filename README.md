@@ -1,6 +1,6 @@
 # Extra Enchants
 
-Adds 17 enchantments with functions ranging from utility to offense. Currently only compatible with version 1.17.
+Adds 19 enchantments with functions ranging from utility to offense. Currently only compatible with version 1.17.
 
 Requires Fabric Loader 0.11.6 and Fabric API 0.36.0+1.17
 
@@ -18,6 +18,14 @@ The effect scales infinitely.</details>
 - Incompatible enchantments: Power
 - Max level: 3<details><summary>Detailed description</summary>Increases arrow velocity by 15% and adds 0.25 to the arrow's damage attribute per level. Roughly equivalent to Power at the same level.\
 The effect scales infinitely, but levels beyond 4 may result in visual bugs and quirky arrow behavior.</details>
+
+### *Barbaric*
+- Increases damage by an amount inversely proportional to the user's armor.
+- Compatible equipment: Swords, Axes
+- Incompatible enchants: Lifesteal
+- Max level: 1<details><summary>Detailed description</summary>
+The damage increase is a multiplier applied to the total damage. The value at no armor is 1.8x, with a 0.04 decrease per armor point.\
+The effect does not scale.</details>
 
 ### *Berserk*
 - Increases damage by an amount proportional to the amount of health lost.
@@ -84,6 +92,12 @@ The effect scales infinitely.</details>
 - Max level: 3<details><summary>Detailed description</summary>Heals 4% of damage dealt per level. Heal amount has an absolute cap of 3. On kill, directly heals (level) health.\
 The healing factor scales infinitely, but is hardcapped at 3 health.</details>
 
+### *Long Jump*
+- Increases horizontal jump velocity
+- Compatible equipment: Boots
+- Max level: 3<details><summary>Detailed description</summary>10% increase to x/z velocities while jumping per level.\
+The effect sscales infinitely.</details>
+
 ### *Surface Skimmer*
 - Allows the user to walk on water. (eventually level will determine max speed)
 - Compatible equipment: Horse armors
@@ -97,6 +111,13 @@ The effect does not scale. (yet)</details>
 - Incompatible enchantments: Bounding, Surface Skimmer
 - Max level: 3<details><summary>Detailed description</summary>Increases horse speed by 10% per level.\
 The effect scales infinitely.</details>
+
+### *Terraforming*
+- Greatly increases mining speed. Broken blocks drop nothing.
+- Compatible equipment: Tools
+- Incompatible enchantments: Fortune, Silk Touch
+- Max level: 1<details><summary>Detailed description</summary>Increases tool speed by 58. This allows a Terraforming Diamond/Netherite Pickaxe to break stone instantly. Terraforming + Efficiency V allows Diamond/Netherite Pickaxes to instantly break some ores.\
+  The effect does not scale.</details>
 
 ### *Tough*
 - Decreases incoming damage.
