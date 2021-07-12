@@ -1,6 +1,6 @@
 # Extra Enchants
 
-Adds 19 enchantments with functions ranging from utility to offense. Currently only compatible with version 1.17.
+Adds 20 enchantments with functions ranging from utility to offense. Currently only compatible with version 1.17.
 
 Requires Fabric Loader 0.11.6 and Fabric API 0.36.0+1.17
 
