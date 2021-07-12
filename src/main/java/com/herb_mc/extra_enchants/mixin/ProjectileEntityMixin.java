@@ -8,6 +8,7 @@ import net.minecraft.entity.boss.dragon.EnderDragonPart;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.mob.EndermanEntity;
 import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -69,7 +70,7 @@ public abstract class ProjectileEntityMixin implements EntityInterfaceMixin {
                     EnderDragonPart dragonTarget = (EnderDragonPart) target;
                     phase = dragonTarget.owner.getPhaseManager().getCurrent().getType().getTypeId();
                 }
-                if ((Object) this instanceof ArrowEntity && phase != 6) {
+                if ((Object) this instanceof ArrowEntity && phase != 6 && !(target instanceof EndermanEntity)) {
                     if (glowing > 0 && target instanceof LivingEntity livingTarget) {
                         StatusEffectInstance glow = new StatusEffectInstance(StatusEffects.GLOWING, glowing, 20, true, true);
                         livingTarget.addStatusEffect(glow);

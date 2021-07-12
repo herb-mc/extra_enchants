@@ -9,6 +9,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.damage.EntityDamageSource;
 import net.minecraft.entity.passive.HorseEntity;
 import net.minecraft.tag.FluidTags;
 import net.minecraft.util.math.BlockPos;
@@ -18,7 +19,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import net.minecraft.block.BedBlock;
 
 import java.util.Random;
 
@@ -59,7 +59,7 @@ public abstract class LivingEntityMixin implements LivingEntityInterfaceMixin, E
             ordinal = 0)
     private float amount(float amount) {
         int i = getEquipmentLevel(ModEnchants.TOUGH, thisEntity);
-        if(i > 0) return amount * (1.0F - 0.03F * i);
+        if (i > 0) return amount * (1.0F - 0.03F * i);
         return amount;
     }
 
@@ -79,7 +79,7 @@ public abstract class LivingEntityMixin implements LivingEntityInterfaceMixin, E
             index = 1)
     private float f(float f) {
         int i = EnchantmentHelper.getEquipmentLevel(ModEnchants.LEAPING,thisEntity);
-        if(i > 0) f += 0.07F * (float) i;
+        if (i > 0) f += 0.07F * (float) i;
         return f;
     }
 
@@ -89,8 +89,18 @@ public abstract class LivingEntityMixin implements LivingEntityInterfaceMixin, E
             ordinal = 0)
     private float fallDistance(float fallDistance) {
         int i = EnchantmentHelper.getEquipmentLevel(ModEnchants.LEAPING,thisEntity);
-        if(i > 0) fallDistance -= (float) i - 1.0F;
+        if (i > 0) fallDistance -= (float) i - 1.0F;
         return fallDistance;
+    }
+
+    @ModifyVariable(
+            method = "damage",
+            at = @At(value = "HEAD", target = "Lnet/minecraft/entity/LivingEntity;damage(Lnet/minecraft/entity/damage/DamageSource;F)Z"),
+            ordinal = 0)
+    private float amount(float amount, DamageSource source) {
+        int i = EnchantmentHelper.getEquipmentLevel(ModEnchants.BLOODCORE,thisEntity);
+        if(source instanceof EntityDamageSource && i > 0 && rand.nextDouble() < 0.25) amount *= 1.8;
+        return amount;
     }
 
     @ModifyArg(
@@ -108,7 +118,7 @@ public abstract class LivingEntityMixin implements LivingEntityInterfaceMixin, E
     private void changeVelocity(CallbackInfo info) {
         int i = EnchantmentHelper.getEquipmentLevel(ModEnchants.LUNGING,thisEntity);
         float mult = (float) (1 + 0.1 * i);
-        if(i > 0) thisEntity.setVelocity(thisEntity.getVelocity().x * mult, thisEntity.getVelocity().y, thisEntity.getVelocity().z * mult);
+        if (i > 0) thisEntity.setVelocity(thisEntity.getVelocity().x * mult, thisEntity.getVelocity().y, thisEntity.getVelocity().z * mult);
     }
 
     @Inject(at = @At("HEAD"), method = "tick")
@@ -118,9 +128,18 @@ public abstract class LivingEntityMixin implements LivingEntityInterfaceMixin, E
             thisEntity.stepHeight = STEP_HEIGHT;
             if (i > 0) thisEntity.stepHeight += i * 0.4F;
         }
+        i = getEquipmentLevel(ModEnchants.BLOODCORE, thisEntity);
+        removeAttribute(thisEntity, EntityAttributes.GENERIC_ARMOR, BLOODCORE_ARMOR_BOOST_ID);
+        removeAttribute(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, BLOODCORE_ATTACK_DAMAGE_BOOST_ID);
+        removeAttribute(thisEntity, EntityAttributes.GENERIC_MAX_HEALTH, BLOODCORE_HEALTH_BOOST_ID);
+        if (i > 0){
+            modAttributeBase(thisEntity, EntityAttributes.GENERIC_ARMOR, 1, BLOODCORE_ARMOR_BOOST_ID, "bld_armor", -0.2, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+            modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, 1, BLOODCORE_ATTACK_DAMAGE_BOOST_ID, "bld_attack_damage", 0.1, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+            modAttributeBase(thisEntity, EntityAttributes.GENERIC_MAX_HEALTH, 1, BLOODCORE_HEALTH_BOOST_ID, "bld_attack_damage", 1.0, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+        }
         i = getEquipmentLevel(ModEnchants.BARBARIC, thisEntity);
         removeAttribute(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, BARBARIC_ATTACK_DAMAGE_BOOST_ID);
-        if(i > 0) modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, 20 - this.getArmor(), BARBARIC_ATTACK_DAMAGE_BOOST_ID, "bar_attack_damage", 0.04, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+        if (i > 0) modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, 20 - this.getArmor(), BARBARIC_ATTACK_DAMAGE_BOOST_ID, "bar_attack_damage", 0.04, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
         i = getEquipmentLevel(ModEnchants.BERSERK, thisEntity);
         removeAttribute(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, BERSERK_ATTACK_DAMAGE_BOOST_ID);
         if (i > 0) modAttributeExtended(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, i, BERSERK_ATTACK_DAMAGE_BOOST_ID, "ber_attack_damage", (thisEntity.getMaxHealth() - thisEntity.getHealth()), 2.0, 2.0, 1.0, 2.0, 0.0, 4.0, 0.0, EntityAttributeModifier.Operation.ADDITION);
