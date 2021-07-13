@@ -48,7 +48,7 @@ The effect scales infinitely, and damage added approaches but never reaches 50% 
 ### *Bloodcore*
 - Doubles health and increases attack damage. Armor is decreased and enemies may deal critical hits. Is considered a curse.<br>
 - Compatible equipment: Chestplates
-- Incompatible enchantments: Protection, Berserk
+- Incompatible enchantments: All Protection-type enchants
 - Max level: 1
 - Rarity: Very rare
 <details><summary>Detailed description</summary>Doubles max health, +10% attack damage, -20% armor, 25% chance to take 80% increased damage from entities.<br>
@@ -98,8 +98,8 @@ Effect does not scale.</details>
 - Incompatible enchantments: Power, Infinity, Ender
 - Max level: 2
 - Rarity: Rare
-<details><summary>Detailed description</summary>The resultant explosion has a power of lvl / 2 + 0.5, if the arrow hits the ground. The explosion power will match the level on direct hits. Power is unconditionally halved during the vulnerable part of the dragon's perching phase. None of the explosions deal block damage. (This will eventually be configurable)<br>
-The effect scales infinitely. At higher levels, due to explosion mechanics, it is possible to trap the Ender Dragon in an infinite loop during its perching phase.</details>
+<details><summary>Detailed description</summary>The resultant explosion has a power of lvl / 2 + 0.5, if the arrow hits the ground. The explosion power will match the level on direct hits. Arrows deal damage normally during dragon perching. None of the explosions deal block damage. (This will eventually be configurable)<br>
+The effect scales infinitely.</details>
 
 ### *Exposing*
 - Arrows inflict a glowing status effect. (there will eventually be enchantments designed to take advantage of this)
@@ -109,9 +109,19 @@ The effect scales infinitely. At higher levels, due to explosion mechanics, it i
 <details><summary>Detailed description</summary>Inflicts 40 extra ticks, or 2 seconds, of Glowing 20 (no particle) per tick.<br>
 The effect scales infinitely.</details>
 
+### *Featherweight*
+- Fall slower depending on the level.
+- Compatible equipment: Boots
+- Incompatible enchantments: Feather Falling
+- Max level: 3
+- Rarity: Uncommon
+<details><summary>Detailed description</summary>Divides fall speed by (level + 1). Divides fall distance by (level * 2) before fall damage calculation. Overridden by Slow Falling effect.<br>
+The effect scales infinitely.</details>
+
 ### *Leaping*
 - Increases jump height.
 - Compatible equipment: Boots
+- Incompatible enchantments: Lunging, Windstep
 - Max level: 2
 - Rarity: Uncommon
 <details><summary>Detailed description</summary>Increases jump velocity by 0.07 per level. Approximately +0.5 blocks of jump height up until level 8.<br>
@@ -128,6 +138,7 @@ The healing factor scales infinitely, but is hardcapped at 3 health.</details>
 ### *Lunging*
 - Increases horizontal jump velocity
 - Compatible equipment: Boots
+- Incompatible enchantments: Leaping, Windstep
 - Max level: 3
 - Rarity: Uncommon
 <details><summary>Detailed description</summary>10% increase to x/z velocities while jumping per level.<br>
@@ -189,7 +200,7 @@ Effect scales infinitely.</details>
 ### *Windstep*
 - Increases step height, allowing the user to instantly walk up 1 block tall inclines.
 - Compatible equipment: Boots
-- Incompatible enchantments: Feather Falling
+- Incompatible enchantments: Leaping, Lunging
 - Max level: 1
 - Rarity: Rare
 <details><summary>Detailed description</summary>+0.4 step height. (default is 0.6 for entities other than horses)<br>

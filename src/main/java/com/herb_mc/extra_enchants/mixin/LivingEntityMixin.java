@@ -88,7 +88,9 @@ public abstract class LivingEntityMixin implements LivingEntityInterfaceMixin, E
             at = @At(value = "HEAD", target = "Lnet/minecraft/entity/LivingEntity;computeFallDamage(FF)I"),
             ordinal = 0)
     private float fallDistance(float fallDistance) {
-        int i = EnchantmentHelper.getEquipmentLevel(ModEnchants.LEAPING,thisEntity);
+        int i = EnchantmentHelper.getEquipmentLevel(ModEnchants.FEATHERWEIGHT, thisEntity);
+        fallDistance /= 2 * i;
+        i = EnchantmentHelper.getEquipmentLevel(ModEnchants.LEAPING,thisEntity);
         if (i > 0) fallDistance -= (float) i - 1.0F;
         return fallDistance;
     }
@@ -110,6 +112,15 @@ public abstract class LivingEntityMixin implements LivingEntityInterfaceMixin, E
     private float armor(float armor) {
         double mult = 1.0D - (float) (1.8D * (level / (2.0D * level + 4.0D)));
         return (float) (armor * mult);
+    }
+
+    @ModifyConstant(method = "travel", constant = @Constant(doubleValue = 0.08D))
+    private double d(double d){
+        int i = EnchantmentHelper.getEquipmentLevel(ModEnchants.FEATHERWEIGHT, thisEntity);
+        if (i > 0 && thisEntity.getVelocity().y < 0) {
+            d /= i + 1;
+        }
+        return d;
     }
 
     @Inject(

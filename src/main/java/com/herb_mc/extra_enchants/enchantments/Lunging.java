@@ -30,7 +30,7 @@ public class Lunging extends Enchantment {
     @Override
     protected boolean canAccept(Enchantment other)
     {
-        return super.canAccept(other) && other != Enchantments.FEATHER_FALLING && other != ModEnchants.WINDSTEP && other != ModEnchants.LEAPING;
+        return super.canAccept(other) && other != ModEnchants.WINDSTEP && other != ModEnchants.LEAPING;
     }
 
 }

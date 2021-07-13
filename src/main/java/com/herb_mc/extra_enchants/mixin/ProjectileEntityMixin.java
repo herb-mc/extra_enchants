@@ -23,6 +23,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import net.minecraft.entity.vehicle.HopperMinecartEntity;
+
 @Mixin(ProjectileEntity.class)
 public abstract class ProjectileEntityMixin implements EntityInterfaceMixin {
 
@@ -70,12 +72,11 @@ public abstract class ProjectileEntityMixin implements EntityInterfaceMixin {
                     EnderDragonPart dragonTarget = (EnderDragonPart) target;
                     phase = dragonTarget.owner.getPhaseManager().getCurrent().getType().getTypeId();
                 }
-                if ((Object) this instanceof ArrowEntity && phase != 6 && !(target instanceof EndermanEntity)) {
+                if ((Object) this instanceof ArrowEntity && phase != 6 && phase != 3 && !(target instanceof EndermanEntity)) {
                     if (glowing > 0 && target instanceof LivingEntity livingTarget) {
                         StatusEffectInstance glow = new StatusEffectInstance(StatusEffects.GLOWING, glowing, 20, true, true);
                         livingTarget.addStatusEffect(glow);
                     }
-                    if (phase == 3) decreasePower = 2.0F;
                     if (this.exploding >= 1) {
                         ArrowEntity entity = (ArrowEntity) (Object) this;
                         if (entity.isCritical()) {

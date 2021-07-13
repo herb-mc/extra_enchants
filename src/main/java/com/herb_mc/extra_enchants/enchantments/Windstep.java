@@ -30,7 +30,7 @@ public class Windstep extends Enchantment {
     @Override
     protected boolean canAccept(Enchantment other)
     {
-        return super.canAccept(other) && other != Enchantments.FEATHER_FALLING && other != ModEnchants.LEAPING && other != ModEnchants.LUNGING;
+        return super.canAccept(other) && other != ModEnchants.LEAPING && other != ModEnchants.LUNGING;
     }
 
 }
