@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ArrowEntity.class)
-public abstract class ArrowEntityMixin extends PersistentProjectileEntity implements LivingEntityInterfaceMixin, ArrowEntityInterfaceMixin {
+public abstract class ArrowEntityMixin extends PersistentProjectileEntity implements ArrowEntityInterfaceMixin {
 
     private int ender;
     private int exploding;

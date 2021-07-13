@@ -3,7 +3,6 @@ package com.herb_mc.extra_enchants.mixin;
 import com.herb_mc.extra_enchants.interfaces.AttributeModifierInterface;
 import com.herb_mc.extra_enchants.registry.ModEnchants;
 import com.herb_mc.extra_enchants.interfaces.GlobalUUIDInterface;
-import net.fabricmc.fabric.mixin.item.group.client.MixinCreativePlayerInventoryGui;
 import net.minecraft.block.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
@@ -12,6 +11,7 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.EntityDamageSource;
 import net.minecraft.entity.passive.HorseEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.tag.FluidTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -26,7 +26,7 @@ import java.util.Random;
 import static net.minecraft.enchantment.EnchantmentHelper.getEquipmentLevel;
 
 @Mixin(LivingEntity.class)
-public abstract class LivingEntityMixin implements LivingEntityInterfaceMixin, EntityInterfaceMixin, HorseBaseEntityInterfaceMixin, AttributeModifierInterface, GlobalUUIDInterface {
+public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBaseEntityInterfaceMixin, AttributeModifierInterface, GlobalUUIDInterface {
 
     @Shadow public abstract int getArmor();
 
@@ -90,7 +90,7 @@ public abstract class LivingEntityMixin implements LivingEntityInterfaceMixin, E
             ordinal = 0)
     private float fallDistance(float fallDistance) {
         int i = EnchantmentHelper.getEquipmentLevel(ModEnchants.FEATHERWEIGHT, thisEntity);
-        fallDistance /= 2 * i;
+        if (!thisEntity.isSneaking()) fallDistance /= 2 * i;
         i = EnchantmentHelper.getEquipmentLevel(ModEnchants.LEAPING,thisEntity);
         if (i > 0) fallDistance -= (float) i - 1.0F;
         return fallDistance;
@@ -118,7 +118,7 @@ public abstract class LivingEntityMixin implements LivingEntityInterfaceMixin, E
     @ModifyConstant(method = "travel", constant = @Constant(doubleValue = 0.08D))
     private double d(double d){
         int i = EnchantmentHelper.getEquipmentLevel(ModEnchants.FEATHERWEIGHT, thisEntity);
-        if (i > 0 && thisEntity.getVelocity().y < 0) {
+        if (i > 0 && thisEntity.getVelocity().y < 0 && !thisEntity.isSneaking()) {
             d /= i + 1;
         }
         return d;
@@ -128,7 +128,7 @@ public abstract class LivingEntityMixin implements LivingEntityInterfaceMixin, E
             method = "jump",
             at = @At("TAIL"))
     private void changeVelocity(CallbackInfo info) {
-        int i = EnchantmentHelper.getEquipmentLevel(ModEnchants.LUNGING,thisEntity);
+        int i = EnchantmentHelper.getEquipmentLevel(ModEnchants.LUNGING, thisEntity);
         float mult = (float) (1 + 0.1 * i);
         if (i > 0) thisEntity.setVelocity(thisEntity.getVelocity().x * mult, thisEntity.getVelocity().y, thisEntity.getVelocity().z * mult);
     }

@@ -12,7 +12,6 @@
     "HorseBaseEntityInterfaceMixin",
     "ItemGroupMixin",
     "ItemMixin",
-    "LivingEntityInterfaceMixin",
     "LivingEntityMixin",
     "PlayerEntityMixin",
     "ProjectileEntityMixin",
