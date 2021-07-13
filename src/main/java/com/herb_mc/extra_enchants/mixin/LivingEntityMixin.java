@@ -3,6 +3,7 @@ package com.herb_mc.extra_enchants.mixin;
 import com.herb_mc.extra_enchants.interfaces.AttributeModifierInterface;
 import com.herb_mc.extra_enchants.registry.ModEnchants;
 import com.herb_mc.extra_enchants.interfaces.GlobalUUIDInterface;
+import net.fabricmc.fabric.mixin.item.group.client.MixinCreativePlayerInventoryGui;
 import net.minecraft.block.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;

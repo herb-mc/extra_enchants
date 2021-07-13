@@ -10,6 +10,7 @@
     "EnchantmentHelperMixin",
     "EntityInterfaceMixin",
     "HorseBaseEntityInterfaceMixin",
+    "ItemGroupMixin",
     "ItemMixin",
     "LivingEntityInterfaceMixin",
     "LivingEntityMixin",
