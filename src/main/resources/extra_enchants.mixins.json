@@ -13,6 +13,7 @@
     "ItemGroupMixin",
     "ItemMixin",
     "LivingEntityMixin",
+    "PersistentProjectileEntityMixin",
     "PlayerEntityMixin",
     "ProjectileEntityMixin",
     "SwoopGoalMixin"

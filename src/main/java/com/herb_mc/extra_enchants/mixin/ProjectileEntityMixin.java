@@ -10,7 +10,9 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.EndermanEntity;
 import net.minecraft.entity.projectile.ArrowEntity;
+import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.hit.EntityHitResult;
@@ -23,17 +25,19 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import net.minecraft.entity.vehicle.HopperMinecartEntity;
+import java.util.Random;
 
 @Mixin(ProjectileEntity.class)
 public abstract class ProjectileEntityMixin implements EntityInterfaceMixin {
 
     @Shadow @Nullable public abstract Entity getOwner();
 
+    private final PersistentProjectileEntity thisEntity = (PersistentProjectileEntity) (Object) this;
     private int exploding;
     private int ender;
     private int glowing = 0;
     private boolean speed = false;
+    private final Random rand = new Random();
 
     @Inject(at = @At("TAIL"), method = "setOwner")
     protected void setOwner(Entity entity, CallbackInfo info) {
@@ -94,6 +98,7 @@ public abstract class ProjectileEntityMixin implements EntityInterfaceMixin {
                                 owner.requestTeleport(target.getX(), target.getY(), target.getZ());
                             }
                         }
+
                         entity.fallDistance = 0.0F;
                         entity.damage(DamageSource.FALL, 1.0F);
                     }
