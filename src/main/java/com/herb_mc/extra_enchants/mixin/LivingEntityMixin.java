@@ -11,7 +11,6 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.EntityDamageSource;
 import net.minecraft.entity.passive.HorseEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.tag.FluidTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -40,7 +39,7 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
 
     @Inject(at = @At("TAIL"), method = "baseTick")
     protected void baseTick(CallbackInfo info){
-        if(!init) {
+        if (!init) {
             STEP_HEIGHT = thisEntity.stepHeight;
             init = true;
         }
@@ -70,7 +69,7 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
             ordinal = 0)
     private DamageSource source(DamageSource source) {
         level = 0;
-        if(source.getAttacker() != null) if(source.getAttacker() instanceof LivingEntity) level = getEquipmentLevel(ModEnchants.CLEAVING, (LivingEntity) source.getAttacker());
+        if (source.getAttacker() != null) if (source.getAttacker() instanceof LivingEntity) level = getEquipmentLevel(ModEnchants.CLEAVING, (LivingEntity) source.getAttacker());
         return source;
     }
 
@@ -102,7 +101,7 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
             ordinal = 0)
     private float amount(float amount, DamageSource source) {
         int i = EnchantmentHelper.getEquipmentLevel(ModEnchants.BLOODCORE,thisEntity);
-        if(source instanceof EntityDamageSource && i > 0 && rand.nextDouble() < 0.25) amount *= 1.8;
+        if (source instanceof EntityDamageSource && i > 0 && rand.nextDouble() < 0.25) amount *= 1.8;
         return amount;
     }
 
@@ -136,7 +135,7 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
     @Inject(at = @At("HEAD"), method = "tick")
     public void tick(CallbackInfo info) {
         int i = getEquipmentLevel(ModEnchants.WINDSTEP, thisEntity);
-        if(STEP_HEIGHT > 0) {
+        if (STEP_HEIGHT > 0) {
             thisEntity.stepHeight = STEP_HEIGHT;
             if (i > 0) thisEntity.stepHeight += i * 0.4F;
         }
@@ -155,7 +154,7 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
         i = getEquipmentLevel(ModEnchants.BERSERK, thisEntity);
         removeAttribute(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, BERSERK_ATTACK_DAMAGE_BOOST_ID);
         if (i > 0) modAttributeExtended(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, i, BERSERK_ATTACK_DAMAGE_BOOST_ID, "ber_attack_damage", (thisEntity.getMaxHealth() - thisEntity.getHealth()), 2.0, 2.0, 1.0, 2.0, 0.0, 4.0, 0.0, EntityAttributeModifier.Operation.ADDITION);
-        if(thisEntity instanceof HorseEntity) {
+        if (thisEntity instanceof HorseEntity) {
             if (getEquipmentLevel(ModEnchants.SURFACE_SKIMMER, thisEntity) > 0) this.updateFloating();
             i = getEquipmentLevel(ModEnchants.SWIFTNESS, thisEntity);
             removeAttribute(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, SWIFTNESS_SPEED_BOOST_ID);
@@ -174,8 +173,8 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
         }
         BlockPos entityPos = thisEntity.getBlockPos();
         Material mat = thisEntity.world.getBlockState((new BlockPos(entityPos.getX(), thisEntity.getBoundingBox().getMin(Direction.Axis.Y) + 0.1D, entityPos.getZ()))).getMaterial();
-        if(mat == Material.WATER || mat == Material.UNDERWATER_PLANT){
-            if(thisEntity.getVelocity().y < 0.0) thisEntity.setVelocity(new Vec3d(thisEntity.getVelocity().x, 0.0, thisEntity.getVelocity().z));
+        if (mat == Material.WATER || mat == Material.UNDERWATER_PLANT){
+            if (thisEntity.getVelocity().y < 0.0) thisEntity.setVelocity(new Vec3d(thisEntity.getVelocity().x, 0.0, thisEntity.getVelocity().z));
             thisEntity.setOnGround(true);
             this.setAir(false);
         }
