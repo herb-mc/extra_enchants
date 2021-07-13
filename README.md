@@ -116,7 +116,7 @@ The effect scales infinitely.</details>
 - Incompatible enchantments: Feather Falling
 - Max level: 3
 - Rarity: Uncommon
-<details><summary>Detailed description</summary>Divides fall speed by (level + 1). Divides fall distance by (level * 2) before fall damage calculation. Overridden by Slow Falling effect.<br>
+<details><summary>Detailed description</summary>Divides fall acceleration by (level + 1). Divides fall distance by (level * 2) before fall damage calculation. Overridden by Slow Falling effect.<br>
 The effect scales infinitely.</details>
 
 ### *Leaping*
