@@ -3,7 +3,6 @@ package com.herb_mc.extra_enchants.mixin;
 import com.herb_mc.extra_enchants.commons.AttributeModCommons;
 import com.herb_mc.extra_enchants.registry.ModEnchants;
 import com.herb_mc.extra_enchants.commons.UUIDCommons;
-import net.minecraft.block.Block;
 import net.minecraft.block.Material;
 import net.minecraft.block.OreBlock;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -13,7 +12,6 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.EntityDamageSource;
 import net.minecraft.entity.passive.HorseEntity;
-import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.tag.FluidTags;
 import net.minecraft.util.math.BlockPos;
@@ -24,10 +22,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
-import java.util.Vector;
 
 import static net.minecraft.enchantment.EnchantmentHelper.getEquipmentLevel;
 
@@ -43,7 +38,6 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
 
     private static final Random rand = new Random();
     int level = 0;
-    int timer = 0;
 
     @Inject(at = @At("TAIL"), method = "baseTick")
     protected void baseTick(CallbackInfo info){
@@ -79,16 +73,6 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
         level = 0;
         if (source.getAttacker() != null) if (source.getAttacker() instanceof LivingEntity) level = getEquipmentLevel(ModEnchants.CLEAVING, (LivingEntity) source.getAttacker());
         return source;
-    }
-
-    @ModifyVariable(
-            method = "jump",
-            at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/entity/LivingEntity;getJumpVelocity()F"),
-            index = 1)
-    private float f(float f) {
-        int i = EnchantmentHelper.getEquipmentLevel(ModEnchants.LEAPING, thisEntity);
-        if (i > 0) f += 0.07F * (float) i;
-        return f;
     }
 
     @ModifyVariable(
@@ -128,6 +112,16 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
     private float armor(float armor) {
         double mult = 1.0D - (float) (1.8D * (level / (2.0D * level + 4.0D)));
         return (float) (armor * mult);
+    }
+
+    @ModifyArg(
+            method = "jump",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;setVelocity(DDD)V"),
+            index = 1)
+    private double jumpVelocity(double d) {
+        int i = EnchantmentHelper.getEquipmentLevel(ModEnchants.LEAPING, thisEntity);
+        if (i > 0) d += 0.075F * (float) i;
+        return d;
     }
 
     @ModifyConstant(method = "travel", constant = @Constant(doubleValue = 0.08D))
