@@ -16,13 +16,13 @@ public class ModEnchants {
     static EnchantmentTarget WEAPONS = ClassTinkerers.getEnum(EnchantmentTarget.class, "WEAPONS");
     public static Enchantment ARCHITECT = new Architect(Enchantment.Rarity.UNCOMMON, EnchantmentTarget.ARMOR_CHEST, new EquipmentSlot[]{EquipmentSlot.CHEST});
     public static Enchantment ARROW_SPEED = new ArrowSpeed(Enchantment.Rarity.COMMON, EnchantmentTarget.BOW, new EquipmentSlot[]{EquipmentSlot.MAINHAND,EquipmentSlot.OFFHAND});
-    public static Enchantment DWARVEN = new Dwarven(Enchantment.Rarity.UNCOMMON, EnchantmentTarget.ARMOR_HEAD, new EquipmentSlot[]{EquipmentSlot.HEAD});
     public static Enchantment BARBARIC = new Barbaric(Enchantment.Rarity.RARE, WEAPONS, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
     public static Enchantment BERSERK = new Berserk(Enchantment.Rarity.UNCOMMON, EnchantmentTarget.ARMOR_CHEST, new EquipmentSlot[]{EquipmentSlot.CHEST});
     public static Enchantment BLOODCORE = new Bloodcore(Enchantment.Rarity.VERY_RARE, EnchantmentTarget.ARMOR_CHEST, new EquipmentSlot[]{EquipmentSlot.CHEST});
     public static Enchantment BOUNDING = new Bounding(Enchantment.Rarity.COMMON, HORSE_ARMOR, new EquipmentSlot[]{EquipmentSlot.CHEST});
     public static Enchantment CLEAVING = new Cleaving(Enchantment.Rarity.UNCOMMON, AXE, EquipmentSlot.MAINHAND);
     public static Enchantment DEXTROUS = new Dextrous(Enchantment.Rarity.RARE, EnchantmentTarget.ARMOR_CHEST, new EquipmentSlot[]{EquipmentSlot.CHEST});
+    public static Enchantment DWARVEN = new Dwarven(Enchantment.Rarity.RARE, EnchantmentTarget.ARMOR_HEAD, new EquipmentSlot[]{EquipmentSlot.HEAD});
     public static Enchantment ENDER = new Ender(Enchantment.Rarity.RARE, EnchantmentTarget.BOW, new EquipmentSlot[]{EquipmentSlot.MAINHAND,EquipmentSlot.OFFHAND});
     public static Enchantment EXPLOSIVE = new Explosive(Enchantment.Rarity.RARE, EnchantmentTarget.BOW, new EquipmentSlot[]{EquipmentSlot.MAINHAND,EquipmentSlot.OFFHAND});
     public static Enchantment EXPOSING = new Exposing(Enchantment.Rarity.COMMON, EnchantmentTarget.CROSSBOW, new EquipmentSlot[]{EquipmentSlot.MAINHAND,EquipmentSlot.OFFHAND});
