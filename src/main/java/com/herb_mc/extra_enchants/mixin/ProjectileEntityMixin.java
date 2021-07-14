@@ -32,7 +32,6 @@ public abstract class ProjectileEntityMixin implements EntityInterfaceMixin {
 
     @Shadow @Nullable public abstract Entity getOwner();
 
-    private final PersistentProjectileEntity thisEntity = (PersistentProjectileEntity) (Object) this;
     private int exploding;
     private int ender;
     private int glowing = 0;
