@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "extra_enchants",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "accessWidener" : "aw.accesswidener",
   "name": "Extra Enchants",
   "description": "Lots of new enchantments",
