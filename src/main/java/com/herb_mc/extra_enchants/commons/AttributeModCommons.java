@@ -1,4 +1,4 @@
-package com.herb_mc.extra_enchants.interfaces;
+package com.herb_mc.extra_enchants.commons;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttribute;
@@ -7,7 +7,7 @@ import net.minecraft.entity.attribute.EntityAttributeModifier;
 
 import java.util.UUID;
 
-public interface AttributeModifierInterface {
+public interface AttributeModCommons {
 
     default void removeAttribute(LivingEntity entity, EntityAttribute attribute, UUID uuid){
         EntityAttributeInstance instance = entity.getAttributeInstance(attribute);

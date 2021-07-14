@@ -1,5 +1,7 @@
 package com.herb_mc.extra_enchants.enchantments;
 
+//shoutouts to fabsol
+
 import com.herb_mc.extra_enchants.registry.ModEnchants;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
@@ -7,31 +9,41 @@ import net.minecraft.entity.EquipmentSlot;
 
 import static com.herb_mc.extra_enchants.registry.ModEnchants.isEnchantType;
 
-public class Leaping extends Enchantment {
+public class Eviocore extends Enchantment {
 
-    public Leaping(Rarity weight, EnchantmentTarget type, EquipmentSlot[] equipmentSlots) {
+    public Eviocore(Rarity weight, EnchantmentTarget type, EquipmentSlot[] equipmentSlots) {
         super(weight, type, equipmentSlots);
     }
 
     @Override
     public int getMinPower(int level) {
-        return 15 + (level - 1) * 10;
+        return 20;
     }
 
     @Override
     public int getMaxLevel() {
-        return 2;
+        return 1;
     }
 
     @Override
     public int getMaxPower(int level) {
-        return this.getMinPower(level) + 15;
+        return 50;
     }
 
     @Override
     protected boolean canAccept(Enchantment other)
     {
-        return super.canAccept(other) && isEnchantType(other, ModEnchants.ENCHANTMENTS_ARMOR_MOBILITY_COMPAT);
+        return super.canAccept(other) && isEnchantType(other, ModEnchants.ENCHANTMENTS_CORE_COMPAT) && isEnchantType(other, ModEnchants.ENCHANTMENTS_ARMOR_OFFENSE_COMPAT);
+    }
+
+    @Override
+    public boolean isCursed() {
+        return true;
+    }
+
+    @Override
+    public boolean isTreasure() {
+        return true;
     }
 
 }

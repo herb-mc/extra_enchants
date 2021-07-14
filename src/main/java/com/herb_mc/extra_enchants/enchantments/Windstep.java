@@ -3,8 +3,9 @@ package com.herb_mc.extra_enchants.enchantments;
 import com.herb_mc.extra_enchants.registry.ModEnchants;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
-import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.EquipmentSlot;
+
+import static com.herb_mc.extra_enchants.registry.ModEnchants.isEnchantType;
 
 public class Windstep extends Enchantment {
 
@@ -30,7 +31,7 @@ public class Windstep extends Enchantment {
     @Override
     protected boolean canAccept(Enchantment other)
     {
-        return super.canAccept(other) && other != ModEnchants.LEAPING && other != ModEnchants.LUNGING;
+        return super.canAccept(other) && isEnchantType(other, ModEnchants.ENCHANTMENTS_ARMOR_MOBILITY_COMPAT);
     }
 
 }

@@ -7,6 +7,7 @@
     "ArrowEntityInterfaceMixin",
     "ArrowEntityMixin",
     "BlockMixin",
+    "DamageEnchantmentMixin",
     "EnchantmentHelperMixin",
     "EntityInterfaceMixin",
     "HorseBaseEntityInterfaceMixin",
@@ -16,7 +17,8 @@
     "PersistentProjectileEntityMixin",
     "PlayerEntityMixin",
     "ProjectileEntityMixin",
-    "SwoopGoalMixin"
+    "SwoopGoalMixin",
+    "TridentEntityMixin"
   ],
   "client": [
   ],

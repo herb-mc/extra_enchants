@@ -9,6 +9,8 @@ import net.minecraft.entity.LivingEntity;
 
 import java.util.Objects;
 
+import static com.herb_mc.extra_enchants.registry.ModEnchants.isEnchantType;
+
 public class Lifesteal extends Enchantment {
 
     public Lifesteal(Rarity weight, EnchantmentTarget type, EquipmentSlot[] equipmentSlots) {
@@ -43,7 +45,7 @@ public class Lifesteal extends Enchantment {
     @Override
     protected boolean canAccept(Enchantment other)
     {
-        return super.canAccept(other) && other != ModEnchants.BARBARIC;
+        return super.canAccept(other) && isEnchantType(other, ModEnchants.ENCHANTMENTS_WEAPONS_COMPAT);
     }
 
 }

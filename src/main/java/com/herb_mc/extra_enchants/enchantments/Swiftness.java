@@ -4,6 +4,8 @@ import com.herb_mc.extra_enchants.registry.ModEnchants;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.EquipmentSlot;
 
+import static com.herb_mc.extra_enchants.registry.ModEnchants.isEnchantType;
+
 public class Swiftness extends Enchantment {
 
     public Swiftness(Rarity weight, EnchantmentTarget type, EquipmentSlot[] equipmentSlots) {
@@ -28,7 +30,7 @@ public class Swiftness extends Enchantment {
     @Override
     protected boolean canAccept(Enchantment other)
     {
-        return super.canAccept(other) && other != ModEnchants.BOUNDING && other != ModEnchants.SURFACE_SKIMMER;
+        return super.canAccept(other) && isEnchantType(other, ModEnchants.ENCHANTMENTS_HORSE_ARMOR_MOBILITY_COMPAT);
     }
 
 }

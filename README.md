@@ -1,8 +1,8 @@
 # Extra Enchants
 
-Adds 22 enchantments with functions ranging from utility to offense. Currently only compatible with version 1.17.
+Adds 24 enchantments with functions ranging from utility to offense. Currently only compatible with version 1.17.
 
-Latest: v0.0.4
+Latest: v0.0.5
 Requires Fabric Loader 0.11.6 and Fabric API 0.36.0+1.17
 
 ## Enchantment List
@@ -47,12 +47,13 @@ This equates to about 16.7% of lost health at level 1, 33.3% of lost health at l
 The effect scales infinitely, and damage added approaches but never reaches 50% of lost health.</details>
 
 ### *Bloodcore*
-- Doubles health and increases attack damage. Armor is decreased and enemies may deal critical hits. Is considered a curse.<br>
+- Doubles health and increases attack damage. Armor is decreased and enemies may deal critical hits.
 - Compatible equipment: Chestplates
 - Incompatible enchantments: All Protection-type enchants
 - Max level: 1
 - Rarity: Very rare
-<details><summary>Detailed description</summary>Doubles max health, +10% attack damage, -20% armor, 25% chance to take 80% increased damage from entities.<br>
+- Type: Curse, Treasure
+<details><summary>Detailed description</summary>Doubles max health, +15% attack damage, -20% armor, 25% chance to take 80% increased damage from entities.<br>
 Effect does not scale.</details>
 
 ### *Bounding*
@@ -84,6 +85,14 @@ Effect scales infinitely, and armor ignored approaches but never reaches 90%.</d
 <details><summary>Detailed description</summary>Increases attack speed by 10% per level.<br>
 Effect scales infinitely.</details>
 
+### *Dwarven*
+- Find nearby ores easily.
+- Compatible equipment: Helmets
+- Max level: 1
+- Rarity: Rare
+<details><summary>Detailed description</summary>A trail of particles will emanate from the player's head towards the nearest ore-type block.<br>
+Effect does not scale.</details>
+
 ### *Ender*
 - On full charge: Teleport to arrow hit location.
 - Compatible equipment: Bows
@@ -109,6 +118,15 @@ The effect scales infinitely.</details>
 - Rarity: Common
 <details><summary>Detailed description</summary>Inflicts 40 extra ticks, or 2 seconds, of Glowing 20 (no particle) per tick.<br>
 The effect scales infinitely.</details>
+
+### *Eviocore*
+- Health is doubled, damage taken is reduced when healthy, speed is slightly reduced. Damage dealt is set to 1.
+- Compatible equipment: Chestplates
+- Max level: 1
+- Rarity: Very rare
+- Type: Curse, Treasure
+<details><summary>Detailed description</summary>Doubled max health, -10% movement speed, damage dealt is set to 1 before damage calculation. Incoming damage is reduced by 70% if the user has at least 60% of their max health remaining.<br>
+The effect does not scale.</details>
 
 ### *Featherweight*
 - Fall slower depending on the level.
@@ -180,6 +198,15 @@ The effect does not scale.</details>
 - Rarity: Uncommon
 <details><summary>Detailed description</summary>Decreases incoming damage by 3% per level before armor is applied. May be more effective than protection in certain circumstances.<br>
 The effect scales infinitely.</details>
+
+### *Voidcore*
+- Health is halved, damage reduction and speed are increased.
+- Compatible equipment: Chestplates
+- Max level: 1
+- Rarity: Very rare
+- Type: Curse, Treasure
+<details><summary>Detailed description</summary>-50% max health, 40% raw damage reduction before damage calculation, +15% movement speed.<br>
+The effect does not scale.</details>
 
 ### *Warding*
 - User scares away phantoms.

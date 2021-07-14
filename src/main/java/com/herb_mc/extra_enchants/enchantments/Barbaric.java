@@ -6,6 +6,8 @@ import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.EquipmentSlot;
 
+import static com.herb_mc.extra_enchants.registry.ModEnchants.isEnchantType;
+
 public class Barbaric extends Enchantment {
 
     public Barbaric(Rarity weight, EnchantmentTarget type, EquipmentSlot[] equipmentSlots) {
@@ -30,7 +32,7 @@ public class Barbaric extends Enchantment {
     @Override
     protected boolean canAccept(Enchantment other)
     {
-        return super.canAccept(other) && other != ModEnchants.LIFESTEAL;
+        return super.canAccept(other) && isEnchantType(other, ModEnchants.ENCHANTMENTS_WEAPONS_COMPAT);
     }
 
 }

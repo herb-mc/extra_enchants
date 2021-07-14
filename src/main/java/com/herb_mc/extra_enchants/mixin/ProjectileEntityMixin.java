@@ -76,7 +76,7 @@ public abstract class ProjectileEntityMixin implements EntityInterfaceMixin {
                     EnderDragonPart dragonTarget = (EnderDragonPart) target;
                     phase = dragonTarget.owner.getPhaseManager().getCurrent().getType().getTypeId();
                 }
-                if ((Object) this instanceof ArrowEntity && phase != 6 && phase != 3 && !(target instanceof EndermanEntity)) {
+                if ((Object) this instanceof ArrowEntity && phase != 6 && phase != 3 && !(target instanceof EndermanEntity) && !target.isSpectator() && !target.isInvulnerable()) {
                     if (glowing > 0 && target instanceof LivingEntity livingTarget) {
                         StatusEffectInstance glow = new StatusEffectInstance(StatusEffects.GLOWING, glowing, 20, true, true);
                         livingTarget.addStatusEffect(glow);

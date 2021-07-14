@@ -6,6 +6,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.particle.ParticleTypes;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArgs;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
@@ -13,12 +14,15 @@ import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 import java.util.Random;
 
 @Mixin(PersistentProjectileEntity.class)
-public class PersistentProjectileEntityMixin {
+public abstract class PersistentProjectileEntityMixin {
+
+    @Shadow public abstract void setDamage(double damage);
 
     private final PersistentProjectileEntity thisEntity = (PersistentProjectileEntity) (Object) this;
     private boolean init = false;
     private boolean isExplosive = false;
     private boolean isEnder = false;
+    private boolean isEvio = false;
     private final Random rand = new Random();
 
     @ModifyArgs(
@@ -27,9 +31,18 @@ public class PersistentProjectileEntityMixin {
                     target = "Lnet/minecraft/world/World;addParticle(Lnet/minecraft/particle/ParticleEffect;DDDDDD)V"))
     private void particle(Args args){
         if (thisEntity.getOwner() instanceof LivingEntity && !init){
-            if (EnchantmentHelper.getEquipmentLevel(ModEnchants.EXPLOSIVE, (LivingEntity) thisEntity.getOwner()) > 0) isExplosive = true;
-            else if (EnchantmentHelper.getEquipmentLevel(ModEnchants.ENDER, (LivingEntity) thisEntity.getOwner()) > 0) isEnder = true;;
+            if (EnchantmentHelper.getEquipmentLevel(ModEnchants.EVIOCORE, (LivingEntity) thisEntity.getOwner()) > 0)
+                isEvio = true;
+            else {
+                if (EnchantmentHelper.getEquipmentLevel(ModEnchants.EXPLOSIVE, (LivingEntity) thisEntity.getOwner()) > 0)
+                    isExplosive = true;
+                else if (EnchantmentHelper.getEquipmentLevel(ModEnchants.ENDER, (LivingEntity) thisEntity.getOwner()) > 0)
+                    isEnder = true;
+            }
             init = true;
+        }
+        if(isEvio){
+            this.setDamage(0);
         }
         if (isExplosive) {
             args.set(0, ParticleTypes.SMOKE);
