@@ -31,6 +31,7 @@ public abstract class PlayerEntityMixin implements AttributeModCommons, UUIDComm
 
     @Inject(at = @At("HEAD"), method = "tick")
     public void tick(CallbackInfo info) {
+
         int i = EnchantmentHelper.getEquipmentLevel(ModEnchants.DEXTROUS, thisEntity);
         removeAttribute(thisEntity, EntityAttributes.GENERIC_ATTACK_SPEED, DEXTERITY_ATTRIBUTE_ID);
         if (i > 0)

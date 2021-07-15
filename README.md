@@ -1,6 +1,6 @@
 # Extra Enchants
 
-Adds 25 enchantments with functions ranging from utility to offense.
+Adds 26 enchantments with functions ranging from utility to offense.
 
 Latest: v0.0.6 for Minecraft 1.17.1<br>
 Requires Fabric Loader 0.11.6 and Fabric API 0.37.0+1.17
@@ -88,6 +88,7 @@ Effect scales infinitely.</details>
 ### *Dwarven*
 - Find nearby ores easily.
 - Compatible equipment: Helmets
+- Incompatible enchantments: Sharpshooter, Night Vision
 - Max level: 1
 - Rarity: Rare
 <details><summary>Detailed description</summary>A trail of particles will emanate from the player's head towards the nearest ore-type block.<br>
@@ -163,8 +164,25 @@ The healing factor scales infinitely, but is hardcapped at 3 health.</details>
 <details><summary>Detailed description</summary>10% increase to x/z velocities while jumping per level.<br>
 The effect sscales infinitely.</details>
 
+### *Night Vision*
+-  While sneaking, the user will gain Night Vision.
+- Compatible equipment: Helmets
+- Incompatible enchantments: Dwarven, Sharpshooter
+- Max level: 1
+- Rarity: Rare
+<details><summary>Detailed description</summary>User is given Night Vision while sneaking. This will override any current Night Vision effect.</details>
+
+
+### *Sharpshooter*
+- While sneaking, movement speed is decreased to zero and vision will zoom in. Arrow damage is increased.
+- Compatible equipment: Helmets
+- Incompatible enchantments: Dwarven, Night Vision
+- Max level: 1
+- Rarity: Rare
+<details><summary>Detailed description</summary>Horizontal movement speed is set to 0 while horizontal jump velocity and FOV are greatly decreased. +1 damage to all fired arrows.</details>
+
 ### *Surface Skimmer*
-- Allows the user to walk on water. (eventually level will determine max speed)
+- Allows the user to walk on water.
 - Compatible equipment: Horse armors
 - Incompatible enchantments: Bounding, Swiftness
 - Max level: 3

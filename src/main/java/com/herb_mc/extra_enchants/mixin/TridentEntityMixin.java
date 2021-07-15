@@ -9,6 +9,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import net.minecraft.entity.LightningEntity;
 
 @Mixin(TridentEntity.class)
 public abstract class TridentEntityMixin {
@@ -30,7 +31,7 @@ public abstract class TridentEntityMixin {
             at = @At("HEAD")
     )
     public void tick(CallbackInfo info){
-        if(!init && EnchantmentHelper.getEquipmentLevel(ModEnchants.EVIOCORE, (LivingEntity) thisEntity.getOwner()) > 0) isEvio = true;
+        if (thisEntity.getOwner() != null) if(!init && EnchantmentHelper.getEquipmentLevel(ModEnchants.EVIOCORE, (LivingEntity) thisEntity.getOwner()) > 0) isEvio = true;
     }
 
 }

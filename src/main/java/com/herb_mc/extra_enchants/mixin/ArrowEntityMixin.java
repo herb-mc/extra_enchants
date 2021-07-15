@@ -36,7 +36,10 @@ public abstract class ArrowEntityMixin extends PersistentProjectileEntity implem
     @Inject(at = @At("HEAD"), method = "initFromStack")
     protected void initFromStack(CallbackInfo info) {
         Entity entity = this.getOwner();
-        int i = EnchantmentHelper.getEquipmentLevel(ModEnchants.ENDER, (LivingEntity) entity);
+        int i = EnchantmentHelper.getEquipmentLevel(ModEnchants.SHARPSHOOTER, (LivingEntity) entity);
+        if(i >= 1 && entity.isSneaking())
+            this.setDamage(this.getDamage() + i);
+        i = EnchantmentHelper.getEquipmentLevel(ModEnchants.ENDER, (LivingEntity) entity);
         if(i >= 1)
             this.ender = 1;
         i = EnchantmentHelper.getEquipmentLevel(ModEnchants.EXPLOSIVE, (LivingEntity) entity);

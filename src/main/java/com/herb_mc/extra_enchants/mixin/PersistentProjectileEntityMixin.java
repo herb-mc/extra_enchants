@@ -8,7 +8,9 @@ import net.minecraft.particle.ParticleTypes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArgs;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 import java.util.Random;
@@ -25,11 +27,8 @@ public abstract class PersistentProjectileEntityMixin {
     private boolean isEvio = false;
     private final Random rand = new Random();
 
-    @ModifyArgs(
-            method = "tick",
-            at = @At(value = "INVOKE",
-                    target = "Lnet/minecraft/world/World;addParticle(Lnet/minecraft/particle/ParticleEffect;DDDDDD)V"))
-    private void particle(Args args){
+    @Inject(method = "tick", at = @At("HEAD"))
+    public void tick(CallbackInfo info) {
         if (thisEntity.getOwner() instanceof LivingEntity && !init){
             if (EnchantmentHelper.getEquipmentLevel(ModEnchants.EVIOCORE, (LivingEntity) thisEntity.getOwner()) > 0)
                 isEvio = true;
@@ -41,6 +40,13 @@ public abstract class PersistentProjectileEntityMixin {
             }
             init = true;
         }
+    }
+
+    @ModifyArgs(
+            method = "tick",
+            at = @At(value = "INVOKE",
+                    target = "Lnet/minecraft/world/World;addParticle(Lnet/minecraft/particle/ParticleEffect;DDDDDD)V"))
+    private void particle(Args args){
         if(isEvio){
             this.setDamage(0);
         }
