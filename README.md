@@ -88,7 +88,7 @@ Effect scales infinitely.</details>
 ### *Dwarven*
 - Find nearby ores easily.
 - Compatible equipment: Helmets
-- Incompatible enchantments: Sharpshooter, Night Vision
+- Incompatible enchantments: Sharpshooter, Night Vision, Psychic
 - Max level: 1
 - Rarity: Rare
 <details><summary>Detailed description</summary>A trail of particles will emanate from the player's head towards the nearest ore-type block.<br>
@@ -165,18 +165,25 @@ The healing factor scales infinitely, but is hardcapped at 3 health.</details>
 The effect sscales infinitely.</details>
 
 ### *Night Vision*
--  While sneaking, the user will gain Night Vision.
+- While sneaking, the user will gain Night Vision.
 - Compatible equipment: Helmets
-- Incompatible enchantments: Dwarven, Sharpshooter
+- Incompatible enchantments: Dwarven, Sharpshooter, Psychic
 - Max level: 1
 - Rarity: Rare
 <details><summary>Detailed description</summary>User is given Night Vision while sneaking. This will override any current Night Vision effect.</details>
 
+### *Psychic*
+- While sneaking, the nearest mob within 7 blocks the user is facing will be exposed. Ignores blocks.
+- Compatible equipment: Helmets
+- Incompatible enchantments: Dwarven, Sharpshooter, Night Vision
+- Max level: 1
+- Rarity: Rare
+<details><summary>Detailed description</summary>Any entity within 7 blocks of the user's line of sight (disregarding blocks) will receive Glowing 20 while the user is sneaking.</details>
 
 ### *Sharpshooter*
 - While sneaking, movement speed is decreased to zero and vision will zoom in. Arrow damage is increased.
 - Compatible equipment: Helmets
-- Incompatible enchantments: Dwarven, Night Vision
+- Incompatible enchantments: Dwarven, Night Vision, Psychic
 - Max level: 1
 - Rarity: Rare
 <details><summary>Detailed description</summary>Horizontal movement speed is set to 0 while horizontal jump velocity and FOV are greatly decreased. +1 damage to all fired arrows.</details>

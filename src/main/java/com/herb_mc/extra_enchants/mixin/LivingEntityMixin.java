@@ -6,6 +6,7 @@ import com.herb_mc.extra_enchants.commons.UUIDCommons;
 import net.minecraft.block.Material;
 import net.minecraft.block.OreBlock;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -14,9 +15,13 @@ import net.minecraft.entity.damage.EntityDamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.passive.HorseEntity;
+import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.tag.FluidTags;
+import net.minecraft.util.hit.EntityHitResult;
+import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import org.spongepowered.asm.mixin.Mixin;
@@ -217,6 +222,13 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
         removeAttribute(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, SHARPSHOOTER_ATTRIBUTE_ID);
         if (i > 0 && thisEntity.isSneaking())
             modAttributeBase(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, 1, SHARPSHOOTER_ATTRIBUTE_ID, "sv_speed", -1.0, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+        i = getEquipmentLevel(ModEnchants.PSYCHIC, thisEntity);
+        if (i > 0 && thisEntity.isSneaking()) {
+            EntityHitResult result = raycast();
+            if (result != null)
+                if (result.getEntity() instanceof LivingEntity)
+                    ((LivingEntity) result.getEntity()).addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 2, 20, true, false, false));
+        }
         i = getEquipmentLevel(ModEnchants.BARBARIC, thisEntity);
         removeAttribute(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, BARBARIC_ATTRIBUTE_ID);
         if (i > 0)
@@ -276,6 +288,17 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
     public double getSquareDist(Vec3d in1, Vec3d in2){
         in2 = in2.subtract(in1);
         return in2.x * in2.x + in2.y * in2.y + in2.z * in2.z;
+    }
+
+    public EntityHitResult raycast() {
+        Vec3d veceye = thisEntity.getEyePos();
+        Vec3d vecdir = thisEntity.getRotationVec(1.0F);
+        Vec3d vecext = veceye.add(vecdir.x * 6, vecdir.y * 6, vecdir.z * 6);
+        Box box = thisEntity.getBoundingBox().stretch(vecdir.multiply(6)).expand(0.0D, 0.0D, 0.0D);
+        EntityHitResult entityHitResult;
+        return entityHitResult = ProjectileUtil.raycast(thisEntity, veceye, vecext, box, (entityx) -> {
+            return !entityx.isSpectator() && entityx.collides();
+        }, 49);
     }
 
 }
