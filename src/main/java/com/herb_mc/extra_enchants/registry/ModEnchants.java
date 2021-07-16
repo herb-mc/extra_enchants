@@ -46,7 +46,7 @@ public class ModEnchants {
     public static Enchantment[] ENCHANTMENTS_CORE_COMPAT = {ModEnchants.BLOODCORE, ModEnchants.EVIOCORE, ModEnchants.VOIDCORE};
     public static Enchantment[] ENCHANTMENTS_ARMOR_MOBILITY_COMPAT = {ModEnchants.LEAPING, ModEnchants.LUNGING, ModEnchants.WINDSTEP};
     public static Enchantment[] ENCHANTMENTS_ARMOR_OFFENSE_COMPAT = {ModEnchants.WEIGHTED, ModEnchants.DEXTROUS, ModEnchants.BERSERK};
-    public static Enchantment[] ENCHANTMENTS_ARMOR_VISION_COMPAT = {ModEnchants.DWARVEN, ModEnchants.SHARPSHOOTER, ModEnchants.NIGHT_VISION};
+    public static Enchantment[] ENCHANTMENTS_ARMOR_VISION_COMPAT = {ModEnchants.DWARVEN, ModEnchants.SHARPSHOOTER, ModEnchants.NIGHT_VISION, ModEnchants.PSYCHIC};
     public static Enchantment[] ENCHANTMENTS_HORSE_ARMOR_MOBILITY_COMPAT = {ModEnchants.BOUNDING, ModEnchants.SURFACE_SKIMMER, ModEnchants.SWIFTNESS};
     public static Enchantment[] ENCHANTMENTS_WEAPONS_COMPAT = {ModEnchants.BARBARIC, ModEnchants.LIFESTEAL};
 
