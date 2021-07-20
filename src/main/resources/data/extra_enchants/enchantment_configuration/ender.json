@@ -1,0 +1,17 @@
+{
+  "name": "ender",
+  "type": "fixed",
+  "available": "true",
+  "rarity": "rare",
+  "min_power": "20",
+  "max_power": "50",
+  "max_level": "1",
+  "is_curse": "false",
+  "is_treasure": "true",
+  "incompatible_enchants": [
+    "power",
+    "infinity",
+    "explosive",
+    "ender"
+  ]
+}

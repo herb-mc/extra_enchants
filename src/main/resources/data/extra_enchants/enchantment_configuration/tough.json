@@ -1,0 +1,19 @@
+{
+  "name": "tough",
+  "type": "scalable",
+  "available": "true",
+  "rarity": "uncommon",
+  "min_power": "1",
+  "min_power_delta": "13",
+  "max_power": "16",
+  "max_power_delta": "13",
+  "max_level": "4",
+  "is_curse": "false",
+  "is_treasure": "false",
+  "incompatible_enchants": [
+    "protection",
+    "blast_protection",
+    "fire_protection",
+    "projectile_protection"
+  ]
+}

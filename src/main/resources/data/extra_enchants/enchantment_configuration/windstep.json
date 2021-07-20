@@ -1,0 +1,16 @@
+{
+  "name": "windstep",
+  "type": "fixed",
+  "available": "true",
+  "rarity": "uncommon",
+  "min_power": "20",
+  "max_power": "50",
+  "max_level": "1",
+  "is_curse": "false",
+  "is_treasure": "false",
+  "incompatible_enchants": [
+    "leaping",
+    "lunging",
+    "windstep"
+  ]
+}

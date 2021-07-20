@@ -1,0 +1,18 @@
+{
+  "name": "cleaving",
+  "type": "scalable",
+  "available": "true",
+  "rarity": "common",
+  "min_power": "1",
+  "min_power_delta": "12",
+  "max_power": "17",
+  "max_power_delta": "17",
+  "max_level": "3",
+  "is_curse": "false",
+  "is_treasure": "false",
+  "incompatible_enchants": [
+    "sharpness",
+    "smite",
+    "bane_of_arthropods"
+  ]
+}

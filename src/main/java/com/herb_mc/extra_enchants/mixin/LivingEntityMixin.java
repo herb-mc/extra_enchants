@@ -6,7 +6,6 @@ import com.herb_mc.extra_enchants.commons.UUIDCommons;
 import net.minecraft.block.Material;
 import net.minecraft.block.OreBlock;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -19,7 +18,6 @@ import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.tag.FluidTags;
 import net.minecraft.util.hit.EntityHitResult;
-import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
@@ -122,6 +120,14 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
         return amount;
     }
 
+    @ModifyVariable(
+            method = "travel",
+            at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/block/Block;getSlipperiness()F")
+    )
+    private float t(float t) {
+        return (EnchantmentHelper.getEquipmentLevel(ModEnchants.SLIMEY, thisEntity) > 0) ? 1.0F : t;
+    }
+
     @ModifyArg(
             method = "applyArmorToDamage",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/DamageUtil;getDamageLeft(FFF)F"),
@@ -136,10 +142,7 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
             at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;setVelocity(DDD)V"),
             index = 1)
     private double jumpVelocity(double d) {
-        int i = EnchantmentHelper.getEquipmentLevel(ModEnchants.LEAPING, thisEntity);
-        if (i > 0)
-            d += 0.075F * (float) i;
-        return d;
+        return (EnchantmentHelper.getEquipmentLevel(ModEnchants.LEAPING, thisEntity) > 0) ? d + 0.075F * (float) EnchantmentHelper.getEquipmentLevel(ModEnchants.LEAPING, thisEntity) : d;
     }
 
     @ModifyConstant(method = "travel", constant = @Constant(doubleValue = 0.08D))

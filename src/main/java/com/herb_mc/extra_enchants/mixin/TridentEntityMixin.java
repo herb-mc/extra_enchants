@@ -22,8 +22,7 @@ public abstract class TridentEntityMixin {
             method = "onEntityHit",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;damage(Lnet/minecraft/entity/damage/DamageSource;F)Z"))
     private float f(float f) {
-        if (isEvio) return 1;
-        return f;
+        return isEvio ? 1 : f;
     }
 
     @Inject(

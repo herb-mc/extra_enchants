@@ -1,0 +1,18 @@
+{
+  "name": "featherweight",
+  "type": "scalable",
+  "available": "true",
+  "rarity": "rare",
+  "min_power": "15",
+  "min_power_delta": "10",
+  "max_power": "25",
+  "max_power_delta": "13",
+  "max_level": "3",
+  "is_curse": "false",
+  "is_treasure": "false",
+  "incompatible_enchants": [
+    "feather_falling",
+    "featherweight",
+    "slimey"
+  ]
+}

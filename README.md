@@ -1,8 +1,8 @@
 # Extra Enchants
 
-Adds 26 enchantments with functions ranging from utility to offense.
+Adds 29 enchantments with functions ranging from utility to offense.
 
-Latest: v0.0.6 for Minecraft 1.17.1<br>
+Latest: v0.0.8 for Minecraft 1.17.1<br>
 Requires Fabric Loader 0.11.6 and Fabric API 0.37.0+1.17
 
 ## Enchantment List
@@ -132,7 +132,7 @@ The effect does not scale.</details>
 ### *Featherweight*
 - Fall slower depending on the level.
 - Compatible equipment: Boots
-- Incompatible enchantments: Feather Falling
+- Incompatible enchantments: Feather Falling, Slimey
 - Max level: 3
 - Rarity: Uncommon
 <details><summary>Detailed description</summary>Divides fall acceleration by (level + 1). Divides fall distance by (level * 2) before fall damage calculation. Overridden by Slow Falling effect.<br>
@@ -186,7 +186,17 @@ The effect sscales infinitely.</details>
 - Incompatible enchantments: Dwarven, Night Vision, Psychic
 - Max level: 1
 - Rarity: Rare
-<details><summary>Detailed description</summary>Horizontal movement speed is set to 0 while horizontal jump velocity and FOV are greatly decreased. +1 damage to all fired arrows.</details>
+<details><summary>Detailed description</summary>Horizontal movement speed is set to 0 while horizontal jump velocity and FOV are greatly decreased. +1 damage to all fired arrows.<br>
+The effect does not scale.</details>
+
+### *Slimey*
+- Slipperiness of blocks is massively increased.
+- Compatible equipment: Boots
+- Incompatible enchantments: Feather Falling, Featherweight
+- Max level: 1
+- Rarity: Rare
+<details><summary>Detailed description</summary>Slipperiness is set to 1.0 while equipped. (Ice/Packed Ice default to 0.98)<br>
+The effect does not scale.</details>
 
 ### *Surface Skimmer*
 - Allows the user to walk on water.

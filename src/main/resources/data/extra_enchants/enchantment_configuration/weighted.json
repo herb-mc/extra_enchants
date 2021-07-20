@@ -1,0 +1,19 @@
+{
+  "name": "weighted",
+  "type": "scalable",
+  "available": "true",
+  "rarity": "rare",
+  "min_power": "16",
+  "min_power_delta": "10",
+  "max_power": "30",
+  "max_power_delta": "20",
+  "max_level": "2",
+  "is_curse": "false",
+  "is_treasure": "false",
+  "incompatible_enchants": [
+    "thorns",
+    "weighted",
+    "dextrous",
+    "berserk"
+  ]
+}

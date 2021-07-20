@@ -1,0 +1,14 @@
+{
+  "name": "architect",
+  "type": "scalable",
+  "available": "true",
+  "rarity": "uncommon",
+  "min_power": "15",
+  "min_power_delta": "10",
+  "max_power": "30",
+  "max_power_delta": "20",
+  "max_level": "2",
+  "is_curse": "false",
+  "is_treasure": "false",
+  "incompatible_enchants": []
+}
