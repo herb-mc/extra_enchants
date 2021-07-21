@@ -4,8 +4,6 @@
   "package": "com.herb_mc.extra_enchants.mixin",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
-    "ArrowEntityInterfaceMixin",
-    "ArrowEntityMixin",
     "BlockMixin",
     "DamageEnchantmentMixin",
     "EnchantmentHelperMixin",
@@ -16,9 +14,10 @@
     "LivingEntityMixin",
     "PersistentProjectileEntityMixin",
     "PlayerEntityMixin",
-    "ProjectileEntityMixin",
+    "ProjectileEntityInterfaceMixin",
     "SwoopGoalMixin",
-    "TridentEntityMixin"
+    "TridentEntityMixin",
+    "TridentItemMixin"
   ],
   "client": [
   ],

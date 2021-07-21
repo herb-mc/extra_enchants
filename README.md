@@ -138,6 +138,14 @@ The effect does not scale.</details>
 <details><summary>Detailed description</summary>Divides fall acceleration by (level + 1). Divides fall distance by (level * 2) before fall damage calculation. Overridden by Slow Falling effect.<br>
 The effect scales infinitely.</details>
 
+### *Launching*
+- Throwing tridents launches you forward.
+- Compatible equipment: Tridents
+- Max level: 3
+- Rarity: Rare
+<details><summary>Detailed description</summary>.<br>
+The effect scales infinitely.</details>
+
 ### *Leaping*
 - Increases jump height.
 - Compatible equipment: Boots

@@ -206,6 +206,20 @@ public class ModEnchants {
             false,
             new Enchantment[]{Enchantments.FEATHER_FALLING}
     );
+    // Launching
+    public static Enchantment LAUNCHING = new ScalableEnchantBuilder(
+            Enchantment.Rarity.RARE,
+            EnchantmentTarget.TRIDENT,
+            new EquipmentSlot[]{EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND},
+            15,
+            15,
+            30,
+            10,
+            3,
+            false,
+            false,
+            new Enchantment[]{}
+    );
     // Leaping
     public static Enchantment LEAPING = new ScalableEnchantBuilder(
             Enchantment.Rarity.UNCOMMON,
@@ -429,6 +443,7 @@ public class ModEnchants {
         enchantments.put("explosive", ModEnchants.EXPLOSIVE);
         enchantments.put("exposing", ModEnchants.EXPOSING);
         enchantments.put("featherweight", ModEnchants.FEATHERWEIGHT);
+        enchantments.put("launching", ModEnchants.LAUNCHING);
         enchantments.put("leaping", ModEnchants.LEAPING);
         enchantments.put("lifesteal", ModEnchants.LIFESTEAL);
         enchantments.put("lunging", ModEnchants.LUNGING);
@@ -504,6 +519,7 @@ public class ModEnchants {
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "exposing"), EXPOSING);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "eviocore"), EVIOCORE);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "featherweight"), FEATHERWEIGHT);
+        Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "launching"), LAUNCHING);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "leaping"), LEAPING);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "lifesteal"), LIFESTEAL);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "lunging"), LUNGING);

@@ -15,6 +15,7 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.passive.HorseEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.tag.FluidTags;
 import net.minecraft.util.hit.EntityHitResult;
@@ -39,25 +40,25 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
 
     private final LivingEntity thisEntity = (LivingEntity) (Object) this;
 
-    private boolean init = false;
-    private float STEP_HEIGHT;
+    private float STEP_HEIGHT = 0F;
 
     private static final Random rand = new Random();
     int level = 0;
 
-    @Inject(at = @At("TAIL"), method = "baseTick")
-    protected void baseTick(CallbackInfo info){
-        if (!init) {
-            STEP_HEIGHT = thisEntity.stepHeight;
-            init = true;
-        }
+    @Inject(method = "writeCustomDataToNbt", at = @At("RETURN"))
+    protected void writeCustomDataToNbt(NbtCompound nbt, CallbackInfo info) {
+        nbt.putFloat("stepHeight", STEP_HEIGHT);
+    }
+
+    @Inject(method = "readCustomDataFromNbt", at = @At("RETURN"))
+    protected void readCustomDataFromNbt(NbtCompound nbt, CallbackInfo info) {
+        STEP_HEIGHT = nbt.getFloat("stepHeight");
     }
 
     @Inject(at = @At("HEAD"), method = "onDeath")
     protected void onDeath(DamageSource source, CallbackInfo info){
         if (source.getAttacker() instanceof LivingEntity) {
-            int i = getEquipmentLevel(ModEnchants.LIFESTEAL, (LivingEntity) source.getAttacker());
-            ((LivingEntity) source.getAttacker()).heal((float) i);
+            ((LivingEntity) source.getAttacker()).heal((float) getEquipmentLevel(ModEnchants.LIFESTEAL, (LivingEntity) source.getAttacker()));
         }
     }
 
@@ -66,10 +67,7 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
             at = @At(value = "HEAD", target = "Lnet/minecraft/entity/LivingEntity;applyArmorToDamage(Lnet/minecraft/entity/damage/DamageSource;F)F"),
             ordinal = 0)
     private float amount(float amount) {
-        int i = getEquipmentLevel(ModEnchants.TOUGH, thisEntity);
-        if (i > 0)
-            return amount * (1.0F - 0.03F * i);
-        return amount;
+        return (getEquipmentLevel(ModEnchants.TOUGH, thisEntity) > 0) ? amount * (1.0F - 0.03F * getEquipmentLevel(ModEnchants.TOUGH, thisEntity)) : amount;
     }
 
     @ModifyVariable(
@@ -147,11 +145,7 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
 
     @ModifyConstant(method = "travel", constant = @Constant(doubleValue = 0.08D))
     private double d(double d){
-        int i = EnchantmentHelper.getEquipmentLevel(ModEnchants.FEATHERWEIGHT, thisEntity);
-        if (i > 0 && thisEntity.getVelocity().y < 0 && !thisEntity.isSneaking()) {
-            d /= i + 1;
-        }
-        return d;
+        return (EnchantmentHelper.getEquipmentLevel(ModEnchants.FEATHERWEIGHT, thisEntity) > 0 && thisEntity.getVelocity().y < 0 && !thisEntity.isSneaking()) ? d / (EnchantmentHelper.getEquipmentLevel(ModEnchants.FEATHERWEIGHT, thisEntity) + 1) : d;
     }
 
     @Inject(
@@ -169,12 +163,12 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
 
     @Inject(at = @At("HEAD"), method = "tick")
     public void tick(CallbackInfo info) {
+        if (STEP_HEIGHT == 0F)
+            STEP_HEIGHT = thisEntity.stepHeight;
         int i = getEquipmentLevel(ModEnchants.WINDSTEP, thisEntity);
-        if (STEP_HEIGHT > 0) {
-            thisEntity.stepHeight = STEP_HEIGHT;
-            if (i > 0)
-                thisEntity.stepHeight += i * 0.4F;
-        }
+        thisEntity.stepHeight = STEP_HEIGHT;
+        if (i > 0)
+            thisEntity.stepHeight += i * 0.4F;
         i = getEquipmentLevel(ModEnchants.DWARVEN, thisEntity);
         if (i > 0) {
             Vec3d vec = getNearestOre();
@@ -271,7 +265,7 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
     }
 
     public boolean isInWater() {
-        return !this.getFirstUpdate() && this.getFluidHeight().getDouble(FluidTags.WATER) > 0.0D;
+        return !this.firstUpdate() && this.fluidHeight().getDouble(FluidTags.WATER) > 0.0D;
     }
 
     private Vec3d getNearestOre() {
@@ -298,10 +292,7 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
         Vec3d vecdir = thisEntity.getRotationVec(1.0F);
         Vec3d vecext = veceye.add(vecdir.x * 6, vecdir.y * 6, vecdir.z * 6);
         Box box = thisEntity.getBoundingBox().stretch(vecdir.multiply(6)).expand(0.0D, 0.0D, 0.0D);
-        EntityHitResult entityHitResult;
-        return entityHitResult = ProjectileUtil.raycast(thisEntity, veceye, vecext, box, (entityx) -> {
-            return !entityx.isSpectator() && entityx.collides();
-        }, 49);
+        return ProjectileUtil.raycast(thisEntity, veceye, vecext, box, (entityx) -> !entityx.isSpectator() && entityx.collides(), 49);
     }
 
 }

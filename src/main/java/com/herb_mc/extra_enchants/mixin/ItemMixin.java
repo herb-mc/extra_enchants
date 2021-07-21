@@ -11,15 +11,17 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin({Item.class})
 public class ItemMixin {
 
+    Item item = (Item) (Object) this;
+
     @Inject(at = {@At("HEAD")}, method = {"getEnchantability"}, cancellable = true)
     private void init(CallbackInfoReturnable<Integer> info) {
-        if ((Object)this instanceof HorseArmorItem)
+        if (item instanceof HorseArmorItem)
             info.setReturnValue(1);
     }
 
     @Inject(at = {@At("HEAD")}, method = {"isEnchantable"}, cancellable = true)
     private void init(ItemStack stack, CallbackInfoReturnable<Boolean> info) {
-        if ((Object)this instanceof HorseArmorItem)
+        if (item instanceof HorseArmorItem)
             info.setReturnValue(Boolean.TRUE);
     }
 
