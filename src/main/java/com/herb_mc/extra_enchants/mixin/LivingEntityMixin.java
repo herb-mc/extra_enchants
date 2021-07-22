@@ -106,6 +106,9 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
         int i = EnchantmentHelper.getEquipmentLevel(ModEnchants.BLOODCORE, thisEntity);
         if (source instanceof EntityDamageSource && i > 0 && rand.nextDouble() < 0.25)
             amount *= 1.8;
+        i = EnchantmentHelper.getEquipmentLevel(ModEnchants.BLAZE_AFFINITY, thisEntity);
+        if (i > 0 && thisEntity.isOnFire())
+            amount *= 0.95;
         i = EnchantmentHelper.getEquipmentLevel(ModEnchants.VOIDCORE, thisEntity);
         if (i > 0)
             amount *= 0.6;
@@ -171,6 +174,10 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
         thisEntity.stepHeight = STEP_HEIGHT;
         if (i > 0)
             thisEntity.stepHeight += i * 0.4F;
+        removeAttribute(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, BLAZE_ATTRIBUTE_ID);
+        i = EnchantmentHelper.getEquipmentLevel(ModEnchants.BLAZE_AFFINITY, thisEntity);
+        if (i > 0 && thisEntity.isOnFire())
+            modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, 1, BLAZE_ATTRIBUTE_ID, "blz_attack_daamge", 0.1, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
         removeAttribute(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, BOOSTING_ATTRIBUTE_ID);
         i = getEquipmentLevel(ModEnchants.BOOSTING, thisEntity);
         if (thisEntity.isSprinting() && i > 0 && SPRINT_BOOST >= 0) {

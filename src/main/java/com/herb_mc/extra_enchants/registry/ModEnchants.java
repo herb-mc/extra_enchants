@@ -74,6 +74,18 @@ public class ModEnchants {
             false,
             new Enchantment[]{Enchantments.PROTECTION, Enchantments.BLAST_PROTECTION, Enchantments.FIRE_PROTECTION, Enchantments.PROJECTILE_PROTECTION, ModEnchants.WEIGHTED, ModEnchants.DEXTROUS, ModEnchants.BERSERK}
     );
+    // Blaze Affinity
+    public static Enchantment BLAZE_AFFINITY = new EnchantBuilder(
+            Enchantment.Rarity.UNCOMMON,
+            EnchantmentTarget.ARMOR_LEGS,
+            new EquipmentSlot[]{EquipmentSlot.LEGS},
+            30,
+            50,
+            1,
+            false,
+            true,
+            new Enchantment[]{}
+    );
     // Bloodcore
     public static Enchantment BLOODCORE = new EnchantBuilder(
             Enchantment.Rarity.VERY_RARE,
@@ -461,6 +473,7 @@ public class ModEnchants {
         enchantments.put("arrow_speed", ModEnchants.ARROW_SPEED);
         enchantments.put("barbaric", ModEnchants.BARBARIC);
         enchantments.put("berserk", ModEnchants.BERSERK);
+        enchantments.put("blaze_affinity", ModEnchants.BLAZE_AFFINITY);
         enchantments.put("bloodcore", ModEnchants.BLOODCORE);
         enchantments.put("boosting", ModEnchants.BOOSTING);
         enchantments.put("bounding", ModEnchants.BOUNDING);
@@ -539,6 +552,7 @@ public class ModEnchants {
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "arrow_speed"), ARROW_SPEED);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "barbaric"), BARBARIC);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "berserk"), BERSERK);
+        Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "blaze_affinity"), BLAZE_AFFINITY);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "bloodcore"), BLOODCORE);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "boosting"), BOOSTING);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "bounding"), BOUNDING);

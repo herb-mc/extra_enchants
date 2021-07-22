@@ -22,6 +22,7 @@ public class TridentItemMixin {
         int i = thisItem.getMaxUseTime(stack) - remainingUseTicks;
         if (EnchantmentHelper.getLevel(ModEnchants.LAUNCHING, stack) > 0 && i >= 10) {
             user.setVelocity(user.getVelocity().add(user.getRotationVector().multiply(EnchantmentHelper.getLevel(ModEnchants.LAUNCHING, stack))));
+            user.fallDistance = 0;
         }
     }
 

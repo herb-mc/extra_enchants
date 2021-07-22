@@ -1,6 +1,6 @@
 # Extra Enchants
 
-Adds 31 obtainable equipment enchants and 1 experimental enchant, with functions ranging from utility to offense.
+Adds 32 obtainable equipment enchants and 1 experimental enchant, with functions ranging from utility to offense.
 
 Latest: v0.0.8 for Minecraft 1.17.1<br>
 Requires Fabric Loader 0.11.6 and Fabric API 0.37.0+1.17
@@ -45,6 +45,15 @@ Extra damage is added directly. The precise formula for determining the amount o
 ![berserk](https://latex.codecogs.com/gif.latex?%28maxhealth-remhealth%29%20*%20%5Cfrac%7Blevel%5E2%7D%7B2%20*%20level%5E2%20&plus;%204%7D)<br>
 This equates to about 16.7% of lost health at level 1, 33.3% of lost health at level 2, and 40.9% of lost health at level 3.<br>
 The effect scales infinitely, and damage added approaches but never reaches 50% of lost health.</details>
+
+### *Blaze Affinity*
+- Increases damage and damage reduction while on fire.
+- Compatible equipment: Leggings
+- Max level: 1
+- Rarity: Very rare
+- Type: Treasure
+<details><summary>Detailed description</summary>+10% damage, +5% damage reduction while on fire. Does not decrease fire damage.<br>
+Effect does not scale.</details>
 
 ### *Bloodcore*
 - Doubles health and increases attack damage. Armor is decreased and enemies may deal critical hits.

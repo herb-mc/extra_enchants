@@ -1,0 +1,13 @@
+{
+  "name": "blaze_affinity",
+  "type": "fixed",
+  "available": "true",
+  "rarity": "uncommon",
+  "min_power": "30",
+  "max_power": "50",
+  "max_level": "1",
+  "is_curse": "false",
+  "is_treasure": "true",
+  "incompatible_enchants": [
+  ]
+}
