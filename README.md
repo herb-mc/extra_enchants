@@ -50,7 +50,7 @@ The effect scales infinitely, and damage added approaches but never reaches 50% 
 - Increases damage and damage reduction while on fire.
 - Compatible equipment: Leggings
 - Max level: 1
-- Rarity: Very rare
+- Rarity: Uncommon
 - Type: Treasure
 <details><summary>Detailed description</summary>+10% damage, +5% damage reduction while on fire. Does not decrease fire damage.<br>
 Effect does not scale.</details>
