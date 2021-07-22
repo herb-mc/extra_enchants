@@ -41,17 +41,20 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
 
     @Unique private final LivingEntity thisEntity = (LivingEntity) (Object) this;
     @Unique private float STEP_HEIGHT = 0F;
+    @Unique private int SPRINT_BOOST = 0;
     @Unique private static final Random rand = new Random();
     @Unique int level = 0;
 
     @Inject(method = "writeCustomDataToNbt", at = @At("RETURN"))
     protected void writeCustomDataToNbt(NbtCompound nbt, CallbackInfo info) {
         nbt.putFloat("stepHeight", STEP_HEIGHT);
+        nbt.putInt("sprintBoost", SPRINT_BOOST);
     }
 
     @Inject(method = "readCustomDataFromNbt", at = @At("RETURN"))
     protected void readCustomDataFromNbt(NbtCompound nbt, CallbackInfo info) {
         STEP_HEIGHT = nbt.getFloat("stepHeight");
+        SPRINT_BOOST = nbt.getInt("sprintBoost");
     }
 
     @Inject(at = @At("HEAD"), method = "onDeath")
@@ -168,6 +171,19 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
         thisEntity.stepHeight = STEP_HEIGHT;
         if (i > 0)
             thisEntity.stepHeight += i * 0.4F;
+        removeAttribute(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, BOOSTING_ATTRIBUTE_ID);
+        i = getEquipmentLevel(ModEnchants.BOOSTING, thisEntity);
+        if (thisEntity.isSprinting() && i > 0 && SPRINT_BOOST >= 0) {
+            SPRINT_BOOST++;
+            if (SPRINT_BOOST < 20 * i)
+                modAttributeBase(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, i, BOOSTING_ATTRIBUTE_ID, "boost_speed", 0.4, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+            else
+                SPRINT_BOOST = -60;
+        }
+        if (SPRINT_BOOST > 0 && !thisEntity.isSprinting())
+            SPRINT_BOOST = -60;
+        if (SPRINT_BOOST < 0 && !thisEntity.isSprinting())
+            SPRINT_BOOST++;
         i = getEquipmentLevel(ModEnchants.DWARVEN, thisEntity);
         if (i > 0) {
             Vec3d vec = getNearestOre();

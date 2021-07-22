@@ -86,6 +86,20 @@ public class ModEnchants {
             true,
             new Enchantment[]{ModEnchants.BLOODCORE, ModEnchants.EVIOCORE, ModEnchants.VOIDCORE}
     );
+    // Boosting
+    public static Enchantment BOOSTING = new ScalableEnchantBuilder(
+            Enchantment.Rarity.UNCOMMON,
+            EnchantmentTarget.ARMOR_LEGS,
+            new EquipmentSlot[]{EquipmentSlot.LEGS},
+            10,
+            10,
+            20,
+            15,
+            3,
+            false,
+            false,
+            new Enchantment[]{ModEnchants.STEADFAST, ModEnchants.BOOSTING}
+    );
     // Bounding
     public static Enchantment BOUNDING = new ScalableEnchantBuilder(
             Enchantment.Rarity.COMMON,
@@ -322,7 +336,7 @@ public class ModEnchants {
             2,
             false,
             false,
-            new Enchantment[]{ModEnchants.STEADFAST}
+            new Enchantment[]{ModEnchants.STEADFAST, ModEnchants.BOOSTING}
     );
     // Surface Skimmer
     public static Enchantment SURFACE_SKIMMER = new ScalableEnchantBuilder(
@@ -448,6 +462,7 @@ public class ModEnchants {
         enchantments.put("barbaric", ModEnchants.BARBARIC);
         enchantments.put("berserk", ModEnchants.BERSERK);
         enchantments.put("bloodcore", ModEnchants.BLOODCORE);
+        enchantments.put("boosting", ModEnchants.BOOSTING);
         enchantments.put("bounding", ModEnchants.BOUNDING);
         enchantments.put("cleaving", ModEnchants.CLEAVING);
         enchantments.put("dextrous", ModEnchants.DEXTROUS);
@@ -525,6 +540,7 @@ public class ModEnchants {
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "barbaric"), BARBARIC);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "berserk"), BERSERK);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "bloodcore"), BLOODCORE);
+        Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "boosting"), BOOSTING);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "bounding"), BOUNDING);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "cleaving"), CLEAVING);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "dextrous"), DEXTROUS);

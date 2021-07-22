@@ -1,13 +1,13 @@
 {
-  "name": "steadfast",
+  "name": "boosting",
   "type": "scalable",
   "available": "true",
   "rarity": "uncommon",
-  "min_power": "20",
+  "min_power": "10",
   "min_power_delta": "10",
-  "max_power": "30",
-  "max_power_delta": "20",
-  "max_level": "2",
+  "max_power": "20",
+  "max_power_delta": "15",
+  "max_level": "3",
   "is_curse": "false",
   "is_treasure": "false",
   "incompatible_enchants": [

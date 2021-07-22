@@ -1,6 +1,6 @@
 # Extra Enchants
 
-Adds 30 obtainable equipment enchants and 1 experimental enchant, with functions ranging from utility to offense.
+Adds 31 obtainable equipment enchants and 1 experimental enchant, with functions ranging from utility to offense.
 
 Latest: v0.0.8 for Minecraft 1.17.1<br>
 Requires Fabric Loader 0.11.6 and Fabric API 0.37.0+1.17
@@ -55,6 +55,15 @@ The effect scales infinitely, and damage added approaches but never reaches 50% 
 - Type: Curse, Treasure
 <details><summary>Detailed description</summary>Doubles max health, +15% attack damage, -20% armor, 25% chance to take 80% increased damage from entities.<br>
 Effect does not scale.</details>
+
+### *Boosting*
+- When initiating a sprint, gain a massive burst of speed. 3 second cooldown.
+- Compatible equipment: Leggings
+- Incompatible enchantments: Steadfast
+- Max level: 3
+- Rarity: Uncommon
+<details><summary>Detailed description</summary>Gain a speed boost equivalent to (40 * level) ticks that lasts for (20 * level) ticks. After stopping a sprint or reaching the maximum time, initiates a cooldown of 60 ticks that only ticks while not sprinting.<br>
+Effect scales infinitely.</details>
 
 ### *Bounding*
 - Increases horse jump height.
@@ -209,6 +218,7 @@ The effect does not scale.</details>
 ### *Steadfast*
 - Decreases the weapon drawing movement penalty.
 - Compatible equipment: Leggings
+- Incompatible enchantments: Boosting
 - Max level: 2
 - Rarity: Uncommon
 <details><summary>Detailed description</summary>While drawing a bow, crossbow or trident: movement speed multiplied by (level + 1).<br>
