@@ -206,8 +206,17 @@ The effect does not scale.</details>
 <details><summary>Detailed description</summary>Slipperiness is set to 1.0 while equipped. (Ice/Packed Ice default to 0.98)<br>
 The effect does not scale.</details>
 
-### *Surface Skimmer*
+### *Steadfast*
+- Decreases the weapon drawing movement penalty.
+- Compatible equipment: Leggings
+- Max level: 2
+- Rarity: Uncommon
+<details><summary>Detailed description</summary>While drawing a bow, crossbow or trident: movement speed multiplied by (level + 1).<br>
+The effect scales infinitely.</details>
+
+### *Surface Skimmer (Experimental)*
 - Allows the user to walk on water.
+- Must be enabled via datapack
 - Compatible equipment: Horse armors
 - Incompatible enchantments: Bounding, Swiftness
 - Max level: 3

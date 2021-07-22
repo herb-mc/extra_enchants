@@ -310,6 +310,20 @@ public class ModEnchants {
             false,
             new Enchantment[]{ModEnchants.LEAPING, ModEnchants.LUNGING, ModEnchants.WINDSTEP, ModEnchants.SLIMEY}
     );
+    // Steadfast
+    public static Enchantment STEADFAST = new ScalableEnchantBuilder(
+            Enchantment.Rarity.UNCOMMON,
+            EnchantmentTarget.ARMOR_LEGS,
+            new EquipmentSlot[]{EquipmentSlot.LEGS},
+            20,
+            10,
+            30,
+            20,
+            2,
+            false,
+            false,
+            new Enchantment[]{ModEnchants.STEADFAST}
+    );
     // Surface Skimmer
     public static Enchantment SURFACE_SKIMMER = new ScalableEnchantBuilder(
             Enchantment.Rarity.COMMON,
@@ -451,6 +465,7 @@ public class ModEnchants {
         enchantments.put("psychic", ModEnchants.PSYCHIC);
         enchantments.put("sharpshooter", ModEnchants.SHARPSHOOTER);
         enchantments.put("slimey", ModEnchants.SLIMEY);
+        enchantments.put("steadfast", ModEnchants.STEADFAST);
         enchantments.put("surface_skimmer", ModEnchants.SURFACE_SKIMMER);
         enchantments.put("swiftness", ModEnchants.SWIFTNESS);
         enchantments.put("terraforming", ModEnchants.TERRAFORMING);
@@ -527,6 +542,7 @@ public class ModEnchants {
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "psychic"), PSYCHIC);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "sharpshooter"), SHARPSHOOTER);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "slimey"), SLIMEY);
+        Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "steadfast"), STEADFAST);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "surface_skimmer"), SURFACE_SKIMMER);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "swiftness"), SWIFTNESS);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "terraforming"), TERRAFORMING);

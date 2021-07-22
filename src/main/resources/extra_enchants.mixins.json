@@ -8,6 +8,8 @@
     "DamageEnchantmentMixin",
     "EnchantmentHelperMixin",
     "EntityInterfaceMixin",
+    "GameRendererMixin",
+    "GameRenderInterfaceMixin",
     "HorseBaseEntityInterfaceMixin",
     "ItemGroupMixin",
     "ItemMixin",

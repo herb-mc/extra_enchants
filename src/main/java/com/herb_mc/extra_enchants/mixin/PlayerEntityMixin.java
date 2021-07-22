@@ -8,6 +8,8 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -49,6 +51,15 @@ public abstract class PlayerEntityMixin implements AttributeModCommons, UUIDComm
         if (i > 0) {
             modAttributeBase(thisEntity, ReachEntityAttributes.REACH, i, ARCHITECT_ATTRIBUTE_ID, "arch_reach_boost", 1.0, EntityAttributeModifier.Operation.ADDITION);
             modAttributeBase(thisEntity, ReachEntityAttributes.ATTACK_RANGE, i, ARCHITECT_ATTRIBUTE_ID, "arch_range_boost", -1.0, EntityAttributeModifier.Operation.ADDITION);
+        }
+
+        i = EnchantmentHelper.getEquipmentLevel(ModEnchants.STEADFAST, thisEntity);
+        if (i > 0) {
+            ItemStack itemStack = thisEntity.getActiveItem();
+            removeAttribute(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, STEADFAST_ATTRIBUTE_ID);
+            if (thisEntity.isUsingItem() && (itemStack.isOf(Items.BOW) || itemStack.isOf(Items.CROSSBOW) || itemStack.isOf(Items.TRIDENT))) {
+                modAttributeBase(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, i, STEADFAST_ATTRIBUTE_ID, "steadfast_movement_speed", 1.0D, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+            }
         }
     }
 

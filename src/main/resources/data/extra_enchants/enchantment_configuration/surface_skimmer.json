@@ -1,7 +1,7 @@
 {
   "name": "surface_skimmer",
   "type": "scalable",
-  "available": "true",
+  "available": "false",
   "rarity": "common",
   "min_power": "1",
   "min_power_delta": "10",
