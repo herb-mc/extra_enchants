@@ -8,8 +8,6 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 @Mixin(TridentEntity.class)
 public abstract class TridentEntityMixin extends PersistentProjectileEntityMixin {
 
-    TridentEntity thisEntity = (TridentEntity) (Object) this;
-
     @ModifyArg(
             method = "onEntityHit",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;damage(Lnet/minecraft/entity/damage/DamageSource;F)Z"))

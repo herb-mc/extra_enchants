@@ -1,24 +1,23 @@
-package com.herb_mc.extra_enchants.chocoasm;
+package com.herb_mc.extra_enchants.asm;
 
 import net.minecraft.item.AxeItem;
-import net.minecraft.item.SwordItem;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
 import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.item.Item;
 
-public class Weapons extends WeaponsEnchantmentTargetMixin {
+public class Axe extends AxeEnchantmentTargetMixin {
 
     @Override
     public boolean isAcceptableItem(Item item) {
-        return item instanceof AxeItem || item instanceof SwordItem;
+        return item instanceof AxeItem;
     }
 
 }
 
 @Mixin(EnchantmentTarget.class)
-abstract class WeaponsEnchantmentTargetMixin {
+abstract class AxeEnchantmentTargetMixin {
 
     @Shadow
     abstract boolean isAcceptableItem(Item item);

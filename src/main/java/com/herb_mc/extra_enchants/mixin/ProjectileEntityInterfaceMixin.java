@@ -10,5 +10,4 @@ public interface ProjectileEntityInterfaceMixin {
     @Accessor("leftOwner")
     boolean leftOwner();
 
-
 }

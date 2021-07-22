@@ -22,6 +22,7 @@ import net.minecraft.world.explosion.Explosion;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArgs;
@@ -39,17 +40,17 @@ public abstract class PersistentProjectileEntityMixin implements ProjectileEntit
 
     @Shadow public abstract boolean isCritical();
 
-    private final PersistentProjectileEntity thisEntity = (PersistentProjectileEntity) (Object) this;
-    public int explosive = 0;
-    public boolean ender = false;
-    public boolean evio = false;
-    public int exposing = 0;
-    public boolean critical = false;
-    public boolean sharpshooter = false;
-    public boolean playerOwner = false;
-    public boolean initialized = false;
-    public int launching = 0;
-    private final Random rand = new Random();
+    @Unique private final PersistentProjectileEntity thisEntity = (PersistentProjectileEntity) (Object) this;
+    @Unique public int explosive = 0;
+    @Unique public boolean ender = false;
+    @Unique public boolean evio = false;
+    @Unique public int exposing = 0;
+    @Unique public boolean critical = false;
+    @Unique public boolean sharpshooter = false;
+    @Unique public boolean playerOwner = false;
+    @Unique public boolean initialized = false;
+    @Unique public int launching = 0;
+    @Unique private final Random rand = new Random();
 
     @Inject(at = @At("TAIL"), method = "setOwner")
     protected void setOwner(@Nullable Entity entity, CallbackInfo info) {

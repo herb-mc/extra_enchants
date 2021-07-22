@@ -189,12 +189,12 @@ The effect sscales infinitely.</details>
 <details><summary>Detailed description</summary>Any entity within 7 blocks of the user's line of sight (disregarding blocks) will receive Glowing 20 while the user is sneaking.</details>
 
 ### *Sharpshooter*
-- While sneaking, movement speed is decreased to zero and vision will zoom in. Arrow damage is increased.
+- While sneaking, the camera will zoom in 3x. Arrow damage is increased.
 - Compatible equipment: Helmets
 - Incompatible enchantments: Dwarven, Night Vision, Psychic
 - Max level: 1
 - Rarity: Rare
-<details><summary>Detailed description</summary>Horizontal movement speed is set to 0 while horizontal jump velocity and FOV are greatly decreased. +1 damage to all fired arrows.<br>
+<details><summary>Detailed description</summary>FOV is multiplied by 1/3. +1 damage to all fired arrows. +5 damage to thrown tridents.<br>
 The effect does not scale.</details>
 
 ### *Slimey*

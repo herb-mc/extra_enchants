@@ -1,5 +1,6 @@
 package com.herb_mc.extra_enchants.commons;
 
+import com.chocohead.mm.api.ClassTinkerers;
 import com.herb_mc.extra_enchants.registry.ModEnchants;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
@@ -15,6 +16,7 @@ public class EnchantBuilder extends Enchantment {
     boolean isTreasure;
     Enchantment[] incompatibleEnchantments;
     boolean enabled;
+    static Rarity NULL = ClassTinkerers.getEnum(Enchantment.Rarity.class, "NULL");
 
     public EnchantBuilder(Rarity weight, EnchantmentTarget type, EquipmentSlot[] equipmentSlots, int minPower, int maxPower, int maxLevel, boolean isCursed, boolean isTreasure, Enchantment[] incompatibleEnchantments) {
         super(weight, type, equipmentSlots);
@@ -25,7 +27,6 @@ public class EnchantBuilder extends Enchantment {
         this.isCursed = isCursed;
         this.isTreasure = isTreasure;
         this.incompatibleEnchantments = incompatibleEnchantments;
-        this.enabled = true;
     }
 
     @Override
@@ -63,17 +64,7 @@ public class EnchantBuilder extends Enchantment {
 
     @Override
     public Rarity getRarity() {
-        return this.rarity;
-    }
-
-    @Override
-    public boolean isAvailableForEnchantedBookOffer() {
-        return enabled;
-    }
-
-    @Override
-    public boolean isAvailableForRandomSelection() {
-        return enabled;
+        return enabled ? this.rarity : NULL;
     }
 
     public void setAttributes(boolean enabled, Rarity weight, int minPower, int maxPower, int maxLevel, boolean isCursed, boolean isTreasure, Enchantment[] incompatibleEnchantments) {

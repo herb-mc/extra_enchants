@@ -25,6 +25,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
@@ -38,12 +39,10 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
 
     @Shadow public abstract int getArmor();
 
-    private final LivingEntity thisEntity = (LivingEntity) (Object) this;
-
-    private float STEP_HEIGHT = 0F;
-
-    private static final Random rand = new Random();
-    int level = 0;
+    @Unique private final LivingEntity thisEntity = (LivingEntity) (Object) this;
+    @Unique private float STEP_HEIGHT = 0F;
+    @Unique private static final Random rand = new Random();
+    @Unique int level = 0;
 
     @Inject(method = "writeCustomDataToNbt", at = @At("RETURN"))
     protected void writeCustomDataToNbt(NbtCompound nbt, CallbackInfo info) {
@@ -215,10 +214,6 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
         if ((i == 0 || i > 0 && !thisEntity.isSneaking()) && thisEntity.getStatusEffect(StatusEffects.NIGHT_VISION) != null)
             if (Objects.requireNonNull(thisEntity.getStatusEffect(StatusEffects.NIGHT_VISION)).getAmplifier() == 100)
                 thisEntity.removeStatusEffect(StatusEffects.NIGHT_VISION);
-        i = getEquipmentLevel(ModEnchants.SHARPSHOOTER, thisEntity);
-        removeAttribute(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, SHARPSHOOTER_ATTRIBUTE_ID);
-        if (i > 0 && thisEntity.isSneaking())
-            modAttributeBase(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, 1, SHARPSHOOTER_ATTRIBUTE_ID, "sv_speed", -1.0, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
         i = getEquipmentLevel(ModEnchants.PSYCHIC, thisEntity);
         if (i > 0 && thisEntity.isSneaking()) {
             EntityHitResult result = raycast();

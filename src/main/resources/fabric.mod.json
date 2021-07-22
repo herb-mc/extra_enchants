@@ -22,7 +22,7 @@
       "com.herb_mc.extra_enchants.ExtraEnchantsMod"
     ],
     "mm:early_risers": [
-      "com.herb_mc.extra_enchants.chocoasm.EarlyRiser"
+      "com.herb_mc.extra_enchants.asm.EarlyRiser"
     ]
   },
   "mixins": [
