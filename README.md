@@ -1,6 +1,6 @@
 # Extra Enchants
 
-Adds 29 enchantments with functions ranging from utility to offense.
+Adds 30 obtainable equipment enchants and 1 experimental enchant, with functions ranging from utility to offense.
 
 Latest: v0.0.8 for Minecraft 1.17.1<br>
 Requires Fabric Loader 0.11.6 and Fabric API 0.37.0+1.17
