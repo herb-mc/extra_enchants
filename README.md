@@ -1,6 +1,6 @@
 # Extra Enchants
 
-Adds 32 obtainable equipment enchants and 1 experimental enchant, with functions ranging from utility to offense.
+Adds 33 obtainable equipment enchants and 1 experimental enchant, with functions ranging from utility to offense.
 
 Latest: v0.0.8 for Minecraft 1.17.1<br>
 Requires Fabric Loader 0.11.6 and Fabric API 0.37.0+1.17
@@ -55,16 +55,6 @@ The effect scales infinitely, and damage added approaches but never reaches 50% 
 <details><summary>Detailed description</summary>+10% damage, +5% damage reduction while on fire. Does not decrease fire damage.<br>
 Effect does not scale.</details>
 
-### *Bloodcore*
-- Doubles health and increases attack damage. Armor is decreased and enemies may deal critical hits.
-- Compatible equipment: Chestplates
-- Incompatible enchantments: All Protection-type enchants
-- Max level: 1
-- Rarity: Very rare
-- Type: Curse, Treasure
-<details><summary>Detailed description</summary>Doubles max health, +15% attack damage, -20% armor, 25% chance to take 80% increased damage from entities.<br>
-Effect does not scale.</details>
-
 ### *Boosting*
 - When initiating a sprint, gain a massive burst of speed. 3 second cooldown.
 - Compatible equipment: Leggings
@@ -93,6 +83,50 @@ Effect technically scales infinitely, but horse jump mechanics have an upper lim
 ![cleaving](https://latex.codecogs.com/gif.latex?1.8%20*%20%5Cfrac%7Blevel%7D%7B2%20*%20level%20&plus;%204%7D)<br>
 This equates to 30% armor ignored at level 1, 45% armor ignored at level 2, 54% armor ignored at level 3, and 60% armor ignored at level 4.<br>
 Effect scales infinitely, and armor ignored approaches but never reaches 90%.</details>
+
+### *Core of Neptune*
+- The less air you have, the stronger you are. Conversely, the more air you have, the weaker you become.
+- Compatible equipment: Chestplates
+- Incompatible enchantments: All Core-type enchants
+- Max level: 1
+- Rarity: Very rare
+- Type: Curse, Treasure
+<details><summary>Detailed description</summary>Air loss in water is 4x faster, while air gain outside of water is roughly 8x slower. Sets swimming drag coefficient to 0.97.<br>
+Scales attack damage/speed according to the following formula:
+![nepatkmod](https://latex.codecogs.com/gif.latex?attackmod%20%3D%201%20&plus;%20%5Cbegin%7Bcases%7D%20%5Cfrac%7B120%20-%20air%7D%7B450%7D%20%26%20%5Ctext%7B%20if%20%7D%20air%20%3E%20120%5C%5C%20%5Cfrac%7B90%20-%20air%7D%7B270%7D%20%26%20%5Ctext%7B%20if%20%7D%20air%20%3C%2090%20%5Cend%7Bcases%7D)<br>
+Scales movement speed according to the following formula:<br>
+![nepspdmod](https://latex.codecogs.com/gif.latex?speedmod%20%3D%201%20&plus;%20%5Cbegin%7Bcases%7D%20%5Cfrac%7B120%20-%20air%7D%7B900%7D%20%26%20%5Ctext%7B%20if%20%7D%20air%20%3E%20120%5C%5C%20%5Cfrac%7B90%20-%20air%7D%7B549%7D%20%26%20%5Ctext%7B%20if%20%7D%20air%20%3C%2090%20%5Cend%7Bcases%7D)<br>
+The effect does not scale.</details>
+
+### *Core of Purity*
+- Health is doubled, damage taken is reduced when healthy, speed is slightly reduced. Damage dealt is set to 1.
+- Compatible equipment: Chestplates
+- Incompatible enchantments: All Core-type enchants
+- Max level: 1
+- Rarity: Very rare
+- Type: Curse, Treasure
+<details><summary>Detailed description</summary>Doubled max health, -10% movement speed, damage dealt is set to 1 before damage calculation. Incoming damage is reduced by 70% if the user has at least 60% of their max health remaining.<br>
+The effect does not scale.</details>
+
+### *Core of the Blood God*
+- Doubles health and increases attack damage. Armor is decreased and enemies may deal critical hits.
+- Compatible equipment: Chestplates
+- Incompatible enchantments: All Core-type enchants
+- Max level: 1
+- Rarity: Very rare
+- Type: Curse, Treasure
+<details><summary>Detailed description</summary>Doubles max health, +15% attack damage, -20% armor, 25% chance to take 80% increased damage from entities.<br>
+Effect does not scale.</details>
+
+### *Core of the Void*
+- Health is halved, damage reduction and speed are increased.
+- Compatible equipment: Chestplates
+- Incompatible enchantments: All Core-type enchants
+- Max level: 1
+- Rarity: Very rare
+- Type: Curse, Treasure
+<details><summary>Detailed description</summary>-50% max health, 40% raw damage reduction before damage calculation, +15% movement speed.<br>
+The effect does not scale.</details>
 
 ### *Dextrous*
 - Increases attack speed.
@@ -137,15 +171,6 @@ The effect scales infinitely.</details>
 - Rarity: Common
 <details><summary>Detailed description</summary>Inflicts 40 extra ticks, or 2 seconds, of Glowing 20 (no particle) per tick.<br>
 The effect scales infinitely.</details>
-
-### *Eviocore*
-- Health is doubled, damage taken is reduced when healthy, speed is slightly reduced. Damage dealt is set to 1.
-- Compatible equipment: Chestplates
-- Max level: 1
-- Rarity: Very rare
-- Type: Curse, Treasure
-<details><summary>Detailed description</summary>Doubled max health, -10% movement speed, damage dealt is set to 1 before damage calculation. Incoming damage is reduced by 70% if the user has at least 60% of their max health remaining.<br>
-The effect does not scale.</details>
 
 ### *Featherweight*
 - Fall slower depending on the level.
@@ -269,15 +294,6 @@ The effect does not scale.</details>
 - Rarity: Uncommon
 <details><summary>Detailed description</summary>Decreases incoming damage by 3% per level before armor is applied. May be more effective than protection in certain circumstances.<br>
 The effect scales infinitely.</details>
-
-### *Voidcore*
-- Health is halved, damage reduction and speed are increased.
-- Compatible equipment: Chestplates
-- Max level: 1
-- Rarity: Very rare
-- Type: Curse, Treasure
-<details><summary>Detailed description</summary>-50% max health, 40% raw damage reduction before damage calculation, +15% movement speed.<br>
-The effect does not scale.</details>
 
 ### *Warding*
 - User scares away phantoms.

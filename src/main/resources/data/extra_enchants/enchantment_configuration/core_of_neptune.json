@@ -1,5 +1,4 @@
 {
-  "name": "voidcore",
   "type": "fixed",
   "available": "true",
   "rarity": "very_rare",
@@ -9,8 +8,9 @@
   "is_curse": "true",
   "is_treasure": "true",
   "incompatible_enchants": [
-    "bloodcore",
-    "eviocore",
-    "voidcore"
+    "core_of_neptune",
+    "core_of_purity",
+    "core_of_the_blood_god",
+    "core_of_the_void"
   ]
 }

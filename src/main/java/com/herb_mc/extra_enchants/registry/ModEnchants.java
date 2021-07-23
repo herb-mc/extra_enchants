@@ -86,18 +86,6 @@ public class ModEnchants {
             true,
             new Enchantment[]{}
     );
-    // Bloodcore
-    public static Enchantment BLOODCORE = new EnchantBuilder(
-            Enchantment.Rarity.VERY_RARE,
-            EnchantmentTarget.ARMOR_CHEST,
-            new EquipmentSlot[]{EquipmentSlot.CHEST},
-            30,
-            50,
-            1,
-            true,
-            true,
-            new Enchantment[]{ModEnchants.BLOODCORE, ModEnchants.EVIOCORE, ModEnchants.VOIDCORE}
-    );
     // Boosting
     public static Enchantment BOOSTING = new ScalableEnchantBuilder(
             Enchantment.Rarity.UNCOMMON,
@@ -139,6 +127,54 @@ public class ModEnchants {
             false,
             false,
             new Enchantment[]{Enchantments.SHARPNESS, Enchantments.SMITE, Enchantments.BANE_OF_ARTHROPODS}
+    );
+    // Core of Neptune
+    public static Enchantment CORE_OF_NEPTUNE = new EnchantBuilder(
+            Enchantment.Rarity.VERY_RARE,
+            EnchantmentTarget.ARMOR_CHEST,
+            new EquipmentSlot[]{EquipmentSlot.CHEST},
+            20,
+            50,
+            1,
+            true,
+            true,
+            new Enchantment[]{ModEnchants.CORE_OF_THE_BLOOD_GOD, ModEnchants.CORE_OF_PURITY, ModEnchants.CORE_OF_THE_VOID, ModEnchants.CORE_OF_NEPTUNE}
+    );
+    // Core of Purity
+    public static Enchantment CORE_OF_PURITY = new EnchantBuilder(
+            Enchantment.Rarity.VERY_RARE,
+            EnchantmentTarget.ARMOR_CHEST,
+            new EquipmentSlot[]{EquipmentSlot.CHEST},
+            20,
+            50,
+            1,
+            true,
+            true,
+            new Enchantment[]{ModEnchants.CORE_OF_THE_BLOOD_GOD, ModEnchants.CORE_OF_PURITY, ModEnchants.CORE_OF_THE_VOID, ModEnchants.CORE_OF_NEPTUNE}
+    );
+    // Core of the Blood God
+    public static Enchantment CORE_OF_THE_BLOOD_GOD = new EnchantBuilder(
+            Enchantment.Rarity.VERY_RARE,
+            EnchantmentTarget.ARMOR_CHEST,
+            new EquipmentSlot[]{EquipmentSlot.CHEST},
+            30,
+            50,
+            1,
+            true,
+            true,
+            new Enchantment[]{ModEnchants.CORE_OF_THE_BLOOD_GOD, ModEnchants.CORE_OF_PURITY, ModEnchants.CORE_OF_THE_VOID, ModEnchants.CORE_OF_NEPTUNE}
+    );
+    // Core of the Void
+    public static Enchantment CORE_OF_THE_VOID = new EnchantBuilder(
+            Enchantment.Rarity.VERY_RARE,
+            EnchantmentTarget.ARMOR_CHEST,
+            new EquipmentSlot[]{EquipmentSlot.CHEST},
+            20,
+            50,
+            1,
+            true,
+            true,
+            new Enchantment[]{ModEnchants.CORE_OF_THE_BLOOD_GOD, ModEnchants.CORE_OF_PURITY, ModEnchants.CORE_OF_THE_VOID, ModEnchants.CORE_OF_NEPTUNE}
     );
     // Dextrous
     public static Enchantment DEXTROUS = new ScalableEnchantBuilder(
@@ -205,18 +241,6 @@ public class ModEnchants {
             false,
             false,
             new Enchantment[]{}
-    );
-    // Eviocore
-    public static Enchantment EVIOCORE = new EnchantBuilder(
-            Enchantment.Rarity.VERY_RARE,
-            EnchantmentTarget.ARMOR_CHEST,
-            new EquipmentSlot[]{EquipmentSlot.CHEST},
-            20,
-            50,
-            1,
-            true,
-            true,
-            new Enchantment[]{ModEnchants.BLOODCORE, ModEnchants.EVIOCORE, ModEnchants.VOIDCORE}
     );
     // Featherweight
     public static Enchantment FEATHERWEIGHT = new ScalableEnchantBuilder(
@@ -404,18 +428,6 @@ public class ModEnchants {
             false,
             new Enchantment[]{Enchantments.PROTECTION, Enchantments.BLAST_PROTECTION, Enchantments.FIRE_PROTECTION, Enchantments.PROJECTILE_PROTECTION}
     );
-    // Voidcore
-    public static Enchantment VOIDCORE = new EnchantBuilder(
-            Enchantment.Rarity.VERY_RARE,
-            EnchantmentTarget.ARMOR_CHEST,
-            new EquipmentSlot[]{EquipmentSlot.CHEST},
-            20,
-            50,
-            1,
-            true,
-            true,
-            new Enchantment[]{ModEnchants.BLOODCORE, ModEnchants.EVIOCORE, ModEnchants.VOIDCORE}
-    );
     // Warding
     public static Enchantment WARDING = new EnchantBuilder(
             Enchantment.Rarity.UNCOMMON,
@@ -474,14 +486,16 @@ public class ModEnchants {
         enchantments.put("barbaric", ModEnchants.BARBARIC);
         enchantments.put("berserk", ModEnchants.BERSERK);
         enchantments.put("blaze_affinity", ModEnchants.BLAZE_AFFINITY);
-        enchantments.put("bloodcore", ModEnchants.BLOODCORE);
         enchantments.put("boosting", ModEnchants.BOOSTING);
         enchantments.put("bounding", ModEnchants.BOUNDING);
         enchantments.put("cleaving", ModEnchants.CLEAVING);
+        enchantments.put("core_of_neptune", ModEnchants.CORE_OF_NEPTUNE);
+        enchantments.put("core_of_purity", ModEnchants.CORE_OF_PURITY);
+        enchantments.put("core_of_the_blood_god", ModEnchants.CORE_OF_THE_BLOOD_GOD);
+        enchantments.put("core_of_the_void", ModEnchants.CORE_OF_THE_VOID);
         enchantments.put("dextrous", ModEnchants.DEXTROUS);
         enchantments.put("dwarven", ModEnchants.DWARVEN);
         enchantments.put("ender", ModEnchants.ENDER);
-        enchantments.put("eviocore", ModEnchants.EVIOCORE);
         enchantments.put("explosive", ModEnchants.EXPLOSIVE);
         enchantments.put("exposing", ModEnchants.EXPOSING);
         enchantments.put("featherweight", ModEnchants.FEATHERWEIGHT);
@@ -498,7 +512,6 @@ public class ModEnchants {
         enchantments.put("swiftness", ModEnchants.SWIFTNESS);
         enchantments.put("terraforming", ModEnchants.TERRAFORMING);
         enchantments.put("tough", ModEnchants.TOUGH);
-        enchantments.put("voidcore", ModEnchants.VOIDCORE);
         enchantments.put("warding", ModEnchants.WARDING);
         enchantments.put("weighted", ModEnchants.WEIGHTED);
         enchantments.put("windstep", ModEnchants.WINDSTEP);
@@ -553,16 +566,18 @@ public class ModEnchants {
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "barbaric"), BARBARIC);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "berserk"), BERSERK);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "blaze_affinity"), BLAZE_AFFINITY);
-        Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "bloodcore"), BLOODCORE);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "boosting"), BOOSTING);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "bounding"), BOUNDING);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "cleaving"), CLEAVING);
+        Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "core_of_neptune"), CORE_OF_NEPTUNE);
+        Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "core_of_purity"), CORE_OF_PURITY);
+        Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "core_of_the_blood_god"), CORE_OF_THE_BLOOD_GOD);
+        Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "core_of_the_void"), CORE_OF_THE_VOID);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "dextrous"), DEXTROUS);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "dwarven"), DWARVEN);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "ender"), ENDER);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "explosive"), EXPLOSIVE);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "exposing"), EXPOSING);
-        Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "eviocore"), EVIOCORE);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "featherweight"), FEATHERWEIGHT);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "launching"), LAUNCHING);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "leaping"), LEAPING);
@@ -577,7 +592,6 @@ public class ModEnchants {
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "swiftness"), SWIFTNESS);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "terraforming"), TERRAFORMING);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "tough"), TOUGH);
-        Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "voidcore"), VOIDCORE);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "warding"), WARDING);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "weighted"), WEIGHTED);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "windstep"), WINDSTEP);

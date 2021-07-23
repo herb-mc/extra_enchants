@@ -28,6 +28,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 import java.util.Objects;
 import java.util.Random;
@@ -63,6 +64,8 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
             ((LivingEntity) source.getAttacker()).heal((float) getEquipmentLevel(ModEnchants.LIFESTEAL, (LivingEntity) source.getAttacker()));
         }
     }
+
+
 
     @ModifyVariable(
             method = "applyArmorToDamage",
@@ -103,21 +106,21 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
             at = @At(value = "HEAD", target = "Lnet/minecraft/entity/LivingEntity;damage(Lnet/minecraft/entity/damage/DamageSource;F)Z"),
             ordinal = 0)
     private float amount(float amount, DamageSource source) {
-        int i = EnchantmentHelper.getEquipmentLevel(ModEnchants.BLOODCORE, thisEntity);
+        int i = EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_THE_BLOOD_GOD, thisEntity);
         if (source instanceof EntityDamageSource && i > 0 && rand.nextDouble() < 0.25)
             amount *= 1.8;
         i = EnchantmentHelper.getEquipmentLevel(ModEnchants.BLAZE_AFFINITY, thisEntity);
         if (i > 0 && thisEntity.isOnFire())
             amount *= 0.95;
-        i = EnchantmentHelper.getEquipmentLevel(ModEnchants.VOIDCORE, thisEntity);
+        i = EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_THE_VOID, thisEntity);
         if (i > 0)
             amount *= 0.6;
         if (source.getSource() != null && source.getSource() instanceof LivingEntity) {
-            i = EnchantmentHelper.getEquipmentLevel(ModEnchants.EVIOCORE, (LivingEntity) source.getSource());
+            i = EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_PURITY, (LivingEntity) source.getSource());
             if (i > 0)
                 amount = 1;
         }
-        i = EnchantmentHelper.getEquipmentLevel(ModEnchants.EVIOCORE, thisEntity);
+        i = EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_PURITY, thisEntity);
         if (i > 0 && thisEntity.getHealth() / thisEntity.getMaxHealth() > 0.6)
             amount *= 0.3;
         return amount;
@@ -153,6 +156,37 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
         return (EnchantmentHelper.getEquipmentLevel(ModEnchants.FEATHERWEIGHT, thisEntity) > 0 && thisEntity.getVelocity().y < 0 && !thisEntity.isSneaking()) ? d / (EnchantmentHelper.getEquipmentLevel(ModEnchants.FEATHERWEIGHT, thisEntity) + 1) : d;
     }
 
+    @ModifyArg(method = "baseTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;setAir(I)V"))
+    private int neptuneModAirUnderwater(int air) {
+        return (EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_NEPTUNE, thisEntity) > 0 && thisEntity.isSubmergedIn(FluidTags.WATER)) ? air - 3 : air;
+    }
+
+    @ModifyConstant(method = "getNextAirOnLand", constant = @Constant(intValue = 4))
+    private int neptuneModAir(int air) {
+        return (EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_NEPTUNE, thisEntity) > 0) ? rand.nextInt(16) % 2 : air;
+    }
+
+    @ModifyVariable(
+            method = "getNextAirUnderwater",
+            at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/enchantment/EnchantmentHelper;getRespiration(Lnet/minecraft/entity/LivingEntity;)I"), ordinal = 1)
+    protected int respLevel(int i) {
+        return (EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_NEPTUNE, thisEntity) > 0) ? 0 : i;
+    }
+
+    @ModifyArgs(
+            method = "travel",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;setVelocity(Lnet/minecraft/util/math/Vec3d;)V", ordinal = 0)
+    )
+    protected void neptuneSwimmingVelocity(Args args) {
+        if (EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_NEPTUNE, thisEntity) > 0) {
+            Vec3d vec3d = thisEntity.getVelocity();
+            if (thisEntity.horizontalCollision && thisEntity.isClimbing()) {
+                vec3d = new Vec3d(vec3d.x, 0.2D, vec3d.z);
+            }
+            args.set(0, vec3d.multiply(0.97D, 0.800000011920929D, 0.97D));
+        }
+    }
+
     @Inject(
             method = "jump",
             at = @At("TAIL"))
@@ -174,6 +208,22 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
         thisEntity.stepHeight = STEP_HEIGHT;
         if (i > 0)
             thisEntity.stepHeight += i * 0.4F;
+        removeAttribute(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, CORE_OF_NEPTUNE_ATTRIBUTE_ID);
+        removeAttribute(thisEntity, EntityAttributes.GENERIC_ATTACK_SPEED, CORE_OF_NEPTUNE_ATTRIBUTE_ID);
+        removeAttribute(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, CORE_OF_NEPTUNE_ATTRIBUTE_ID);
+        if (EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_NEPTUNE, thisEntity) > 0) {
+            int air = thisEntity.getAir();
+            if (air > 120) {
+                modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, 1, CORE_OF_NEPTUNE_ATTRIBUTE_ID, "nep_attack_damage", (120.0 - air) / 450.0, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+                modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_SPEED, 1, CORE_OF_NEPTUNE_ATTRIBUTE_ID, "nep_attack_speed", (120.0 - air) / 450.0, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+                modAttributeBase(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, 1, CORE_OF_NEPTUNE_ATTRIBUTE_ID, "nep_movement_speed", (120.0 - air) / 900.0, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+            }
+            else if (air < 90) {
+                modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, 1, CORE_OF_NEPTUNE_ATTRIBUTE_ID, "nep_attack_damage", (90 - air) / 270.0, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+                modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_SPEED, 1, CORE_OF_NEPTUNE_ATTRIBUTE_ID, "nep_attack_speed", (90 - air) / 270.0, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+                modAttributeBase(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, 1, CORE_OF_NEPTUNE_ATTRIBUTE_ID, "nep_movement_speed", (90 - air) / 540.0, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+            }
+        }
         removeAttribute(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, BLAZE_ATTRIBUTE_ID);
         i = EnchantmentHelper.getEquipmentLevel(ModEnchants.BLAZE_AFFINITY, thisEntity);
         if (i > 0 && thisEntity.isOnFire())
@@ -206,30 +256,29 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
                 thisEntity.world.addParticle(ParticleTypes.ELECTRIC_SPARK, true, thisEntity.getX() + dx / 10, thisEntity.getY() + 1.0 - sneak + dy / 10, thisEntity.getZ() + dz / 10, dx / 1.25, dy / 1.25, dz / 1.25);
             }
         }
-        i = getEquipmentLevel(ModEnchants.BLOODCORE, thisEntity);
-        removeAttribute(thisEntity, EntityAttributes.GENERIC_ARMOR, BLOODCORE_ATTRIBUTE_ID);
-        removeAttribute(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, BLOODCORE_ATTRIBUTE_ID);
-        removeAttribute(thisEntity, EntityAttributes.GENERIC_MAX_HEALTH, BLOODCORE_ATTRIBUTE_ID);
+        i = getEquipmentLevel(ModEnchants.CORE_OF_THE_BLOOD_GOD, thisEntity);
+        removeAttribute(thisEntity, EntityAttributes.GENERIC_ARMOR, CORE_OF_THE_BLOOD_GOD_ATTRIBUTE_ID);
+        removeAttribute(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, CORE_OF_THE_BLOOD_GOD_ATTRIBUTE_ID);
+        removeAttribute(thisEntity, EntityAttributes.GENERIC_MAX_HEALTH, CORE_OF_THE_BLOOD_GOD_ATTRIBUTE_ID);
         if (i > 0) {
-            modAttributeBase(thisEntity, EntityAttributes.GENERIC_ARMOR, 1, BLOODCORE_ATTRIBUTE_ID, "bld_armor", -0.2, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
-            modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, 1, BLOODCORE_ATTRIBUTE_ID, "bld_attack_damage", 0.15, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
-            modAttributeBase(thisEntity, EntityAttributes.GENERIC_MAX_HEALTH, 1, BLOODCORE_ATTRIBUTE_ID, "bld_attack_damage", 1.0, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+            modAttributeBase(thisEntity, EntityAttributes.GENERIC_ARMOR, 1, CORE_OF_THE_BLOOD_GOD_ATTRIBUTE_ID, "bld_armor", -0.2, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+            modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, 1, CORE_OF_THE_BLOOD_GOD_ATTRIBUTE_ID, "bld_attack_damage", 0.15, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+            modAttributeBase(thisEntity, EntityAttributes.GENERIC_MAX_HEALTH, 1, CORE_OF_THE_BLOOD_GOD_ATTRIBUTE_ID, "bld_attack_damage", 1.0, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
         }
-        i = getEquipmentLevel(ModEnchants.VOIDCORE, thisEntity);
-        removeAttribute(thisEntity, EntityAttributes.GENERIC_MAX_HEALTH, VOIDCORE_ATTRIBUTE_ID);
-        removeAttribute(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, VOIDCORE_ATTRIBUTE_ID);
+        i = getEquipmentLevel(ModEnchants.CORE_OF_THE_VOID, thisEntity);
+        removeAttribute(thisEntity, EntityAttributes.GENERIC_MAX_HEALTH, CORE_OF_THE_VOID_ATTRIBUTE_ID);
+        removeAttribute(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, CORE_OF_THE_VOID_ATTRIBUTE_ID);
         if (i > 0) {
-            modAttributeBase(thisEntity, EntityAttributes.GENERIC_MAX_HEALTH, 1, VOIDCORE_ATTRIBUTE_ID, "vd_health", -0.5, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
-            modAttributeBase(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, 1, VOIDCORE_ATTRIBUTE_ID, "vd_speed", 0.15, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
-            if (thisEntity.getHealth() > thisEntity.getMaxHealth())
-                thisEntity.setHealth(thisEntity.getMaxHealth());
+            modAttributeBase(thisEntity, EntityAttributes.GENERIC_MAX_HEALTH, 1, CORE_OF_THE_VOID_ATTRIBUTE_ID, "vd_health", -0.5, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+            modAttributeBase(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, 1, CORE_OF_THE_VOID_ATTRIBUTE_ID, "vd_speed", 0.15, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+
         }
-        i = getEquipmentLevel(ModEnchants.EVIOCORE, thisEntity);
-        removeAttribute(thisEntity, EntityAttributes.GENERIC_MAX_HEALTH, EVIOCORE_ATTRIBUTE_ID);
-        removeAttribute(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, EVIOCORE_ATTRIBUTE_ID);
+        i = getEquipmentLevel(ModEnchants.CORE_OF_PURITY, thisEntity);
+        removeAttribute(thisEntity, EntityAttributes.GENERIC_MAX_HEALTH, CORE_OF_PURITY_ATTRIBUTE_ID);
+        removeAttribute(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, CORE_OF_PURITY_ATTRIBUTE_ID);
         if (i > 0) {
-            modAttributeBase(thisEntity, EntityAttributes.GENERIC_MAX_HEALTH, 1, EVIOCORE_ATTRIBUTE_ID, "ev_health", 1.0, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
-            modAttributeBase(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, 1, EVIOCORE_ATTRIBUTE_ID, "ev_speed", -0.1, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+            modAttributeBase(thisEntity, EntityAttributes.GENERIC_MAX_HEALTH, 1, CORE_OF_PURITY_ATTRIBUTE_ID, "ev_health", 1.0, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+            modAttributeBase(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, 1, CORE_OF_PURITY_ATTRIBUTE_ID, "ev_speed", -0.1, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
         }
         i = getEquipmentLevel(ModEnchants.NIGHT_VISION, thisEntity);
         if (i > 0 && thisEntity.isSneaking())
@@ -264,6 +313,10 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
             if (i > 0)
                 modAttributeBase(thisEntity, EntityAttributes.HORSE_JUMP_STRENGTH, i, BOUNDING_JUMP_BOOST_ID, "bounding_jump_height_boost", 0.1, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
         }
+        if (EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_NEPTUNE, thisEntity) > 0 && thisEntity.getAir() < 0)
+            thisEntity.setAir(0);
+        if (thisEntity.getHealth() > thisEntity.getMaxHealth())
+            thisEntity.setHealth(thisEntity.getMaxHealth());
     }
 
     private void updateFloating() {

@@ -43,12 +43,12 @@ public abstract class PersistentProjectileEntityMixin implements ProjectileEntit
     @Unique private final PersistentProjectileEntity thisEntity = (PersistentProjectileEntity) (Object) this;
     @Unique public int explosive = 0;
     @Unique public boolean ender = false;
-    @Unique public boolean evio = false;
+    @Unique public boolean purity = false;
     @Unique public int exposing = 0;
     @Unique public boolean critical = false;
     @Unique public boolean sharpshooter = false;
+    @Unique public boolean neptune = false;
     @Unique public boolean playerOwner = false;
-    @Unique public boolean initialized = false;
     @Unique public int launching = 0;
     @Unique private final Random rand = new Random();
 
@@ -64,10 +64,12 @@ public abstract class PersistentProjectileEntityMixin implements ProjectileEntit
                 thisEntity.setDamage(thisEntity.getDamage() + EnchantmentHelper.getEquipmentLevel(ModEnchants.SHARPSHOOTER, (LivingEntity) entity));
                 sharpshooter = true;
             }
+            if (EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_NEPTUNE, (LivingEntity) entity) > 0)
+                neptune = true;
             if (EnchantmentHelper.getEquipmentLevel(ModEnchants.EXPOSING, (LivingEntity) entity) > 0)
                 exposing = EnchantmentHelper.getEquipmentLevel(ModEnchants.EXPOSING, (LivingEntity) entity);
-            if (EnchantmentHelper.getEquipmentLevel(ModEnchants.EVIOCORE, (LivingEntity) entity) > 0)
-                evio = true;
+            if (EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_PURITY, (LivingEntity) entity) > 0)
+                purity = true;
             if (EnchantmentHelper.getEquipmentLevel(ModEnchants.EXPLOSIVE, (LivingEntity) entity) > 0)
                 explosive += EnchantmentHelper.getEquipmentLevel(ModEnchants.EXPLOSIVE, (LivingEntity) entity);
             else if (EnchantmentHelper.getEquipmentLevel(ModEnchants.ENDER, (LivingEntity) entity) > 0)
@@ -80,10 +82,10 @@ public abstract class PersistentProjectileEntityMixin implements ProjectileEntit
     @Inject(method = "writeCustomDataToNbt", at = @At("RETURN"))
     protected void writeCustomDataToNbt(NbtCompound nbt, CallbackInfo info) {
         nbt.putBoolean("ender", ender);
-        nbt.putBoolean("evio", evio);
+        nbt.putBoolean("purity", purity);
         nbt.putInt("explosive", explosive);
         nbt.putInt("exposing", exposing);
-        nbt.putBoolean("initialized", initialized);
+        nbt.putBoolean("neptune", neptune);
         nbt.putBoolean("sharpshooter", sharpshooter);
         nbt.putBoolean("shot_by_player", playerOwner);
         if (thisEntity instanceof TridentEntity) {
@@ -94,10 +96,10 @@ public abstract class PersistentProjectileEntityMixin implements ProjectileEntit
     @Inject(method = "readCustomDataFromNbt", at = @At("RETURN"))
     protected void readCustomDataFromNbt(NbtCompound nbt, CallbackInfo info) {
         ender = nbt.getBoolean("ender");
-        evio = nbt.getBoolean("evio");
+        purity = nbt.getBoolean("purity");
         explosive = nbt.getInt("explosive");
         exposing = nbt.getInt("exposing");
-        initialized = nbt.getBoolean("initialized");
+        neptune = nbt.getBoolean("neptune");
         sharpshooter = nbt.getBoolean("sharpshooter");
         playerOwner = nbt.getBoolean("shot_by_player");
         if (thisEntity instanceof TridentEntity) {
@@ -110,7 +112,7 @@ public abstract class PersistentProjectileEntityMixin implements ProjectileEntit
             at = @At(value = "INVOKE",
                     target = "Lnet/minecraft/world/World;addParticle(Lnet/minecraft/particle/ParticleEffect;DDDDDD)V"))
     private void particle(Args args){
-        if(evio){
+        if(purity){
             this.setDamage(0);
         }
         if (explosive > 0) {

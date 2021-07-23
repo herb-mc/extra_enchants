@@ -10,10 +10,12 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.util.math.Vec3d;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArgs;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
@@ -27,14 +29,11 @@ public abstract class PlayerEntityMixin implements AttributeModCommons, UUIDComm
             method = "getBlockBreakingSpeed",
             at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/entity/player/PlayerInventory;getBlockBreakingSpeed(Lnet/minecraft/block/BlockState;)F"))
     private float f(float f) {
-        int i = EnchantmentHelper.getEquipmentLevel(ModEnchants.TERRAFORMING,thisEntity);
-        if(i > 0 && f > 1.0) f += 58.0F;
-        return f;
+        return (EnchantmentHelper.getEquipmentLevel(ModEnchants.TERRAFORMING,thisEntity) > 0 && f > 1.0) ? f + 58 : f;
     }
 
     @Inject(at = @At("HEAD"), method = "tick")
     public void tick(CallbackInfo info) {
-
         int i = EnchantmentHelper.getEquipmentLevel(ModEnchants.DEXTROUS, thisEntity);
         removeAttribute(thisEntity, EntityAttributes.GENERIC_ATTACK_SPEED, DEXTERITY_ATTRIBUTE_ID);
         if (i > 0)

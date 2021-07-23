@@ -24,6 +24,7 @@ import static com.herb_mc.extra_enchants.ExtraEnchantsMod.MOD_ID;
 public class ReloadListener extends JsonDataLoader implements SimpleSynchronousResourceReloadListener {
 
     static int loaded;
+    static int disabled;
 
     public static final Identifier IDENTIFIER = new Identifier(MOD_ID, "enchantment_configuration");
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting()
@@ -41,8 +42,10 @@ public class ReloadListener extends JsonDataLoader implements SimpleSynchronousR
     @Override
     public void apply(Map<Identifier, JsonElement> loader, ResourceManager manager, Profiler profiler) {
         loaded = 0;
+        disabled = 0;
         for (Identifier id : manager.findResources("enchantment_configuration", path -> path.endsWith(".json"))) {
             try (InputStream stream = manager.getResource(id).getInputStream()) {
+                String name = id.toString().replace("extra_enchants:enchantment_configuration/", "").replace(".json", "");
                 BufferedReader br = new BufferedReader(new InputStreamReader(stream));
                 String line = "";
                 StringBuilder strBuilder = new StringBuilder();
@@ -53,6 +56,8 @@ public class ReloadListener extends JsonDataLoader implements SimpleSynchronousR
                 JsonObject file = new JsonParser().parse(strBuilder.toString()).getAsJsonObject();
                 boolean scalable = file.get("type").getAsString().equals("scalable");
                 boolean enabled = file.get("available").getAsBoolean();
+                if (!enabled)
+                    disabled++;
                 Enchantment.Rarity rarity = Enchantment.Rarity.valueOf(file.get("rarity").getAsString().toUpperCase());
                 int minPower = file.get("min_power").getAsInt();
                 int minPowerDelta = 0;
@@ -70,19 +75,21 @@ public class ReloadListener extends JsonDataLoader implements SimpleSynchronousR
                 Enchantment[] incompatibleEnchantments = new Enchantment[incompatArray.size()];
                 if (incompatibleEnchantments.length > 0) {
                     int index = 0;
-                    while (iter.hasNext())
+                    while (iter.hasNext()) {
                         incompatibleEnchantments[index] = ModEnchants.valueOf(iter.next().getAsString().toLowerCase());
+                        index++;
+                    }
                 }
                 if (scalable)
-                    ((ScalableEnchantBuilder) ModEnchants.enchantments.get(file.get("name").getAsString())).setAttributes(enabled, rarity, minPower, minPowerDelta, maxPower, maxPowerDelta, maxLevel, isCurse, isTreasure, incompatibleEnchantments);
+                    ((ScalableEnchantBuilder) ModEnchants.enchantments.get(name)).setAttributes(enabled, rarity, minPower, minPowerDelta, maxPower, maxPowerDelta, maxLevel, isCurse, isTreasure, incompatibleEnchantments);
                 else
-                    ((EnchantBuilder) ModEnchants.enchantments.get(file.get("name").getAsString())).setAttributes(enabled, rarity, minPower, maxPower, maxLevel, isCurse, isTreasure, incompatibleEnchantments);
+                    ((EnchantBuilder) ModEnchants.enchantments.get(name)).setAttributes(enabled, rarity, minPower, maxPower, maxLevel, isCurse, isTreasure, incompatibleEnchantments);
                 loaded++;
             } catch (Exception e) {
                 EXTRA_ENCHANTS_LOGGER.error("Error occurred while loading resource json " + id.toString(), e);
             }
         }
-        EXTRA_ENCHANTS_LOGGER.info("Loaded {} enchantments", loaded);
+        EXTRA_ENCHANTS_LOGGER.info("Loaded {} enchantments, {} disabled", loaded, disabled);
     }
 
     @Override

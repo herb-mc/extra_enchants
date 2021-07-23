@@ -12,7 +12,9 @@ public abstract class TridentEntityMixin extends PersistentProjectileEntityMixin
             method = "onEntityHit",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;damage(Lnet/minecraft/entity/damage/DamageSource;F)Z"))
     private float f(float f) {
-        return evio ? 1 : sharpshooter ? f + 4 : f;
+        if (neptune)
+            f += 8;
+        return purity ? 1 : sharpshooter ? (f + 4) : f;
     }
 
 }
