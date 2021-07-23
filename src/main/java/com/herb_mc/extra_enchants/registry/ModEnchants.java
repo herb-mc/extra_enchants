@@ -138,7 +138,7 @@ public class ModEnchants {
             1,
             true,
             true,
-            new Enchantment[]{ModEnchants.CORE_OF_THE_BLOOD_GOD, ModEnchants.CORE_OF_PURITY, ModEnchants.CORE_OF_THE_VOID, ModEnchants.CORE_OF_NEPTUNE}
+            new Enchantment[]{ModEnchants.CORE_OF_THE_BLOOD_GOD, ModEnchants.CORE_OF_PURITY, ModEnchants.CORE_OF_THE_WARP, ModEnchants.CORE_OF_NEPTUNE}
     );
     // Core of Purity
     public static Enchantment CORE_OF_PURITY = new EnchantBuilder(
@@ -150,7 +150,7 @@ public class ModEnchants {
             1,
             true,
             true,
-            new Enchantment[]{ModEnchants.CORE_OF_THE_BLOOD_GOD, ModEnchants.CORE_OF_PURITY, ModEnchants.CORE_OF_THE_VOID, ModEnchants.CORE_OF_NEPTUNE}
+            new Enchantment[]{ModEnchants.CORE_OF_THE_BLOOD_GOD, ModEnchants.CORE_OF_PURITY, ModEnchants.CORE_OF_THE_WARP, ModEnchants.CORE_OF_NEPTUNE}
     );
     // Core of the Blood God
     public static Enchantment CORE_OF_THE_BLOOD_GOD = new EnchantBuilder(
@@ -162,10 +162,10 @@ public class ModEnchants {
             1,
             true,
             true,
-            new Enchantment[]{ModEnchants.CORE_OF_THE_BLOOD_GOD, ModEnchants.CORE_OF_PURITY, ModEnchants.CORE_OF_THE_VOID, ModEnchants.CORE_OF_NEPTUNE}
+            new Enchantment[]{ModEnchants.CORE_OF_THE_BLOOD_GOD, ModEnchants.CORE_OF_PURITY, ModEnchants.CORE_OF_THE_WARP, ModEnchants.CORE_OF_NEPTUNE}
     );
-    // Core of the Void
-    public static Enchantment CORE_OF_THE_VOID = new EnchantBuilder(
+    // Core of the Warp
+    public static Enchantment CORE_OF_THE_WARP = new EnchantBuilder(
             Enchantment.Rarity.VERY_RARE,
             EnchantmentTarget.ARMOR_CHEST,
             new EquipmentSlot[]{EquipmentSlot.CHEST},
@@ -174,7 +174,7 @@ public class ModEnchants {
             1,
             true,
             true,
-            new Enchantment[]{ModEnchants.CORE_OF_THE_BLOOD_GOD, ModEnchants.CORE_OF_PURITY, ModEnchants.CORE_OF_THE_VOID, ModEnchants.CORE_OF_NEPTUNE}
+            new Enchantment[]{ModEnchants.CORE_OF_THE_BLOOD_GOD, ModEnchants.CORE_OF_PURITY, ModEnchants.CORE_OF_THE_WARP, ModEnchants.CORE_OF_NEPTUNE}
     );
     // Dextrous
     public static Enchantment DEXTROUS = new ScalableEnchantBuilder(
@@ -504,7 +504,7 @@ public class ModEnchants {
         enchantments.put("core_of_neptune", ModEnchants.CORE_OF_NEPTUNE);
         enchantments.put("core_of_purity", ModEnchants.CORE_OF_PURITY);
         enchantments.put("core_of_the_blood_god", ModEnchants.CORE_OF_THE_BLOOD_GOD);
-        enchantments.put("core_of_the_void", ModEnchants.CORE_OF_THE_VOID);
+        enchantments.put("core_of_the_warp", ModEnchants.CORE_OF_THE_WARP);
         enchantments.put("dextrous", ModEnchants.DEXTROUS);
         enchantments.put("dwarven", ModEnchants.DWARVEN);
         enchantments.put("ender", ModEnchants.ENDER);
@@ -585,7 +585,7 @@ public class ModEnchants {
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "core_of_neptune"), CORE_OF_NEPTUNE);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "core_of_purity"), CORE_OF_PURITY);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "core_of_the_blood_god"), CORE_OF_THE_BLOOD_GOD);
-        Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "core_of_the_void"), CORE_OF_THE_VOID);
+        Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "core_of_the_warp"), CORE_OF_THE_WARP);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "dextrous"), DEXTROUS);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "dwarven"), DWARVEN);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "ender"), ENDER);

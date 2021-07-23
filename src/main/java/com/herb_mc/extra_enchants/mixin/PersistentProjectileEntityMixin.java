@@ -13,6 +13,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.TridentEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -32,7 +33,7 @@ import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 import java.util.Random;
 
 @Mixin(PersistentProjectileEntity.class)
-public abstract class PersistentProjectileEntityMixin implements ProjectileEntityInterfaceMixin {
+public abstract class PersistentProjectileEntityMixin {
 
     @Shadow public abstract void setDamage(double damage);
 
@@ -41,8 +42,8 @@ public abstract class PersistentProjectileEntityMixin implements ProjectileEntit
     @Shadow public abstract boolean isCritical();
 
     @Unique private final PersistentProjectileEntity thisEntity = (PersistentProjectileEntity) (Object) this;
-    @Unique public int explosive = 0;
-    @Unique public boolean ender = false;
+    @Unique public int explosive;
+    @Unique public boolean ender;
     @Unique public boolean purity = false;
     @Unique public int exposing = 0;
     @Unique public boolean critical = false;
@@ -55,8 +56,9 @@ public abstract class PersistentProjectileEntityMixin implements ProjectileEntit
     @Inject(at = @At("TAIL"), method = "setOwner")
     protected void setOwner(@Nullable Entity entity, CallbackInfo info) {
         if (entity instanceof LivingEntity) {
-            if (EnchantmentHelper.getEquipmentLevel(ModEnchants.ARROW_SPEED, (LivingEntity) entity) > 0) {
-                int i = EnchantmentHelper.getEquipmentLevel(ModEnchants.ARROW_SPEED, (LivingEntity) thisEntity.getOwner());
+            ItemStack stack = ((LivingEntity) entity).getStackInHand(((LivingEntity) entity).getActiveHand());
+            if (EnchantmentHelper.getLevel(ModEnchants.ARROW_SPEED, stack) > 0) {
+                int i = EnchantmentHelper.getLevel(ModEnchants.ARROW_SPEED, stack);
                 thisEntity.setVelocity(thisEntity.getVelocity().multiply((20.0F + 3.0F * i) / 20.0F));
                 thisEntity.setDamage(thisEntity.getDamage() + 0.25 * i);
             }
@@ -66,13 +68,13 @@ public abstract class PersistentProjectileEntityMixin implements ProjectileEntit
             }
             if (EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_NEPTUNE, (LivingEntity) entity) > 0)
                 neptune = true;
-            if (EnchantmentHelper.getEquipmentLevel(ModEnchants.EXPOSING, (LivingEntity) entity) > 0)
+            if (EnchantmentHelper.getLevel(ModEnchants.EXPOSING, stack) > 0)
                 exposing = EnchantmentHelper.getEquipmentLevel(ModEnchants.EXPOSING, (LivingEntity) entity);
             if (EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_PURITY, (LivingEntity) entity) > 0)
                 purity = true;
-            if (EnchantmentHelper.getEquipmentLevel(ModEnchants.EXPLOSIVE, (LivingEntity) entity) > 0)
-                explosive += EnchantmentHelper.getEquipmentLevel(ModEnchants.EXPLOSIVE, (LivingEntity) entity);
-            else if (EnchantmentHelper.getEquipmentLevel(ModEnchants.ENDER, (LivingEntity) entity) > 0)
+            if (EnchantmentHelper.getLevel(ModEnchants.EXPLOSIVE, stack) > 0)
+                explosive += EnchantmentHelper.getLevel(ModEnchants.EXPLOSIVE, stack);
+            else if (EnchantmentHelper.getLevel(ModEnchants.ENDER, stack) > 0)
                 ender = true;
             if (entity instanceof PlayerEntity)
                 playerOwner = true;

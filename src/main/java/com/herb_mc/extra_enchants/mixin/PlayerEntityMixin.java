@@ -29,7 +29,7 @@ public abstract class PlayerEntityMixin implements AttributeModCommons, UUIDComm
             method = "getBlockBreakingSpeed",
             at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/entity/player/PlayerInventory;getBlockBreakingSpeed(Lnet/minecraft/block/BlockState;)F"))
     private float f(float f) {
-        return (EnchantmentHelper.getEquipmentLevel(ModEnchants.TERRAFORMING,thisEntity) > 0 && f > 1.0) ? f + 58 : f;
+        return (EnchantmentHelper.getLevel(ModEnchants.TERRAFORMING, thisEntity.getStackInHand(thisEntity.getActiveHand())) > 0 && f > 1.0) ? f + 58 : f;
     }
 
     @Inject(at = @At("HEAD"), method = "tick")

@@ -18,7 +18,6 @@
     "PlayerEntityMixin",
     "PlayerInventoryMixin",
     "ServerPlayerEntityMixin",
-    "ProjectileEntityInterfaceMixin",
     "SwoopGoalMixin",
     "TridentEntityMixin",
     "TridentItemMixin"

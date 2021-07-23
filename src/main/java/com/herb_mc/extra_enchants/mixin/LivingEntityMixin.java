@@ -34,6 +34,7 @@ import java.util.Objects;
 import java.util.Random;
 
 import static net.minecraft.enchantment.EnchantmentHelper.getEquipmentLevel;
+import static net.minecraft.enchantment.EnchantmentHelper.getLevel;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBaseEntityInterfaceMixin, AttributeModCommons, UUIDCommons {
@@ -60,8 +61,8 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
 
     @Inject(at = @At("HEAD"), method = "onDeath")
     protected void onDeath(DamageSource source, CallbackInfo info){
-        if (source.getAttacker() instanceof LivingEntity) {
-            ((LivingEntity) source.getAttacker()).heal((float) getEquipmentLevel(ModEnchants.LIFESTEAL, (LivingEntity) source.getAttacker()));
+        if (source.getAttacker() instanceof LivingEntity && !source.isProjectile()) {
+            ((LivingEntity) source.getAttacker()).heal((float) getLevel(ModEnchants.LIFESTEAL, ((LivingEntity) source.getAttacker()).getStackInHand(thisEntity.getActiveHand())));
         }
     }
 
@@ -82,8 +83,8 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
     private DamageSource source(DamageSource source) {
         level = 0;
         if (source.getAttacker() != null)
-            if (source.getAttacker() instanceof LivingEntity)
-                level = getEquipmentLevel(ModEnchants.CLEAVING, (LivingEntity) source.getAttacker());
+            if (source.getAttacker() instanceof LivingEntity && !source.isProjectile())
+                level = getLevel(ModEnchants.CLEAVING, ((LivingEntity) source.getAttacker()).getStackInHand(thisEntity.getActiveHand()));
         return source;
     }
 
@@ -112,7 +113,7 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
         i = EnchantmentHelper.getEquipmentLevel(ModEnchants.BLAZE_AFFINITY, thisEntity);
         if (i > 0 && thisEntity.isOnFire())
             amount *= 0.95;
-        i = EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_THE_VOID, thisEntity);
+        i = EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_THE_WARP, thisEntity);
         if (i > 0)
             amount *= 0.6;
         if (source.getSource() != null && source.getSource() instanceof LivingEntity) {
@@ -265,7 +266,7 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
             modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, 1, CORE_OF_THE_BLOOD_GOD_ATTRIBUTE_ID, "bld_attack_damage", 0.15, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
             modAttributeBase(thisEntity, EntityAttributes.GENERIC_MAX_HEALTH, 1, CORE_OF_THE_BLOOD_GOD_ATTRIBUTE_ID, "bld_attack_damage", 1.0, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
         }
-        i = getEquipmentLevel(ModEnchants.CORE_OF_THE_VOID, thisEntity);
+        i = getEquipmentLevel(ModEnchants.CORE_OF_THE_WARP, thisEntity);
         removeAttribute(thisEntity, EntityAttributes.GENERIC_MAX_HEALTH, CORE_OF_THE_VOID_ATTRIBUTE_ID);
         removeAttribute(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, CORE_OF_THE_VOID_ATTRIBUTE_ID);
         if (i > 0) {
@@ -293,7 +294,7 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
                 if (result.getEntity() instanceof LivingEntity)
                     ((LivingEntity) result.getEntity()).addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 2, 20, true, false, false));
         }
-        i = getEquipmentLevel(ModEnchants.BARBARIC, thisEntity);
+        i = getLevel(ModEnchants.BARBARIC, thisEntity.getStackInHand(thisEntity.getActiveHand()));
         removeAttribute(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, BARBARIC_ATTRIBUTE_ID);
         if (i > 0)
             modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, 20 - this.getArmor(), BARBARIC_ATTRIBUTE_ID, "bar_attack_damage", 0.04, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
