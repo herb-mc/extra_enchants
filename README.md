@@ -6,7 +6,7 @@ Latest: v0.0.9 for Minecraft 1.17.1<br>
 Requires Fabric Loader 0.11.6 and Fabric API 0.37.0+1.17
 
 ## Enchantment List
-######This list only provides a basic description of each enchantment - [click here](info/index.md) for more detailed descriptions
+##### *This list only provides a basic description of each enchantment - [click here](info/index.md) for more detailed descriptions*
 
 #### Bow
 
@@ -101,6 +101,6 @@ Requires Fabric Loader 0.11.6 and Fabric API 0.37.0+1.17
 *Core of the Warp* (curse) (treasure) - The power of the warp enhances your mobility and endurance, but your vitality is decreased and you randomly teleport in certain biomes
 
 #### Experimental
-###### Experimental enchants are disabled normally, and can only be enabled via datapack, as they are not in a complete state.
+##### *Experimental enchants are disabled normally, and can only be enabled via datapack, as they are not in a complete state.*
 
 *Surface Skimmer* - Allows the user to walk on water
