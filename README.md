@@ -257,6 +257,16 @@ The effect does not scale.</details>
 <details><summary>Detailed description</summary>Slipperiness is set to 1.0 while equipped. (Ice/Packed Ice default to 0.98)<br>
 The effect does not scale.</details>
 
+### *Soulbound*
+- Item stays in inventory after death.
+- Compatible equipment: Breakable
+- Incompatible enchantments: Curse of Vanishing
+- Max level: 1
+- Rarity: Very Rare
+- Type: Treasure
+<details><summary>Detailed description</summary>Items with soulbound will be skipped during the dropAll() check. Armor and offhand items stay in their respective slots.<br>
+The effect does not scale.</details>
+
 ### *Steadfast*
 - Decreases the weapon drawing movement penalty.
 - Compatible equipment: Leggings
