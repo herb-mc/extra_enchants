@@ -348,7 +348,7 @@ public class ModEnchants {
             false,
             new Enchantment[]{ModEnchants.DWARVEN, ModEnchants.SHARPSHOOTER, ModEnchants.NIGHT_VISION, ModEnchants.PSYCHIC}
     );
-    // Slippery
+    // Slimey
     public static Enchantment SLIMEY = new EnchantBuilder(
             Enchantment.Rarity.RARE,
             EnchantmentTarget.ARMOR_FEET,
@@ -359,6 +359,18 @@ public class ModEnchants {
             false,
             false,
             new Enchantment[]{ModEnchants.LEAPING, ModEnchants.LUNGING, ModEnchants.WINDSTEP, ModEnchants.SLIMEY}
+    );
+    // Soulbound
+    public static Enchantment SOULBOUND = new EnchantBuilder(
+            Enchantment.Rarity.VERY_RARE,
+            EnchantmentTarget.BREAKABLE,
+            new EquipmentSlot[]{},
+            20,
+            50,
+            1,
+            false,
+            true,
+            new Enchantment[]{Enchantments.VANISHING_CURSE}
     );
     // Steadfast
     public static Enchantment STEADFAST = new ScalableEnchantBuilder(
@@ -507,6 +519,7 @@ public class ModEnchants {
         enchantments.put("psychic", ModEnchants.PSYCHIC);
         enchantments.put("sharpshooter", ModEnchants.SHARPSHOOTER);
         enchantments.put("slimey", ModEnchants.SLIMEY);
+        enchantments.put("soulbound", ModEnchants.SOULBOUND);
         enchantments.put("steadfast", ModEnchants.STEADFAST);
         enchantments.put("surface_skimmer", ModEnchants.SURFACE_SKIMMER);
         enchantments.put("swiftness", ModEnchants.SWIFTNESS);
@@ -587,6 +600,7 @@ public class ModEnchants {
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "psychic"), PSYCHIC);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "sharpshooter"), SHARPSHOOTER);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "slimey"), SLIMEY);
+        Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "soulbound"), SOULBOUND);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "steadfast"), STEADFAST);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "surface_skimmer"), SURFACE_SKIMMER);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "swiftness"), SWIFTNESS);
