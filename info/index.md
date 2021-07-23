@@ -8,33 +8,33 @@
 - [Boosting](#boosting)
 - [Bounding](#bounding)
 - [Cleaving](#cleaving)
-- [Core of Neptune]()
-- [Core of Purity]()
-- [Core of the Blood God]()
-- [Core of the Warp]()
-- [Dextrous]()
-- [Dwarven]()
-- [Ender]()
-- [Explosive]()
-- [Exposing]()
-- [Featherweight]()
-- [Launching]()
-- [Leaping]()
-- [Lifesteal]()
-- [Lunging]()
-- [Night Vision]()
-- [Psychic]()
-- [Sharpshooter]()
-- [Slimey]()
-- [Soulbound]()
-- [Steadfast]()
-- [Surface Skimmer]()
-- [Swiftness]()
-- [Terraforming]()
-- [Tough]()
-- [Warding]()
-- [Weighted]()
-- [Windstep]()
+- [Core of Neptune](#core-of-neptune)
+- [Core of Purity](#core-of-purity)
+- [Core of the Blood God](#core-of-the-blood-god)
+- [Core of the Warp](#core-of-the-warp)
+- [Dextrous](#dextrous)
+- [Dwarven](#dwarven)
+- [Ender](#ender)
+- [Explosive](#explosive)
+- [Exposing](#exposing)
+- [Featherweight](#featherweight)
+- [Launching](#launching)
+- [Leaping](#leaping)
+- [Lifesteal](#lifesteal)
+- [Lunging](#lunging)
+- [Night Vision](#night-vision)
+- [Psychic](#psychic)
+- [Sharpshooter](#sharpshooter)
+- [Slimey](#slimey)
+- [Soulbound](#soulbound)
+- [Steadfast](#steadfast)
+- [Surface Skimmer](#surface-skimmer)
+- [Swiftness](#swiftness)
+- [Terraforming](#terraforming)
+- [Tough](#tough)
+- [Warding](#warding)
+- [Weighted](#weighted)
+- [Windstep](#windstep)
 ---
 [Back to top](#enchantment-list)
 
@@ -43,7 +43,6 @@
 - Compatible equipment: Chestplates
 - Max level: 3
 - Rarity: Uncommon
----
 ### Technical description:
 - +1.0 range per level. Only applies to block placement/destruction, not attacking.
 ---
@@ -54,7 +53,6 @@
 - Incompatible enchantments: Power
 - Max level: 3
 - Rarity: Common
----
 ### Technical description:
 - Increases arrow velocity by 15% and adds 0.25 to the arrow's damage attribute per level. Roughly equivalent to Power at the same level.<br>
   Levels beyond 4 may result in visual bugs and quirky arrow behavior.
@@ -66,7 +64,6 @@
 - Incompatible enchants: Lifesteal
 - Max level: 1
 - Rarity: Rare
----
 ### Technical description:
 - The damage increase is a multiplier applied to the total damage. The value at no armor is 1.8x, with a 0.04 decrease per armor point.
 ---
@@ -78,7 +75,6 @@
 - Incompatible enchantments: All Protection-type enchants
 - Max level: 3
 - Rarity: Uncommon
----
 ### Technical description:
 - Extra damage is added directly. The precise formula for determining the amount of damage added is the following:<br>
 
@@ -95,7 +91,6 @@
 - Max level: 1
 - Rarity: Uncommon
 - Type: Treasure
----
 ### Technical description:
 - +10% damage, +5% damage reduction while on fire. Does not decrease fire damage.
 ---
@@ -107,7 +102,6 @@
 - Incompatible enchantments: Steadfast
 - Max level: 3
 - Rarity: Uncommon
----
 ### Technical description:
 - Gain a (40 * level)% speed boost that lasts for (20 * level) ticks. After stopping a sprint or reaching the maximum time, initiates a cooldown of 60 ticks that only ticks while not sprinting.
 ---
@@ -119,7 +113,6 @@
 - Incompatible enchantments: Surface Skimmer, Swiftness
 - Max level: 3
 - Rarity: Common
----
 ### Technical description:
 - Increases jump height by 10% per level.
 ---
@@ -131,7 +124,6 @@
 - Incompatible enchantments: Damage increasing enchantments
 - Max level: 4
 - Rarity: Uncommon
----
 ### Technical description:
 - The amount of armor ignored scales with level, with diminishing returns. The precise formula for determining the percentage ignored is the following:
 
@@ -149,7 +141,6 @@
 - Max level: 1
 - Rarity: Very rare
 - Type: Curse, Treasure
----
 ### Technical description:
 - Air loss in water is 4x faster, while air gain outside of water is roughly 8x slower. Sets swimming drag coefficient to 0.97.<br>
   Scales attack damage/speed according to the following formula:
@@ -170,7 +161,6 @@
 - Max level: 1
 - Rarity: Very rare
 - Type: Curse, Treasure
----
 ### Technical description:
 - Doubled max health, -10% movement speed, damage dealt is set to 1 before damage calculation. Incoming damage is reduced by 70% if the user has at least 60% of their max health remaining.
 ---
@@ -183,7 +173,6 @@
 - Max level: 1
 - Rarity: Very rare
 - Type: Curse, Treasure
----
 ### Technical description:
 - Doubles max health, +15% attack damage, -20% armor, 25% chance totake 80% increased damage from entities.<br>
   Effect does not scale.</details>
@@ -197,7 +186,6 @@
 - Max level: 1
 - Rarity: Very rare
 - Type: Curse, Treasure
----
 ### Technical description:
 - -50% max health, 40% raw damage reduction before damage calculation, +15% movement speed.
 ---
@@ -209,7 +197,6 @@
 - Incompatible enchantments: Weighted, Thorns
 - Max level: 2
 - Rarity: Rare
----
 ### Technical description:
 - Increases attack speed by 10% per level.
 ---
@@ -221,7 +208,6 @@
 - Incompatible enchantments: Sharpshooter, Night Vision, Psychic
 - Max level: 1
 - Rarity: Rare
----
 ### Technical description:
 - A trail of particles will emanate from the player's head towards the nearest ore-type block.
 ---
@@ -233,7 +219,6 @@
 - Incompatible enchantments: Power, Infinity, Explosive
 - Max level: 1
 - Rarity: Rare
----
 ### Technical description:
 - Teleports the user to the arrow's location and inflicts the user with 2 fall damage if it hits the ground. If the arrow hits a mob, it will instead teleport the user to the mob and inflict 1 fall damage.
 ---
@@ -245,7 +230,6 @@
 - Incompatible enchantments: Power, Infinity, Ender
 - Max level: 2
 - Rarity: Rare
----
 ### Technical description:
 - The resultant explosion has a power of lvl / 2 + 0.5, if the arrow hits the ground. The explosion power will match the level on direct hits. Arrows deal damage normally during dragon perching. None of the explosions deal block damage. (This will eventually be configurable)
 ---
@@ -256,7 +240,6 @@
 - Compatible equipment: Crossbows
 - Max level: 3
 - Rarity: Common
----
 ### Technical description:
 - Inflicts 40 extra ticks, or 2 seconds, of Glowing 20 (no particle) per tick.
 ---
@@ -268,7 +251,6 @@
 - Incompatible enchantments: Feather Falling, Slimey
 - Max level: 3
 - Rarity: Uncommon
----
 ### Technical description:
 - Divides fall acceleration by (level + 1). Divides fall distance by (level * 2) before fall damage calculation. Overridden by Slow Falling effect.
 ---
@@ -279,7 +261,6 @@
 - Compatible equipment: Tridents
 - Max level: 3
 - Rarity: Rare
----
 ### Technical description:
 - Adds ((rotation unit vector) * level) to user velocity upon a successful trident throw.
 ---
@@ -291,7 +272,6 @@
 - Incompatible enchantments: Lunging, Windstep
 - Max level: 2
 - Rarity: Uncommon
----
 ### Technical description:
 - Increases jump velocity by 0.07 per level. Approximately +0.5 blocks of jump height up until level 8.
 ---
@@ -302,7 +282,6 @@
 - Compatible equipment: Swords
 - Max level: 3
 - Rarity: Rare
----
 ### Technical description:
 - Heals 4% of damage dealt per level. Heal amount has an absolute cap of 3. On kill, directly heals (level) health. The healing factor is hardcapped at 3 health.
 ---
@@ -314,7 +293,6 @@
 - Incompatible enchantments: Leaping, Windstep
 - Max level: 3
 - Rarity: Uncommon
----
 ### Technical description:
 - 10% increase per level to horizontal velocities while jumping.
 ---
@@ -326,7 +304,6 @@
 - Incompatible enchantments: Dwarven, Sharpshooter, Psychic
 - Max level: 1
 - Rarity: Rare
----
 ### Technical description:
 - User is given Night Vision while sneaking. This will override any current Night Vision effect.
 ---
@@ -338,7 +315,6 @@
 - Incompatible enchantments: Dwarven, Sharpshooter, Night Vision
 - Max level: 1
 - Rarity: Rare
----
 ### Technical description:
 - Any entity within 7 blocks of the user's line of sight (disregarding blocks) will receive Glowing 20 while the user is sneaking.
 ---
@@ -350,7 +326,6 @@
 - Incompatible enchantments: Dwarven, Night Vision, Psychic
 - Max level: 1
 - Rarity: Rare
----
 ### Technical description:
 - FOV is multiplied by 1/3. +1 damage to all fired arrows. +5 damage to thrown tridents.
 ---
@@ -362,7 +337,6 @@
 - Incompatible enchantments: Feather Falling, Featherweight
 - Max level: 1
 - Rarity: Rare
----
 ### Technical description:
 - Slipperiness is set to 1.0 while equipped. (Ice/Packed Ice default to 0.98)
 ---
@@ -375,7 +349,6 @@
 - Max level: 1
 - Rarity: Very Rare
 - Type: Treasure
----
 ### Technical description:
 - Items with soulbound will be skipped during the dropAll() check. Armor and offhand items stay in their respective slots.
 ---
@@ -387,20 +360,19 @@
 - Incompatible enchantments: Boosting
 - Max level: 2
 - Rarity: Uncommon
----
 ### Technical description:
 - While drawing a bow, crossbow or trident: movement speed multiplied by (level + 1).
 ---
 [Back to top](#enchantment-list)
 
-## *Surface Skimmer (Experimental)*
+## *Surface Skimmer*
+- **Experimental**: disabled by default
 - Allows the user to walk on water.
 - Must be enabled via datapack
 - Compatible equipment: Horse armors
 - Incompatible enchantments: Bounding, Swiftness
 - Max level: 3
 - Rarity: Common
----
 ### Technical description:
 - Horses with this equipped will always float in and eventually stand on top of water.
 ---
@@ -412,7 +384,6 @@
 - Incompatible enchantments: Bounding, Surface Skimmer
 - Max level: 3
 - Rarity: Common
----
 ### Technical description:
 - Increases speed by 10% per level.
 ---
@@ -424,7 +395,6 @@
 - Incompatible enchantments: Fortune, Silk Touch
 - Max level: 1
 - Rarity: Rare
----
 ### Technical description:
 - Increases tool speed by 58. This allows a Terraforming Diamond/Netherite Pickaxe to break stone instantly. Terraforming + Efficiency V allows Diamond/Netherite Pickaxes to instantly break some ores and deepslate.
 ---
@@ -436,7 +406,6 @@
 - Incompatible enchantments: Damage reduction-type enchantments
 - Max level: 4
 - Rarity: Uncommon
----
 ### Technical description:
 - Decreases incoming damage by 3% per level before armor is applied. May be more effective than protection in certain circumstances.
 ---
@@ -447,7 +416,6 @@
 - Compatible equipment: Horse armors
 - Max level: 1
 - Rarity: Uncommon
----
 ### Technical description:
 - Prevents phantoms from swooping/attacking similar to cats, with a smaller area of effect.
 ---
@@ -459,7 +427,6 @@
 - Incompatible enchantments: Dextrous, Thorns
 - Max level: 2
 - Rarity: Rare
----
 ### Technical description:
 - +20% damage, -15% attack speed per level.
 ---
@@ -471,6 +438,5 @@
 - Incompatible enchantments: Leaping, Lunging
 - Max level: 1
 - Rarity: Rare
----
 ### Technical description:
 - +0.4 step height. (default is 0.6 for entities other than horses)
