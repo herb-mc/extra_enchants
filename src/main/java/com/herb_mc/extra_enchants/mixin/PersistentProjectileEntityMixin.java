@@ -56,28 +56,33 @@ public abstract class PersistentProjectileEntityMixin {
     @Inject(at = @At("TAIL"), method = "setOwner")
     protected void setOwner(@Nullable Entity entity, CallbackInfo info) {
         if (entity instanceof LivingEntity) {
-            ItemStack stack = ((LivingEntity) entity).getStackInHand(((LivingEntity) entity).getActiveHand());
-            if (EnchantmentHelper.getLevel(ModEnchants.ARROW_SPEED, stack) > 0) {
-                int i = EnchantmentHelper.getLevel(ModEnchants.ARROW_SPEED, stack);
-                thisEntity.setVelocity(thisEntity.getVelocity().multiply((20.0F + 3.0F * i) / 20.0F));
-                thisEntity.setDamage(thisEntity.getDamage() + 0.25 * i);
-            }
             if (EnchantmentHelper.getEquipmentLevel(ModEnchants.SHARPSHOOTER, (LivingEntity) entity) > 0 && entity.isSneaking()) {
                 thisEntity.setDamage(thisEntity.getDamage() + EnchantmentHelper.getEquipmentLevel(ModEnchants.SHARPSHOOTER, (LivingEntity) entity));
                 sharpshooter = true;
             }
             if (EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_NEPTUNE, (LivingEntity) entity) > 0)
                 neptune = true;
-            if (EnchantmentHelper.getLevel(ModEnchants.EXPOSING, stack) > 0)
-                exposing = EnchantmentHelper.getEquipmentLevel(ModEnchants.EXPOSING, (LivingEntity) entity);
             if (EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_PURITY, (LivingEntity) entity) > 0)
                 purity = true;
-            if (EnchantmentHelper.getLevel(ModEnchants.EXPLOSIVE, stack) > 0)
-                explosive += EnchantmentHelper.getLevel(ModEnchants.EXPLOSIVE, stack);
-            else if (EnchantmentHelper.getLevel(ModEnchants.ENDER, stack) > 0)
-                ender = true;
-            if (entity instanceof PlayerEntity)
-                playerOwner = true;
+            if (((LivingEntity) entity).getActiveHand() != null) {
+                ItemStack stack = ((LivingEntity) entity).getStackInHand(((LivingEntity) entity).getActiveHand());
+                if (EnchantmentHelper.getLevel(ModEnchants.EXPOSING, stack) > 0)
+                    exposing = EnchantmentHelper.getEquipmentLevel(ModEnchants.EXPOSING, (LivingEntity) entity);
+                if (EnchantmentHelper.getLevel(ModEnchants.EXPLOSIVE, stack) > 0)
+                    explosive += EnchantmentHelper.getLevel(ModEnchants.EXPLOSIVE, stack);
+                else if (EnchantmentHelper.getLevel(ModEnchants.ENDER, stack) > 0)
+                    ender = true;
+                if (entity instanceof PlayerEntity)
+                    playerOwner = true;
+            }
+            else if (((LivingEntity) entity).getMainHandStack() != null) {
+                if (EnchantmentHelper.getLevel(ModEnchants.EXPOSING, ((LivingEntity) entity).getMainHandStack()) > 0)
+                    exposing = EnchantmentHelper.getEquipmentLevel(ModEnchants.EXPOSING, (LivingEntity) entity);
+                if (EnchantmentHelper.getLevel(ModEnchants.EXPLOSIVE, ((LivingEntity) entity).getMainHandStack()) > 0)
+                    explosive += EnchantmentHelper.getLevel(ModEnchants.EXPLOSIVE, ((LivingEntity) entity).getMainHandStack());
+                else if (EnchantmentHelper.getLevel(ModEnchants.ENDER, ((LivingEntity) entity).getMainHandStack()) > 0)
+                    ender = true;
+            }
         }
     }
 

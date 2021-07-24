@@ -1,6 +1,6 @@
 # Extra Enchants
 
-Adds 34 obtainable equipment enchants and 1 experimental enchant, with functions ranging from utility to offense.
+Adds 34 obtainable equipment enchants and 2 experimental enchants, with functions ranging from utility to offense.
 
 Latest: v0.0.9 for Minecraft 1.17.1<br>
 Requires Fabric Loader 0.11.6 and Fabric API 0.37.0+1.17
@@ -101,6 +101,8 @@ Requires Fabric Loader 0.11.6 and Fabric API 0.37.0+1.17
 *Core of the Warp* (curse) (treasure) - The power of the warp enhances your mobility and endurance, but your vitality is decreased and you randomly teleport in certain biomes
 
 #### Experimental
-##### *Experimental enchants are disabled normally, and can only be enabled via datapack, as they are not in a complete state.*
+##### *Experimental enchants are disabled normally, and can only be enabled via datapack.*
 
 *Surface Skimmer* - Allows the user to walk on water
+
+*Testing* - Some RNG effects become guaranteed while equipped

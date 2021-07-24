@@ -1,5 +1,6 @@
 package com.herb_mc.extra_enchants;
 
+import com.chocohead.mm.api.ClassTinkerers;
 import com.google.gson.*;
 import com.google.gson.JsonObject;
 import com.herb_mc.extra_enchants.commons.EnchantBuilder;
@@ -58,7 +59,11 @@ public class ReloadListener extends JsonDataLoader implements SimpleSynchronousR
                 boolean enabled = file.get("available").getAsBoolean();
                 if (!enabled)
                     disabled++;
-                Enchantment.Rarity rarity = Enchantment.Rarity.valueOf(file.get("rarity").getAsString().toUpperCase());
+                Enchantment.Rarity rarity;
+                if (file.get("rarity").getAsString().toUpperCase().equals("NULL"))
+                    rarity = ClassTinkerers.getEnum(Enchantment.Rarity.class, "NULL");
+                else
+                    rarity = Enchantment.Rarity.valueOf(file.get("rarity").getAsString().toUpperCase());
                 int minPower = file.get("min_power").getAsInt();
                 int minPowerDelta = 0;
                 if (scalable)

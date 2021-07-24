@@ -1,4 +1,4 @@
-## Enchantment List
+# Enchantment List
 
 - [Architect](#architect)
 - [Arrow Speed](#arrow-speed)
@@ -31,6 +31,7 @@
 - [Surface Skimmer](#surface-skimmer)
 - [Swiftness](#swiftness)
 - [Terraforming](#terraforming)
+- [Testing](#testing)
 - [Tough](#tough)
 - [Warding](#warding)
 - [Weighted](#weighted)
@@ -187,7 +188,7 @@
 - Rarity: Very rare
 - Type: Curse, Treasure
 ### Technical description:
-- -50% max health, 40% raw damage reduction before damage calculation, +15% movement speed.
+- -50% max health, 40% raw damage reduction before damage calculation, +15% movement speed. 5% chance to teleport on hit in certain biomes.
 ---
 [Back to top](#enchantment-list)
 
@@ -386,6 +387,16 @@
 - Rarity: Common
 ### Technical description:
 - Increases speed by 10% per level.
+---
+[Back to top](#enchantment-list)
+
+## *Testing*
+- Some RNG effects become guaranteed.
+- Compatible equipment: Any
+- Max level: 1
+- Rarity: Unobtainable
+### Technical description:
+- The chance that Core of the Warp teleports and Core of the Blood God crits will trigger becomes 100%.
 ---
 [Back to top](#enchantment-list)
 

@@ -19,6 +19,7 @@ public class ModEnchants {
     static EnchantmentTarget AXE = ClassTinkerers.getEnum(EnchantmentTarget.class, "AXE");
     static EnchantmentTarget HORSE_ARMOR = ClassTinkerers.getEnum(EnchantmentTarget.class, "HORSE_ARMOR");
     static EnchantmentTarget WEAPONS = ClassTinkerers.getEnum(EnchantmentTarget.class, "WEAPONS");
+    static Enchantment.Rarity NULL = ClassTinkerers.getEnum(Enchantment.Rarity.class, "NULL");
 
     // Architect
     public static Enchantment ARCHITECT = new ScalableEnchantBuilder(
@@ -479,6 +480,19 @@ public class ModEnchants {
             new Enchantment[]{ModEnchants.LEAPING, ModEnchants.LUNGING, ModEnchants.WINDSTEP, ModEnchants.SLIMEY}
     );
 
+    // experimental
+    public static Enchantment TESTING = new EnchantBuilder(
+            NULL,
+            EnchantmentTarget.BREAKABLE,
+            new EquipmentSlot[]{EquipmentSlot.OFFHAND, EquipmentSlot.MAINHAND, EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET},
+            50,
+            50,
+            1,
+            false,
+            false,
+            new Enchantment[]{}
+    );
+
     public static boolean isEnchantType(Enchantment other, Enchantment[] type) {
         if (type == null) return false;
         for(Enchantment e : type) {
@@ -524,6 +538,7 @@ public class ModEnchants {
         enchantments.put("surface_skimmer", ModEnchants.SURFACE_SKIMMER);
         enchantments.put("swiftness", ModEnchants.SWIFTNESS);
         enchantments.put("terraforming", ModEnchants.TERRAFORMING);
+        enchantments.put("testing", ModEnchants.TESTING);
         enchantments.put("tough", ModEnchants.TOUGH);
         enchantments.put("warding", ModEnchants.WARDING);
         enchantments.put("weighted", ModEnchants.WEIGHTED);
@@ -605,6 +620,7 @@ public class ModEnchants {
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "surface_skimmer"), SURFACE_SKIMMER);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "swiftness"), SWIFTNESS);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "terraforming"), TERRAFORMING);
+        Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "testing"), TESTING);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "tough"), TOUGH);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "warding"), WARDING);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "weighted"), WEIGHTED);

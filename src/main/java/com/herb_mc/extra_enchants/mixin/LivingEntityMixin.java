@@ -13,16 +13,19 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.EntityDamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.passive.FoxEntity;
 import net.minecraft.entity.passive.HorseEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.tag.FluidTags;
 import net.minecraft.util.hit.EntityHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.*;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -61,12 +64,11 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
 
     @Inject(at = @At("HEAD"), method = "onDeath")
     protected void onDeath(DamageSource source, CallbackInfo info){
-        if (source.getAttacker() instanceof LivingEntity && !source.isProjectile()) {
-            ((LivingEntity) source.getAttacker()).heal((float) getLevel(ModEnchants.LIFESTEAL, ((LivingEntity) source.getAttacker()).getStackInHand(thisEntity.getActiveHand())));
-        }
+        if (source.getAttacker() instanceof LivingEntity && !source.isProjectile() && ((LivingEntity) source.getAttacker()).getActiveHand() != null)
+            ((LivingEntity) source.getAttacker()).heal((float) getLevel(ModEnchants.LIFESTEAL, ((LivingEntity) source.getAttacker()).getStackInHand(((LivingEntity) source.getAttacker()).getActiveHand())));
+        else if (source.getAttacker() instanceof LivingEntity && !source.isProjectile() && ((LivingEntity) source.getAttacker()).getMainHandStack() != null)
+            ((LivingEntity) source.getAttacker()).heal((float) getLevel(ModEnchants.LIFESTEAL, ((LivingEntity) source.getAttacker()).getMainHandStack()));
     }
-
-
 
     @ModifyVariable(
             method = "applyArmorToDamage",
@@ -83,8 +85,10 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
     private DamageSource source(DamageSource source) {
         level = 0;
         if (source.getAttacker() != null)
-            if (source.getAttacker() instanceof LivingEntity && !source.isProjectile())
-                level = getLevel(ModEnchants.CLEAVING, ((LivingEntity) source.getAttacker()).getStackInHand(thisEntity.getActiveHand()));
+            if (source.getAttacker() instanceof LivingEntity && !source.isProjectile() && ((LivingEntity) source.getAttacker()).getActiveHand() != null)
+                level = getLevel(ModEnchants.CLEAVING, ((LivingEntity) source.getAttacker()).getStackInHand(((LivingEntity) source.getAttacker()).getActiveHand()));
+            else if (source.getAttacker() instanceof LivingEntity && !source.isProjectile() && ((LivingEntity) source.getAttacker()).getMainHandStack() != null)
+                level = getLevel(ModEnchants.CLEAVING, ((LivingEntity) source.getAttacker()).getMainHandStack());
         return source;
     }
 
@@ -107,22 +111,20 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
             at = @At(value = "HEAD", target = "Lnet/minecraft/entity/LivingEntity;damage(Lnet/minecraft/entity/damage/DamageSource;F)Z"),
             ordinal = 0)
     private float amount(float amount, DamageSource source) {
-        int i = EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_THE_BLOOD_GOD, thisEntity);
-        if (source instanceof EntityDamageSource && i > 0 && rand.nextDouble() < 0.25)
+        if (source instanceof EntityDamageSource && EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_THE_BLOOD_GOD, thisEntity) > 0 && (rand.nextDouble() < 0.25 || EnchantmentHelper.getEquipmentLevel(ModEnchants.TESTING, thisEntity) > 0))
             amount *= 1.8;
-        i = EnchantmentHelper.getEquipmentLevel(ModEnchants.BLAZE_AFFINITY, thisEntity);
-        if (i > 0 && thisEntity.isOnFire())
+        if (EnchantmentHelper.getEquipmentLevel(ModEnchants.BLAZE_AFFINITY, thisEntity) > 0 && thisEntity.isOnFire())
             amount *= 0.95;
-        i = EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_THE_WARP, thisEntity);
-        if (i > 0)
+        if (EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_THE_WARP, thisEntity) > 0) {
             amount *= 0.6;
+            if (rand.nextDouble() < 0.05 || EnchantmentHelper.getEquipmentLevel(ModEnchants.TESTING, thisEntity) > 0)
+                warpTeleport();
+        }
         if (source.getSource() != null && source.getSource() instanceof LivingEntity) {
-            i = EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_PURITY, (LivingEntity) source.getSource());
-            if (i > 0)
+            if (EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_PURITY, (LivingEntity) source.getSource()) > 0)
                 amount = 1;
         }
-        i = EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_PURITY, thisEntity);
-        if (i > 0 && thisEntity.getHealth() / thisEntity.getMaxHealth() > 0.6)
+        if (EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_PURITY, thisEntity) > 0 && thisEntity.getHealth() / thisEntity.getMaxHealth() > 0.6)
             amount *= 0.3;
         return amount;
     }
@@ -131,7 +133,7 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
             method = "travel",
             at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/block/Block;getSlipperiness()F")
     )
-    private float t(float t) {
+    private float slimeyFriction(float t) {
         return (EnchantmentHelper.getEquipmentLevel(ModEnchants.SLIMEY, thisEntity) > 0) ? 1.0F : t;
     }
 
@@ -153,7 +155,7 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
     }
 
     @ModifyConstant(method = "travel", constant = @Constant(doubleValue = 0.08D))
-    private double d(double d){
+    private double featherweightFallSpeed(double d){
         return (EnchantmentHelper.getEquipmentLevel(ModEnchants.FEATHERWEIGHT, thisEntity) > 0 && thisEntity.getVelocity().y < 0 && !thisEntity.isSneaking()) ? d / (EnchantmentHelper.getEquipmentLevel(ModEnchants.FEATHERWEIGHT, thisEntity) + 1) : d;
     }
 
@@ -294,10 +296,14 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
                 if (result.getEntity() instanceof LivingEntity)
                     ((LivingEntity) result.getEntity()).addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 2, 20, true, false, false));
         }
-        i = getLevel(ModEnchants.BARBARIC, thisEntity.getStackInHand(thisEntity.getActiveHand()));
         removeAttribute(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, BARBARIC_ATTRIBUTE_ID);
-        if (i > 0)
-            modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, 20 - this.getArmor(), BARBARIC_ATTRIBUTE_ID, "bar_attack_damage", 0.04, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+        i = getLevel(ModEnchants.BARBARIC, thisEntity.getMainHandStack());
+        if (i > 0) {
+            if (thisEntity.getActiveHand() != null)
+                modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, 20 - this.getArmor(), BARBARIC_ATTRIBUTE_ID, "bar_attack_damage", 0.04, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+            else if (thisEntity.getMainHandStack() != null)
+                modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, 20 - this.getArmor(), BARBARIC_ATTRIBUTE_ID, "bar_attack_damage", 0.04, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+        }
         i = getEquipmentLevel(ModEnchants.BERSERK, thisEntity);
         removeAttribute(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, BERSERK_ATTRIBUTE_ID);
         if (i > 0)
@@ -365,6 +371,29 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
         Vec3d vecext = veceye.add(vecdir.x * 6, vecdir.y * 6, vecdir.z * 6);
         Box box = thisEntity.getBoundingBox().stretch(vecdir.multiply(6)).expand(0.0D, 0.0D, 0.0D);
         return ProjectileUtil.raycast(thisEntity, veceye, vecext, box, (entityx) -> !entityx.isSpectator() && entityx.collides(), 49);
+    }
+
+    public void warpTeleport(){
+        double d = thisEntity.getX();
+        double e = thisEntity.getY();
+        double f = thisEntity.getZ();
+
+        for(int i = 0; i < 16; ++i) {
+            double g = thisEntity.getX() + (thisEntity.getRandom().nextDouble() - 0.5D) * 16.0D;
+            double h = MathHelper.clamp(thisEntity.getY() + (double)(thisEntity.getRandom().nextInt(16) - 8), thisEntity.world.getBottomY(), (double)(thisEntity.world.getBottomY() + ((ServerWorld)thisEntity.world).getLogicalHeight() - 1));
+            double j = thisEntity.getZ() + (thisEntity.getRandom().nextDouble() - 0.5D) * 16.0D;
+            if (thisEntity.hasVehicle()) {
+                thisEntity.stopRiding();
+            }
+
+            if (thisEntity.teleport(g, h, j, true)) {
+                thisEntity.fallDistance = 0;
+                SoundEvent soundEvent = thisEntity instanceof FoxEntity ? SoundEvents.ENTITY_FOX_TELEPORT : SoundEvents.ENTITY_ENDERMAN_TELEPORT;
+                thisEntity.world.playSound((PlayerEntity)null, d, e, f, soundEvent, SoundCategory.PLAYERS, 1.0F, 1.0F);
+                thisEntity.playSound(soundEvent, 1.0F, 1.0F);
+                break;
+            }
+        }
     }
 
 }
