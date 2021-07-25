@@ -88,6 +88,8 @@ Requires Fabric Loader 0.11.6 and Fabric API 0.37.0+1.17
 
 #### General
 
+*Fireproof* (treasure) - Item does not burn
+
 *Soulbound* (treasure) - Item stays in inventory after death
 
 #### Special

@@ -1,5 +1,7 @@
 package com.herb_mc.extra_enchants.mixin;
 
+import com.herb_mc.extra_enchants.registry.ModEnchants;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.HorseArmorItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -15,14 +17,14 @@ public class ItemMixin {
     @Unique
     Item item = (Item) (Object) this;
 
-    @Inject(at = {@At("HEAD")}, method = {"getEnchantability"}, cancellable = true)
-    private void init(CallbackInfoReturnable<Integer> info) {
+    @Inject(at = @At("HEAD"), method = "getEnchantability", cancellable = true)
+    private void getEnchantability(CallbackInfoReturnable<Integer> info) {
         if (item instanceof HorseArmorItem)
             info.setReturnValue(1);
     }
 
-    @Inject(at = {@At("HEAD")}, method = {"isEnchantable"}, cancellable = true)
-    private void init(ItemStack stack, CallbackInfoReturnable<Boolean> info) {
+    @Inject(at = @At("HEAD"), method = "isEnchantable", cancellable = true)
+    private void isEnchantable(ItemStack stack, CallbackInfoReturnable<Boolean> info) {
         if (item instanceof HorseArmorItem)
             info.setReturnValue(Boolean.TRUE);
     }

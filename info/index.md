@@ -1,3 +1,4 @@
+[Back to readme](/README.md)
 # Enchantment List
 
 - [Architect](#architect)
@@ -254,6 +255,17 @@
 - Rarity: Uncommon
 ### Technical description:
 - Divides fall acceleration by (level + 1). Divides fall distance by (level * 2) before fall damage calculation. Overridden by Slow Falling effect.
+---
+[Back to top](#enchantment-list)
+
+## *Fireproof*
+- Item will not burn.
+- Compatible equipment: Any
+- Max level: 1
+- Rarity: Rare
+- Type: Treasure
+### Technical description:
+- Dropped items with this enchantment are fireproof.
 ---
 [Back to top](#enchantment-list)
 

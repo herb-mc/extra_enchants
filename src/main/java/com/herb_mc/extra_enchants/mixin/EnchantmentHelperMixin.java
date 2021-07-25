@@ -15,7 +15,7 @@ import static net.minecraft.enchantment.EnchantmentHelper.getEquipmentLevel;
 public class EnchantmentHelperMixin {
 
     @Inject(method = "getDepthStrider", at = @At(value = "HEAD"), cancellable = true)
-    private static void getDepthStrider(LivingEntity entity, CallbackInfoReturnable info) {
+    private static void getDepthStrider(LivingEntity entity, CallbackInfoReturnable<Integer> info) {
         if(entity instanceof HorseEntity && getEquipmentLevel(ModEnchants.SURFACE_SKIMMER, entity) > 0)
             info.setReturnValue(getEquipmentLevel(ModEnchants.SURFACE_SKIMMER, entity));
     }

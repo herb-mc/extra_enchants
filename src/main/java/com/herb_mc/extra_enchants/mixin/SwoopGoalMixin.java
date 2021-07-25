@@ -24,7 +24,7 @@ public abstract class SwoopGoalMixin {
     @Unique private static boolean found = false;
 
     @Inject(at = @At("TAIL"), method = "shouldContinue", cancellable = true)
-    private void shouldContinue(CallbackInfoReturnable info){
+    private void shouldContinue(CallbackInfoReturnable<Boolean> info){
         List<HorseEntity> list = field_7333.world.getEntitiesByClass(HorseEntity.class, field_7333.getBoundingBox().expand(8.0D), EntityPredicates.VALID_ENTITY);
         if (!list.isEmpty()) {
             Iterator HorseIter = list.iterator();

@@ -22,9 +22,10 @@ public class BlockMixin {
 
     @ModifyArgs(method = "afterBreak", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/Block;dropStacks(Lnet/minecraft/block/BlockState;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/entity/BlockEntity;Lnet/minecraft/entity/Entity;Lnet/minecraft/item/ItemStack;)V"))
     public void afterBreak(Args args){
-        PlayerEntity player = args.get(1);
-        if(EnchantmentHelper.getLevel(ModEnchants.TERRAFORMING, player.getStackInHand(player.getActiveHand())) > 0)
+        PlayerEntity player = args.get(4);
+        if(EnchantmentHelper.getLevel(ModEnchants.TERRAFORMING, player.getStackInHand(player.getActiveHand())) > 0) {
             args.set(5, ItemStack.EMPTY);
+        }
     }
 
 }
