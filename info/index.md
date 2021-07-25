@@ -325,12 +325,12 @@
 [Back to top](#enchantment-list)
 
 ## *Propelling*
-- While flying, the user's speed will be maintained at a minimum. Firework use is disabled.
+- While flying, the user's speed will be maintained at a minimum, which decreases with height gain. Firework use is disabled.
 - Compatible equipment: Elytra
 - Max level: 3
 - Rarity: Uncommon
 ### Technical description:
-- Firework use is disabled in-flight. While in-flight, when the user's speed goes below (0.5 + 0.05 * level), ((unit rotation vector) * (0.015 + 0.01 * level)) is added to their velocity
+- Firework use is disabled in-flight. While in-flight, when the user's speed goes below (0.5 + 0.05 * level), ((unit rotation vector) * (0.005 + *multiplier*)) is added to their velocity, where *multiplier* = (0.01 + 0.01 * level), and decreases above y = 128 until it eventually hits 0 at y = 256.
 ---
 [Back to top](#enchantment-list)
 
