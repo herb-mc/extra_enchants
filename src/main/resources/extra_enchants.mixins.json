@@ -11,6 +11,7 @@
     "EntityInterfaceMixin",
     "GameRendererMixin",
     "GameRenderInterfaceMixin",
+    "HorseArmorRendererMixin",
     "HorseBaseEntityInterfaceMixin",
     "ItemGroupMixin",
     "ItemMixin",
