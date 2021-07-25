@@ -10,7 +10,6 @@ import net.minecraft.client.render.entity.feature.HorseArmorFeatureRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.passive.HorseEntity;
 import net.minecraft.item.HorseArmorItem;
-import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;

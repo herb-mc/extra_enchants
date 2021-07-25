@@ -26,6 +26,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.tag.FluidTags;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.*;
+import net.minecraft.world.biome.Biome;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -117,7 +118,7 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
             amount *= 0.95;
         if (EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_THE_WARP, thisEntity) > 0) {
             amount *= 0.6;
-            if (rand.nextDouble() < 0.05 || EnchantmentHelper.getEquipmentLevel(ModEnchants.TESTING, thisEntity) > 0)
+            if ((rand.nextDouble() < 0.05 || EnchantmentHelper.getEquipmentLevel(ModEnchants.TESTING, thisEntity) > 0) && (thisEntity.world.getBiome(thisEntity.getBlockPos()).getCategory() == Biome.Category.THEEND || thisEntity.world.getBiomeKey(thisEntity.getBlockPos()).get().getValue().toString().equals("minecraft:warped_forest")))
                 warpTeleport();
         }
         if (source.getSource() != null && source.getSource() instanceof LivingEntity) {
