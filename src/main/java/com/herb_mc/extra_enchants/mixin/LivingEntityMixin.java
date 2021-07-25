@@ -32,6 +32,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 import java.util.Objects;
@@ -192,8 +193,30 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
     }
 
     @Inject(
+            method = "travel",
+            at = @At(
+                    value = "INVOKE_ASSIGN",
+                    target = "Lnet/minecraft/entity/LivingEntity;getVelocity()Lnet/minecraft/util/math/Vec3d;",
+                    ordinal = 10
+            )
+    )
+    private void setMinimumVelocity(Vec3d movementInput, CallbackInfo info) {
+        if (EnchantmentHelper.getEquipmentLevel(ModEnchants.PROPELLING, thisEntity) > 0)
+            if (thisEntity.getVelocity().length() < 0.5 + 0.05 * EnchantmentHelper.getEquipmentLevel(ModEnchants.PROPELLING, thisEntity)) {
+                double mult = 0.01 + 0.01 * EnchantmentHelper.getEquipmentLevel(ModEnchants.PROPELLING, thisEntity);
+                if (thisEntity.getBlockY() >= 128)
+                    mult *= (256 - thisEntity.getBlockY()) / 128D;
+                if (mult < 0)
+                    mult = 0;
+                mult += 0.005;
+                thisEntity.setVelocity(thisEntity.getVelocity().add(thisEntity.getRotationVector().multiply(mult)));
+            }
+    }
+
+    @Inject(
             method = "jump",
-            at = @At("TAIL"))
+            at = @At("TAIL")
+    )
     private void changeVelocity(CallbackInfo info) {
         int i = EnchantmentHelper.getEquipmentLevel(ModEnchants.LUNGING, thisEntity);
         float mult = (float) (1 + 0.1 * i);

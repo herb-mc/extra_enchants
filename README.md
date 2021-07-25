@@ -1,6 +1,6 @@
 # Extra Enchants
 
-Adds 34 obtainable equipment enchants and 2 experimental enchants, with functions ranging from utility to offense.
+Adds 36 obtainable equipment enchants and 2 experimental enchants, with functions ranging from utility to offense.
 
 Latest: v0.0.9 for Minecraft 1.17.1<br>
 Requires Fabric Loader 0.11.6 and Fabric API 0.37.0+1.17
@@ -10,101 +10,105 @@ Requires Fabric Loader 0.11.6 and Fabric API 0.37.0+1.17
 
 #### Bow
 
-*Arrow Speed*  - Your arrows fly faster
+- *Arrow Speed*  - Your arrows fly faster
 
-*Ender* - On fully charged shot: teleport to arrow hit location
+- *Ender* - On fully charged shot: teleport to arrow hit location
 
-*Explosive* - On fully charged shot: arrows explode on contact
+- *Explosive* - On fully charged shot: arrows explode on contact
 
 #### Crossbow
 
-*Exposing* - Arrows inflict Glowing, and enemies may take more damage
+- *Exposing* - Arrows inflict Glowing, and enemies may take more damage
 
 #### Melee weapons
 
-*Barbaric* - Deal more damage the less armor you have
+- *Barbaric* - Deal more damage the less armor you have
 
-*Cleaving* - Pierces a portion of enemy armor
+- *Cleaving* - Pierces a portion of enemy armor
 
-*Lifesteal* - Drain a small amount of health upon dealing damage
+- *Lifesteal* - Drain a small amount of health upon dealing damage
 
 #### Tools
 
-*Terraforming* - Massive increase in mining speed, but blocks drop nothing
+- *Terraforming* - Massive increase in mining speed, but blocks drop nothing
 
 #### Tridents
 
-*Launching* - Trident throws propel you forward
+- *Launching* - Trident throws propel you forward
 
 #### Helmet
 
-*Dwarven* - Points you in the direction of the nearest ore
+- *Dwarven* - Points you in the direction of the nearest ore
 
-*Night Vision* - On sneak: gain Night Vision
+- *Night Vision* - On sneak: gain Night Vision
 
-*Psychic* - On sneak: nearest mob within 7 blocks in front of the player will get the exposing effect
+- *Psychic* - On sneak: nearest mob within 7 blocks in front of the player will get the exposing effect
 
-*Sharpshooter* - On sneak: gain 3x zoom, Arrow and trident damage are increased
+- *Sharpshooter* - On sneak: gain 3x zoom, Arrow and trident damage are increased
 
 #### Chestplate
 
-*Architect* - Block placement/breaking range increased
+- *Architect* - Block placement/breaking range increased
 
-*Berserk* - The more health you've lost, the more damage you deal
+- *Berserk* - The more health you've lost, the more damage you deal
 
-*Dextrous* - Increases attack speed
+- *Dextrous* - Increases attack speed
 
-*Weighted* - Decreases attack speed but increases attack damage
+- *Weighted* - Decreases attack speed but increases attack damage
 
 #### Leggings
 
-*Blaze Affinity* (treasure) - While on fire, you gain damage and damage reduction
+- *Blaze Affinity* (treasure) - While on fire, you gain damage and damage reduction
 
-*Boosting* - Gain a burst of speed when you start sprinting
+- *Boosting* - Gain a burst of speed when you start sprinting
 
-*Steadfast* - Decreases the weapon drawing movement penalty
+- *Steadfast* - Decreases the weapon drawing movement penalty
 
-*Tough* - Decreases incoming damage, synergizes well with armor toughness
+- *Tough* - Decreases incoming damage, synergizes well with armor toughness
 
 #### Boots
 
-*Featherweight* - Fall slower
+- *Featherweight* - Fall slower
 
-*Leaping* - increases jump height
+- *Leaping* - increases jump height
 
-*Lunging* - You jump further
+- *Lunging* - You jump further
 
-*Slimey* - Your boots are slimey, making you slide around everywhere
+- *Slimey* - Your boots are slimey, making you slide around everywhere
 
-*Windstep* - The user can instantly step up full blocks, like a horse
+- *Windstep* - The user can instantly step up full blocks, like a horse
+
+#### Elytra
+
+- *Propelling* - Elytras guarantee a minimum speed that decreases with height, but prevents firework usage
 
 #### Horse armor
 
-*Bounding* - Increases jump height
+- *Bounding* - Increases jump height
 
-*Swiftness* - Increases movement speed
+- *Swiftness* - Increases movement speed
 
-*Warding* - Scares away phantoms
+- *Warding* - Scares away phantoms
 
 #### General
 
-*Fireproof* (treasure) - Item does not burn
+- *Fireproof* (treasure) - Item does not burn
 
-*Soulbound* (treasure) - Item stays in inventory after death
+- *Soulbound* (treasure) - Item stays in inventory after death
 
 #### Special
 
-*Core of Neptune* (curse) (treasure) - The power of the ocean god grants you unparalleled strength and speed in the water, but you become weaker as you dry off
+- *Core of Neptune* (curse) (treasure) - The power of the ocean god grants you unparalleled strength and speed in the water, but you become weaker as you dry off
 
-*Core of Purity* (curse) (treasure) - A pure energy floods your body, rendering you nearly unkillable but severely weakening your attacks
+- *Core of Purity* (curse) (treasure) - A pure energy floods your body, rendering you nearly unkillable but severely weakening your attacks
 
-*Core of the Blood God* (curse) (treasure) - Embody a small portion of an ancient god's strength and vitality, but at a price
+- *Core of the Blood God* (curse) (treasure) - Embody a small portion of an ancient god's strength and vitality, but at a price
 
-*Core of the Warp* (curse) (treasure) - The power of the warp enhances your mobility and endurance, but your vitality is decreased and you randomly teleport in certain biomes
+- *Core of the Warp* (curse) (treasure) - The power of the warp enhances your mobility and endurance, but your vitality is decreased and you randomly teleport in certain biomes
 
 #### Experimental
 ##### *Experimental enchants are disabled normally, and can only be enabled via datapack.*
 
-*Surface Skimmer* - Allows the user to walk on water
+- *Surface Skimmer* - Allows the user to walk on water
 
-*Testing* - Some RNG effects become guaranteed while equipped
+- *Testing* - Some RNG effects become guaranteed while equipped

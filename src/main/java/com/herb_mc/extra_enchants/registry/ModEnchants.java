@@ -17,6 +17,7 @@ import java.util.Map;
 public class ModEnchants {
 
     static EnchantmentTarget AXE = ClassTinkerers.getEnum(EnchantmentTarget.class, "AXE");
+    static EnchantmentTarget ELYTRA = ClassTinkerers.getEnum(EnchantmentTarget.class, "ELYTRA");
     static EnchantmentTarget HORSE_ARMOR = ClassTinkerers.getEnum(EnchantmentTarget.class, "HORSE_ARMOR");
     static EnchantmentTarget WEAPONS = ClassTinkerers.getEnum(EnchantmentTarget.class, "WEAPONS");
     static Enchantment.Rarity NULL = ClassTinkerers.getEnum(Enchantment.Rarity.class, "NULL");
@@ -337,6 +338,20 @@ public class ModEnchants {
             false,
             new Enchantment[]{ModEnchants.DWARVEN, ModEnchants.SHARPSHOOTER, ModEnchants.NIGHT_VISION, ModEnchants.PSYCHIC}
     );
+    // Propelling
+    public static Enchantment PROPELLING = new ScalableEnchantBuilder(
+            Enchantment.Rarity.UNCOMMON,
+            ELYTRA,
+            new EquipmentSlot[]{EquipmentSlot.CHEST},
+            15,
+            10,
+            30,
+            10,
+            3,
+            false,
+            false,
+            new Enchantment[]{}
+    );
     // Psychic
     public static Enchantment PSYCHIC = new EnchantBuilder(
             Enchantment.Rarity.RARE,
@@ -543,6 +558,7 @@ public class ModEnchants {
         enchantments.put("lifesteal", ModEnchants.LIFESTEAL);
         enchantments.put("lunging", ModEnchants.LUNGING);
         enchantments.put("night_vision", ModEnchants.NIGHT_VISION);
+        enchantments.put("propelling", ModEnchants.PROPELLING);
         enchantments.put("psychic", ModEnchants.PSYCHIC);
         enchantments.put("sharpshooter", ModEnchants.SHARPSHOOTER);
         enchantments.put("slimey", ModEnchants.SLIMEY);
@@ -626,6 +642,7 @@ public class ModEnchants {
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "lifesteal"), LIFESTEAL);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "lunging"), LUNGING);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "night_vision"), NIGHT_VISION);
+        Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "propelling"), PROPELLING);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "psychic"), PSYCHIC);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "sharpshooter"), SHARPSHOOTER);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "slimey"), SLIMEY);

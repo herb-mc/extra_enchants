@@ -19,11 +19,13 @@
 - [Explosive](#explosive)
 - [Exposing](#exposing)
 - [Featherweight](#featherweight)
+- [Fireproof](#fireproof)
 - [Launching](#launching)
 - [Leaping](#leaping)
 - [Lifesteal](#lifesteal)
 - [Lunging](#lunging)
 - [Night Vision](#night-vision)
+- [Propelling](#propelling)
 - [Psychic](#psychic)
 - [Sharpshooter](#sharpshooter)
 - [Slimey](#slimey)
@@ -319,6 +321,16 @@
 - Rarity: Rare
 ### Technical description:
 - User is given Night Vision while sneaking. This will override any current Night Vision effect.
+---
+[Back to top](#enchantment-list)
+
+## *Propelling*
+- While flying, the user's speed will be maintained at a minimum. Firework use is disabled.
+- Compatible equipment: Elytra
+- Max level: 3
+- Rarity: Uncommon
+### Technical description:
+- Firework use is disabled in-flight. While in-flight, when the user's speed goes below (0.5 + 0.05 * level), ((unit rotation vector) * (0.015 + 0.01 * level)) is added to their velocity
 ---
 [Back to top](#enchantment-list)
 

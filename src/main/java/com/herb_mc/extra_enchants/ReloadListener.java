@@ -37,7 +37,7 @@ public class ReloadListener extends JsonDataLoader implements SimpleSynchronousR
     }
 
     public ReloadListener() {
-        super(GSON, "enchantment_configuration");
+        super(GSON, "enchantments");
     }
 
     @Override
