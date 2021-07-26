@@ -1,6 +1,6 @@
 # Extra Enchants
 
-Adds 36 obtainable equipment enchants and 2 experimental enchants, with functions ranging from utility to offense.
+Adds 37 obtainable equipment enchants and 2 experimental enchants, with functions ranging from utility to offense.
 
 Latest: v0.0.9 for Minecraft 1.17.1<br>
 Requires Fabric Loader 0.11.6 and Fabric API 0.37.0+1.17
@@ -29,6 +29,10 @@ Requires Fabric Loader 0.11.6 and Fabric API 0.37.0+1.17
 - *Lifesteal* - Drain a small amount of health upon dealing damage
 
 #### Tools
+
+- *Antigravity* - Mined items will have no gravity
+
+- *Magnetic* - Items will attracted towards the holder
 
 - *Terraforming* - Massive increase in mining speed, but blocks drop nothing
 

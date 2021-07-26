@@ -1,4 +1,5 @@
 {
+  "enchantment.extra_enchants.antigravity": "Antigravity",
   "enchantment.extra_enchants.architect": "Architect",
   "enchantment.extra_enchants.arrow_speed": "Arrow Speed",
   "enchantment.extra_enchants.barbaric": "Barbaric",
@@ -22,6 +23,7 @@
   "enchantment.extra_enchants.leaping": "Leaping",
   "enchantment.extra_enchants.lifesteal": "Lifesteal",
   "enchantment.extra_enchants.lunging": "Lunging",
+  "enchantment.extra_enchants.magnetic": "Magnetic",
   "enchantment.extra_enchants.propelling": "Propelling",
   "enchantment.extra_enchants.psychic": "Psychic",
   "enchantment.extra_enchants.night_vision": "Night Vision",

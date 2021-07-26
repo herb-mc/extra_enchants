@@ -6,6 +6,7 @@ import com.herb_mc.extra_enchants.commons.UUIDCommons;
 import net.minecraft.block.Material;
 import net.minecraft.block.OreBlock;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -19,6 +20,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
@@ -32,11 +34,9 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
-import java.util.Objects;
-import java.util.Random;
+import java.util.*;
 
 import static net.minecraft.enchantment.EnchantmentHelper.getEquipmentLevel;
 import static net.minecraft.enchantment.EnchantmentHelper.getLevel;
@@ -348,6 +348,16 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
             thisEntity.setAir(0);
         if (thisEntity.getHealth() > thisEntity.getMaxHealth())
             thisEntity.setHealth(thisEntity.getMaxHealth());
+        if (EnchantmentHelper.getLevel(ModEnchants.MAGNETIC, thisEntity.getMainHandStack()) > 0) {
+            List<ItemEntity> list = getNearestItems(4.5, EnchantmentHelper.getLevel(ModEnchants.MAGNETIC, thisEntity.getMainHandStack()));
+            if (!list.isEmpty()) {
+                Iterator var3 = list.iterator();
+                while(var3.hasNext()) {
+                    ItemEntity entity = (ItemEntity) var3.next();
+                    entity.setVelocity(entity.getVelocity().subtract(entity.getPos().subtract(new Vec3d(thisEntity.getPos().x, thisEntity.getPos().y + 1, thisEntity.getPos().z)).multiply(EnchantmentHelper.getLevel(ModEnchants.MAGNETIC, thisEntity.getMainHandStack()) * 0.025)));
+                }
+            }
+        }
     }
 
     private void updateFloating() {
@@ -383,8 +393,7 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
         }
         return vec3d;
     }
-
-    public double getSquareDist(Vec3d in1, Vec3d in2){
+    private static double getSquareDist(Vec3d in1, Vec3d in2){
         in2 = in2.subtract(in1);
         return in2.x * in2.x + in2.y * in2.y + in2.z * in2.z;
     }
@@ -418,6 +427,21 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
                 break;
             }
         }
+    }
+
+    private List<ItemEntity> getNearestItems(double baseRadius, int level) {
+        List<ItemEntity> list = thisEntity.world.getEntitiesByClass(ItemEntity.class, thisEntity.getBoundingBox().expand(7.0), EntityPredicates.VALID_ENTITY);
+        double squareDist = Math.pow(baseRadius + level, 2);
+        List<ItemEntity> finalList = new ArrayList<>();
+        if (!list.isEmpty()) {
+            Iterator var3 = list.iterator();
+            while(var3.hasNext()) {
+                ItemEntity entity = (ItemEntity) var3.next();
+                if (getSquareDist(entity.getPos(), thisEntity.getPos()) < squareDist)
+                    finalList.add(entity);
+            }
+        }
+        return finalList;
     }
 
 }

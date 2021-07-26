@@ -19,10 +19,13 @@ public class ItemGroupMixin {
     @Mutable
     public static ItemGroup MISC;
 
+    @Shadow @Final public static ItemGroup TRANSPORTATION;
+
     @ModifyArg(method = "<clinit>", at = @At(value = "INVOKE",
             target = "Lnet/minecraft/item/ItemGroup$12;setEnchantments([Lnet/minecraft/enchantment/EnchantmentTarget;)Lnet/minecraft/item/ItemGroup;"))
     private static EnchantmentTarget[] additionalCombatTarget(EnchantmentTarget... targets) {
         MISC.setEnchantments(ClassTinkerers.getEnum(EnchantmentTarget.class, "HORSE_ARMOR"));
+        TRANSPORTATION.setEnchantments(ClassTinkerers.getEnum(EnchantmentTarget.class, "ELYTRA"));
         return ArrayUtils.addAll(targets, ClassTinkerers.getEnum(EnchantmentTarget.class, "AXE"), ClassTinkerers.getEnum(EnchantmentTarget.class, "WEAPONS"));
     }
 

@@ -27,13 +27,8 @@ public abstract class SwoopGoalMixin {
     private void shouldContinue(CallbackInfoReturnable<Boolean> info){
         List<HorseEntity> list = field_7333.world.getEntitiesByClass(HorseEntity.class, field_7333.getBoundingBox().expand(8.0D), EntityPredicates.VALID_ENTITY);
         if (!list.isEmpty()) {
-            Iterator HorseIter = list.iterator();
-
-            while(HorseIter.hasNext()) {
-                HorseEntity horse = (HorseEntity) HorseIter.next();
-                if(EnchantmentHelper.getEquipmentLevel(ModEnchants.WARDING,horse) > 0) found = true;
-            }
-
+            for (HorseEntity horse : list)
+                if (EnchantmentHelper.getEquipmentLevel(ModEnchants.WARDING, horse) > 0) found = true;
             if(found){
                 found = false;
                 info.setReturnValue(false);

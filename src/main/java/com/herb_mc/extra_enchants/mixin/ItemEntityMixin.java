@@ -13,7 +13,10 @@ public class ItemEntityMixin {
 
     ItemEntity thisEntity = (ItemEntity) (Object) this;
 
-    @Inject(method = "isFireImmune", at = @At("RETURN"), cancellable = true)
+    @Inject(
+            method = "isFireImmune",
+            at = @At("RETURN"),
+            cancellable = true)
     public void fireproof(CallbackInfoReturnable<Boolean> info) {
         if (EnchantmentHelper.getLevel(ModEnchants.FIREPROOF, thisEntity.getStack()) > 0)
             info.setReturnValue(true);

@@ -26,11 +26,11 @@ public class HorseArmorRendererMixin {
             )
     )
     private VertexConsumer renderHorseArmorGlint(VertexConsumer vertexConsumer, MatrixStack matrixStackIn, VertexConsumerProvider vertexConsumerProvider, int i, HorseEntity horseEntity, float f, float g, float h, float j, float k, float l) {
-        return renderGlint(vertexConsumer, vertexConsumerProvider, horseEntity);
+        return addGlintLayer(vertexConsumer, vertexConsumerProvider, horseEntity);
     }
 
-    private VertexConsumer renderGlint(VertexConsumer vertexConsumer, VertexConsumerProvider vertexConsumerProvider, HorseEntity horseEntity) {
-        if (horseEntity.getArmorType().hasEnchantments() && horseEntity.getArmorType().getItem() instanceof HorseArmorItem)
+    private VertexConsumer addGlintLayer(VertexConsumer vertexConsumer, VertexConsumerProvider vertexConsumerProvider, HorseEntity horseEntity) {
+        if (horseEntity.getArmorType().hasEnchantments())
             return VertexConsumers.union(vertexConsumerProvider.getBuffer(RenderLayer.getEntityGlint()), vertexConsumerProvider.getBuffer(RenderLayer.getEntityCutoutNoCull(((HorseArmorItem) horseEntity.getArmorType().getItem()).getEntityTexture())));
         return vertexConsumer;
     }

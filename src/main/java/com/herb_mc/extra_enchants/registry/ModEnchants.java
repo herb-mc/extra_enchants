@@ -22,6 +22,18 @@ public class ModEnchants {
     static EnchantmentTarget WEAPONS = ClassTinkerers.getEnum(EnchantmentTarget.class, "WEAPONS");
     static Enchantment.Rarity NULL = ClassTinkerers.getEnum(Enchantment.Rarity.class, "NULL");
 
+    // Antigravity
+    public static Enchantment ANTIGRAVITY = new EnchantBuilder(
+            Enchantment.Rarity.RARE,
+            EnchantmentTarget.DIGGER,
+            new EquipmentSlot[]{EquipmentSlot.MAINHAND},
+            20,
+            50,
+            1,
+            false,
+            true,
+            new Enchantment[]{ModEnchants.TERRAFORMING}
+    );
     // Architect
     public static Enchantment ARCHITECT = new ScalableEnchantBuilder(
             Enchantment.Rarity.UNCOMMON,
@@ -326,6 +338,20 @@ public class ModEnchants {
             false,
             new Enchantment[]{ModEnchants.LEAPING, ModEnchants.LUNGING, ModEnchants.WINDSTEP, ModEnchants.SLIMEY}
     );
+    // Magnetic
+    public static Enchantment MAGNETIC = new ScalableEnchantBuilder(
+            Enchantment.Rarity.RARE,
+            EnchantmentTarget.BREAKABLE,
+            new EquipmentSlot[]{},
+            15,
+            10,
+            30,
+            10,
+            3,
+            false,
+            true,
+            new Enchantment[]{ModEnchants.TERRAFORMING}
+    );
     // Night Vision
     public static Enchantment NIGHT_VISION = new EnchantBuilder(
             Enchantment.Rarity.RARE,
@@ -452,7 +478,7 @@ public class ModEnchants {
             1,
             false,
             true,
-            new Enchantment[]{Enchantments.FORTUNE, Enchantments.SILK_TOUCH}
+            new Enchantment[]{Enchantments.FORTUNE, Enchantments.SILK_TOUCH, ModEnchants.ANTIGRAVITY, ModEnchants.MAGNETIC}
     );
     // Tough
     public static Enchantment TOUGH = new ScalableEnchantBuilder(
@@ -534,6 +560,7 @@ public class ModEnchants {
     {
         // extra enchants
         enchantments = new HashMap<>();
+        enchantments.put("antigravity", ModEnchants.ANTIGRAVITY);
         enchantments.put("architect", ModEnchants.ARCHITECT);
         enchantments.put("arrow_speed", ModEnchants.ARROW_SPEED);
         enchantments.put("barbaric", ModEnchants.BARBARIC);
@@ -557,6 +584,7 @@ public class ModEnchants {
         enchantments.put("leaping", ModEnchants.LEAPING);
         enchantments.put("lifesteal", ModEnchants.LIFESTEAL);
         enchantments.put("lunging", ModEnchants.LUNGING);
+        enchantments.put("magnetic", ModEnchants.MAGNETIC);
         enchantments.put("night_vision", ModEnchants.NIGHT_VISION);
         enchantments.put("propelling", ModEnchants.PROPELLING);
         enchantments.put("psychic", ModEnchants.PSYCHIC);
@@ -618,6 +646,7 @@ public class ModEnchants {
     }
 
     public static void registerEnchants() {
+        Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "antigravity"), ANTIGRAVITY);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "architect"), ARCHITECT);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "arrow_speed"), ARROW_SPEED);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "barbaric"), BARBARIC);
@@ -641,6 +670,7 @@ public class ModEnchants {
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "leaping"), LEAPING);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "lifesteal"), LIFESTEAL);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "lunging"), LUNGING);
+        Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "magnetic"), MAGNETIC);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "night_vision"), NIGHT_VISION);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "propelling"), PROPELLING);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "psychic"), PSYCHIC);

@@ -1,6 +1,7 @@
 [Back to readme](/README.md)
 # Enchantment List
 
+- [Antigravity](#antigravity)
 - [Architect](#architect)
 - [Arrow Speed](#arrow-speed)
 - [Barbaric](#barbaric)
@@ -24,6 +25,7 @@
 - [Leaping](#leaping)
 - [Lifesteal](#lifesteal)
 - [Lunging](#lunging)
+- [Magnetic](#magnetic)
 - [Night Vision](#night-vision)
 - [Propelling](#propelling)
 - [Psychic](#psychic)
@@ -39,6 +41,17 @@
 - [Warding](#warding)
 - [Weighted](#weighted)
 - [Windstep](#windstep)
+---
+[Back to top](#enchantment-list)
+
+## *Antigravity*
+- Removes mined item gravity.
+- Compatible equipment: Tools
+- Max level: 1
+- Rarity: Rare
+- Type: Treasure
+### Technical description:
+- Dropped item entities will have no gravity.
 ---
 [Back to top](#enchantment-list)
 
@@ -310,6 +323,17 @@
 - Rarity: Uncommon
 ### Technical description:
 - 10% increase per level to horizontal velocities while jumping.
+---
+[Back to top](#enchantment-list)
+
+## *Magnetic*
+- While held: items will move towards the holder.
+- Compatible equipment: Tools
+- Max level: 3
+- Rarity: Rare
+- Type: Treasure
+### Technical description:
+- Items will move towards the user within (4.5 + level) tiles of the user. The velocity at which they move increases with level.
 ---
 [Back to top](#enchantment-list)
 
