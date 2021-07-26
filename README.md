@@ -30,11 +30,11 @@ Requires Fabric Loader 0.11.6 and Fabric API 0.37.0+1.17
 
 #### Tools
 
-- *Antigravity* - Mined items will have no gravity
+- *Antigravity* (treasure) - Mined items will have no gravity
 
-- *Magnetic* - Items will attracted towards the holder
+- *Magnetic* (treasure) - Items will attracted towards the holder
 
-- *Terraforming* - Massive increase in mining speed, but blocks drop nothing
+- *Terraforming* (treasure) - Massive increase in mining speed, but blocks drop nothing
 
 #### Tridents
 
