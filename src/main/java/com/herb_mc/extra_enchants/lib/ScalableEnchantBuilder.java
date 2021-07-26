@@ -1,4 +1,4 @@
-package com.herb_mc.extra_enchants.commons;
+package com.herb_mc.extra_enchants.lib;
 
 import com.chocohead.mm.api.ClassTinkerers;
 import com.herb_mc.extra_enchants.registry.ModEnchants;
@@ -6,11 +6,13 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.EquipmentSlot;
 
-public class EnchantBuilder extends Enchantment {
+public class ScalableEnchantBuilder extends Enchantment {
 
     Rarity rarity;
     int minPower;
+    int minPowerDelta;
     int maxPower;
+    int maxPowerDelta;
     int maxLevel;
     boolean isCursed;
     boolean isTreasure;
@@ -18,11 +20,13 @@ public class EnchantBuilder extends Enchantment {
     boolean enabled;
     static Rarity NULL = ClassTinkerers.getEnum(Enchantment.Rarity.class, "NULL");
 
-    public EnchantBuilder(Rarity weight, EnchantmentTarget type, EquipmentSlot[] equipmentSlots, int minPower, int maxPower, int maxLevel, boolean isCursed, boolean isTreasure, Enchantment[] incompatibleEnchantments) {
+    public ScalableEnchantBuilder(Rarity weight, EnchantmentTarget type, EquipmentSlot[] equipmentSlots, int minPower, int minPowerDelta, int maxPower, int maxPowerDelta, int maxLevel, boolean isCursed, boolean isTreasure, Enchantment[] incompatibleEnchantments) {
         super(weight, type, equipmentSlots);
         this.rarity = weight;
         this.minPower = minPower;
+        this.minPowerDelta = minPowerDelta;
         this.maxPower = maxPower;
+        this.maxPowerDelta = maxPowerDelta;
         this.maxLevel = maxLevel;
         this.isCursed = isCursed;
         this.isTreasure = isTreasure;
@@ -31,12 +35,12 @@ public class EnchantBuilder extends Enchantment {
 
     @Override
     public int getMinPower(int level) {
-        return minPower;
+        return minPower + (level - 1) * minPowerDelta;
     }
 
     @Override
     public int getMaxPower(int level) {
-        return maxPower;
+        return maxPower + (level - 1) * maxPowerDelta;
     }
 
     @Override
@@ -67,11 +71,13 @@ public class EnchantBuilder extends Enchantment {
         return enabled ? this.rarity : NULL;
     }
 
-    public void setAttributes(boolean enabled, Rarity weight, int minPower, int maxPower, int maxLevel, boolean isCursed, boolean isTreasure, Enchantment[] incompatibleEnchantments) {
+    public void setAttributes(boolean enabled, Rarity weight, int minPower, int minPowerDelta, int maxPower, int maxPowerDelta, int maxLevel, boolean isCursed, boolean isTreasure, Enchantment[] incompatibleEnchantments) {
         this.setEnabled(enabled);
         this.setRarity(weight);
         this.setMinPower(minPower);
+        this.setMinPowerDelta(minPowerDelta);
         this.setMaxPower(maxPower);
+        this.setMaxPowerDelta(maxPowerDelta);
         this.setMaxLevel(maxLevel);
         this.setCursed(isCursed);
         this.setTreasure(isTreasure);
@@ -90,8 +96,16 @@ public class EnchantBuilder extends Enchantment {
         this.minPower = minPower;
     }
 
+    public void setMinPowerDelta(int minPowerDelta) {
+        this.minPowerDelta = minPowerDelta;
+    }
+
     public void setMaxPower(int maxPower) {
         this.maxPower = maxPower;
+    }
+
+    public void setMaxPowerDelta(int maxPowerDelta) {
+        this.maxPowerDelta = maxPowerDelta;
     }
 
     public void setMaxLevel(int maxLevel) {

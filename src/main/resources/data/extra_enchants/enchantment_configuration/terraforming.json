@@ -8,6 +8,7 @@
   "is_curse": "false",
   "is_treasure": "true",
   "incompatible_enchants": [
+    "terraforming",
     "fortune",
     "silk_touch",
     "antigravity",

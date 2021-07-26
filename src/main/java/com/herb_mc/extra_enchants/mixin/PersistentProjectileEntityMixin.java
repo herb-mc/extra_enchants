@@ -1,8 +1,11 @@
 package com.herb_mc.extra_enchants.mixin;
 
+import com.herb_mc.extra_enchants.lib.LivingEntityMixinAccess;
 import com.herb_mc.extra_enchants.registry.ModEnchants;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LightningEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.boss.dragon.EnderDragonPart;
 import net.minecraft.entity.damage.DamageSource;
@@ -19,6 +22,7 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.hit.EntityHitResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.explosion.Explosion;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -47,6 +51,7 @@ public abstract class PersistentProjectileEntityMixin {
     @Unique public boolean purity = false;
     @Unique public int exposing = 0;
     @Unique public boolean critical = false;
+    @Unique public boolean thunderbolt = false;
     @Unique public boolean sharpshooter = false;
     @Unique public boolean neptune = false;
     @Unique public boolean playerOwner = false;
@@ -67,17 +72,19 @@ public abstract class PersistentProjectileEntityMixin {
             if (((LivingEntity) entity).getActiveHand() != null) {
                 ItemStack stack = ((LivingEntity) entity).getStackInHand(((LivingEntity) entity).getActiveHand());
                 if (EnchantmentHelper.getLevel(ModEnchants.EXPOSING, stack) > 0)
-                    exposing = EnchantmentHelper.getEquipmentLevel(ModEnchants.EXPOSING, (LivingEntity) entity);
+                    exposing = EnchantmentHelper.getEquipmentLevel(ModEnchants.EXPOSING, (LivingEntity) entity) * 30;
                 if (EnchantmentHelper.getLevel(ModEnchants.EXPLOSIVE, stack) > 0)
                     explosive += EnchantmentHelper.getLevel(ModEnchants.EXPLOSIVE, stack);
                 else if (EnchantmentHelper.getLevel(ModEnchants.ENDER, stack) > 0)
                     ender = true;
+                else if (EnchantmentHelper.getLevel(ModEnchants.THUNDERBOLT, stack) > 0)
+                    thunderbolt = true;
                 if (entity instanceof PlayerEntity)
                     playerOwner = true;
             }
             else if (((LivingEntity) entity).getMainHandStack() != null) {
                 if (EnchantmentHelper.getLevel(ModEnchants.EXPOSING, ((LivingEntity) entity).getMainHandStack()) > 0)
-                    exposing = EnchantmentHelper.getEquipmentLevel(ModEnchants.EXPOSING, (LivingEntity) entity);
+                    exposing = EnchantmentHelper.getEquipmentLevel(ModEnchants.EXPOSING, (LivingEntity) entity) * 30;
                 if (EnchantmentHelper.getLevel(ModEnchants.EXPLOSIVE, ((LivingEntity) entity).getMainHandStack()) > 0)
                     explosive += EnchantmentHelper.getLevel(ModEnchants.EXPLOSIVE, ((LivingEntity) entity).getMainHandStack());
                 else if (EnchantmentHelper.getLevel(ModEnchants.ENDER, ((LivingEntity) entity).getMainHandStack()) > 0)
@@ -94,7 +101,8 @@ public abstract class PersistentProjectileEntityMixin {
         nbt.putInt("exposing", exposing);
         nbt.putBoolean("neptune", neptune);
         nbt.putBoolean("sharpshooter", sharpshooter);
-        nbt.putBoolean("shot_by_player", playerOwner);
+        nbt.putBoolean("shotByPlayer", playerOwner);
+        nbt.putBoolean("thunderbolt", thunderbolt);
         if (thisEntity instanceof TridentEntity) {
             nbt.putInt("launching", launching);
         }
@@ -108,7 +116,8 @@ public abstract class PersistentProjectileEntityMixin {
         exposing = nbt.getInt("exposing");
         neptune = nbt.getBoolean("neptune");
         sharpshooter = nbt.getBoolean("sharpshooter");
-        playerOwner = nbt.getBoolean("shot_by_player");
+        playerOwner = nbt.getBoolean("shotByPlayer");
+        thunderbolt = nbt.getBoolean("thunderbolt");
         if (thisEntity instanceof TridentEntity) {
             launching = nbt.getInt("launching");
         }
@@ -122,17 +131,23 @@ public abstract class PersistentProjectileEntityMixin {
         if(purity){
             this.setDamage(0);
         }
-        if (explosive > 0) {
-            args.set(0, ParticleTypes.SMOKE);
-            args.set(4, (rand.nextDouble() - 0.5) / 15);
-            args.set(5, (rand.nextDouble() - 0.5) / 15);
-            args.set(6, (rand.nextDouble() - 0.5) / 15);
-        }
-        else if (ender) {
-            args.set(0, ParticleTypes.REVERSE_PORTAL);
-            args.set(4, (rand.nextDouble() - 0.5) / 15);
-            args.set(5, (rand.nextDouble() - 0.5) / 15);
-            args.set(6, (rand.nextDouble() - 0.5) / 15);
+        if (critical) {
+            if (explosive > 0) {
+                args.set(0, ParticleTypes.SMOKE);
+                args.set(4, (rand.nextDouble() - 0.5) / 15);
+                args.set(5, (rand.nextDouble() - 0.5) / 15);
+                args.set(6, (rand.nextDouble() - 0.5) / 15);
+            } else if (ender) {
+                args.set(0, ParticleTypes.REVERSE_PORTAL);
+                args.set(4, (rand.nextDouble() - 0.5) / 15);
+                args.set(5, (rand.nextDouble() - 0.5) / 15);
+                args.set(6, (rand.nextDouble() - 0.5) / 15);
+            } else if (thunderbolt && thisEntity.world.isSkyVisible(thisEntity.getBlockPos())) {
+                args.set(0, ParticleTypes.ELECTRIC_SPARK);
+                args.set(4, (rand.nextDouble() - 0.5) * 2);
+                args.set(5, (rand.nextDouble() - 0.5) * 2);
+                args.set(6, (rand.nextDouble() - 0.5) * 2);
+            }
         }
     }
 
@@ -148,7 +163,8 @@ public abstract class PersistentProjectileEntityMixin {
             if (explosive >= 1) {
                 thisEntity.world.createExplosion(thisEntity, thisEntity.getX(), thisEntity.getY(), thisEntity.getZ(), explosive / 2.0F + 0.5F, Explosion.DestructionType.NONE);
                 thisEntity.discard();
-            } else if (ender && thisEntity.getOwner() != null && thisEntity.getOwner().isAlive()) {
+            }
+            else if (ender && thisEntity.getOwner() != null && thisEntity.getOwner().isAlive()) {
                 Entity entity = thisEntity.getOwner();
                 if (entity instanceof ServerPlayerEntity serverPlayerEntity) {
                     if (entity.hasVehicle()) {
@@ -169,6 +185,13 @@ public abstract class PersistentProjectileEntityMixin {
                 thisEntity.playSound(SoundEvents.ENTITY_ENDERMAN_TELEPORT, 1.0F, 1.0F);
                 thisEntity.discard();
             }
+            else if (thunderbolt && thisEntity.world.isSkyVisible(thisEntity.getBlockPos())) {
+                LightningEntity lightningEntity = EntityType.LIGHTNING_BOLT.create(thisEntity.world);
+                lightningEntity.refreshPositionAfterTeleport(Vec3d.ofBottomCenter(thisEntity.getBlockPos()));
+                lightningEntity.setChanneler(thisEntity.getOwner() instanceof ServerPlayerEntity ? (ServerPlayerEntity)thisEntity.getOwner() : null);
+                thisEntity.world.spawnEntity(lightningEntity);
+                thisEntity.discard();
+            }
         }
     }
 
@@ -182,15 +205,17 @@ public abstract class PersistentProjectileEntityMixin {
                 if (target instanceof EnderDragonPart dragonTarget) {
                     phase = dragonTarget.owner.getPhaseManager().getCurrent().getType().getTypeId();
                 }
-                if (phase != 6 && phase != 3 && !(target instanceof EndermanEntity) && !target.isSpectator() && !target.isInvulnerable()) {
+                if (phase != 3 && !(target instanceof EndermanEntity) && !target.isSpectator() && !target.isInvulnerable()) {
                     if (exposing > 0 && target instanceof LivingEntity livingTarget) {
-                        StatusEffectInstance glow = new StatusEffectInstance(StatusEffects.GLOWING, exposing, 20, true, true);
+                        StatusEffectInstance glow = new StatusEffectInstance(StatusEffects.GLOWING, exposing, 1, true, true);
                         livingTarget.addStatusEffect(glow);
+                        ((LivingEntityMixinAccess) livingTarget).exposedModify(exposing);
                     }
-                    if (explosive > 0) {
+                    if (phase != 6 && explosive > 0) {
                         explosionArrow(target, decreasePower);
                         info.cancel();
-                    } else if (ender && thisEntity.getOwner() != null && thisEntity.getOwner().isAlive()) {
+                    }
+                    else if (ender && thisEntity.getOwner() != null && thisEntity.getOwner().isAlive()) {
                         ArrowEntity entity = (ArrowEntity) (Object) this;
                         entity.playSound(SoundEvents.ENTITY_ENDERMAN_TELEPORT, 1.0F, 1.0F);
                         Entity owner = thisEntity.getOwner();
@@ -203,6 +228,13 @@ public abstract class PersistentProjectileEntityMixin {
                         }
                         entity.fallDistance = 0.0F;
                         entity.damage(DamageSource.FALL, 1.0F);
+                    }
+                    else if (thunderbolt && thisEntity.world.isSkyVisible(target.getBlockPos())) {
+                        LightningEntity lightningEntity = EntityType.LIGHTNING_BOLT.create(thisEntity.world);
+                        lightningEntity.refreshPositionAfterTeleport(Vec3d.ofBottomCenter(target.getBlockPos()));
+                        lightningEntity.setChanneler(thisEntity.getOwner() instanceof ServerPlayerEntity ? (ServerPlayerEntity)thisEntity.getOwner() : null);
+                        thisEntity.world.spawnEntity(lightningEntity);
+                        thisEntity.discard();
                     }
                 }
             }

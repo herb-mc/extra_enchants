@@ -8,7 +8,9 @@
   "is_curse": "false",
   "is_treasure": "true",
   "incompatible_enchants": [
-    "antigravity",
-    "terraforming"
+    "thunderbolt",
+    "piercing",
+    "quick_charge",
+    "exposing"
   ]
 }

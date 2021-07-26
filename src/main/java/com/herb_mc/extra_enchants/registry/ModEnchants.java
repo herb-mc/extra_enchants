@@ -1,8 +1,8 @@
 package com.herb_mc.extra_enchants.registry;
 
 import com.chocohead.mm.api.ClassTinkerers;
-import com.herb_mc.extra_enchants.commons.EnchantBuilder;
-import com.herb_mc.extra_enchants.commons.ScalableEnchantBuilder;
+import com.herb_mc.extra_enchants.lib.EnchantBuilder;
+import com.herb_mc.extra_enchants.lib.ScalableEnchantBuilder;
 import com.herb_mc.extra_enchants.ExtraEnchantsMod;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
@@ -245,7 +245,7 @@ public class ModEnchants {
     // Exposing
     public static Enchantment EXPOSING = new ScalableEnchantBuilder(
             Enchantment.Rarity.RARE,
-            EnchantmentTarget.BOW,
+            EnchantmentTarget.CROSSBOW,
             new EquipmentSlot[]{EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND},
             15,
             10,
@@ -254,7 +254,7 @@ public class ModEnchants {
             3,
             false,
             false,
-            new Enchantment[]{}
+            new Enchantment[]{ModEnchants.EXPOSING, ModEnchants.THUNDERBOLT}
     );
     // Featherweight
     public static Enchantment FEATHERWEIGHT = new ScalableEnchantBuilder(
@@ -480,6 +480,18 @@ public class ModEnchants {
             true,
             new Enchantment[]{Enchantments.FORTUNE, Enchantments.SILK_TOUCH, ModEnchants.ANTIGRAVITY, ModEnchants.MAGNETIC}
     );
+    // Thunderbolt
+    public static Enchantment THUNDERBOLT = new EnchantBuilder(
+            Enchantment.Rarity.RARE,
+            EnchantmentTarget.CROSSBOW,
+            new EquipmentSlot[]{EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND},
+            20,
+            50,
+            1,
+            false,
+            true,
+            new Enchantment[]{ModEnchants.THUNDERBOLT, ModEnchants.EXPOSING, Enchantments.PIERCING, Enchantments.QUICK_CHARGE}
+    );
     // Tough
     public static Enchantment TOUGH = new ScalableEnchantBuilder(
             Enchantment.Rarity.UNCOMMON,
@@ -595,6 +607,7 @@ public class ModEnchants {
         enchantments.put("swiftness", ModEnchants.SWIFTNESS);
         enchantments.put("terraforming", ModEnchants.TERRAFORMING);
         enchantments.put("testing", ModEnchants.TESTING);
+        enchantments.put("thunderbolt", ModEnchants.THUNDERBOLT);
         enchantments.put("tough", ModEnchants.TOUGH);
         enchantments.put("warding", ModEnchants.WARDING);
         enchantments.put("weighted", ModEnchants.WEIGHTED);
@@ -681,6 +694,7 @@ public class ModEnchants {
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "swiftness"), SWIFTNESS);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "terraforming"), TERRAFORMING);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "testing"), TESTING);
+        Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "thunderbolt"), THUNDERBOLT);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "tough"), TOUGH);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "warding"), WARDING);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "weighted"), WEIGHTED);

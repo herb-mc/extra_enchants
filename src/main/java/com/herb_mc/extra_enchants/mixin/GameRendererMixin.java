@@ -1,6 +1,6 @@
 package com.herb_mc.extra_enchants.mixin;
 
-import com.herb_mc.extra_enchants.commons.UUIDCommons;
+import com.herb_mc.extra_enchants.lib.UUIDCommons;
 import com.herb_mc.extra_enchants.registry.ModEnchants;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.GameRenderer;

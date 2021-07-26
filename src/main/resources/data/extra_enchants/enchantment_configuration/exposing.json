@@ -9,5 +9,7 @@
   "max_level": "3",
   "is_curse": "false",
   "is_treasure": "false",
-  "incompatible_enchants": []
+  "incompatible_enchants": [
+    "thunderbolt"
+  ]
 }

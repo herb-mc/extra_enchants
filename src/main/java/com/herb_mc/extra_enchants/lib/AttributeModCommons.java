@@ -1,4 +1,4 @@
-package com.herb_mc.extra_enchants.commons;
+package com.herb_mc.extra_enchants.lib;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttribute;

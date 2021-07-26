@@ -1,8 +1,9 @@
 package com.herb_mc.extra_enchants.mixin;
 
-import com.herb_mc.extra_enchants.commons.AttributeModCommons;
+import com.herb_mc.extra_enchants.lib.AttributeModCommons;
+import com.herb_mc.extra_enchants.lib.LivingEntityMixinAccess;
 import com.herb_mc.extra_enchants.registry.ModEnchants;
-import com.herb_mc.extra_enchants.commons.UUIDCommons;
+import com.herb_mc.extra_enchants.lib.UUIDCommons;
 import net.minecraft.block.OreBlock;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.ItemEntity;
@@ -41,25 +42,38 @@ import static net.minecraft.enchantment.EnchantmentHelper.getEquipmentLevel;
 import static net.minecraft.enchantment.EnchantmentHelper.getLevel;
 
 @Mixin(LivingEntity.class)
-public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBaseEntityInterfaceMixin, AttributeModCommons, UUIDCommons {
+public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBaseEntityInterfaceMixin, AttributeModCommons, UUIDCommons, LivingEntityMixinAccess {
 
     @Shadow public abstract int getArmor();
 
     @Unique private final LivingEntity thisEntity = (LivingEntity) (Object) this;
+    @Unique private int EXPOSED;
     @Unique private float STEP_HEIGHT = 0F;
     @Unique private int SPRINT_BOOST = 0;
     @Unique private final LivingEntity entityStatic = (LivingEntity) (Object) this;
     @Unique private final Random rand = entityStatic.getRandom();
     @Unique int level = 0;
 
+    @Override
+    public int exposedAccess() {
+        return EXPOSED;
+    }
+
+    @Override
+    public void exposedModify(int i) {
+        EXPOSED = i;
+    }
+
     @Inject(method = "writeCustomDataToNbt", at = @At("RETURN"))
     protected void writeCustomDataToNbt(NbtCompound nbt, CallbackInfo info) {
+        nbt.putInt("exposedTicks", EXPOSED);
         nbt.putFloat("stepHeight", STEP_HEIGHT);
         nbt.putInt("sprintBoost", SPRINT_BOOST);
     }
 
     @Inject(method = "readCustomDataFromNbt", at = @At("RETURN"))
     protected void readCustomDataFromNbt(NbtCompound nbt, CallbackInfo info) {
+        EXPOSED = nbt.getInt("exposedTicks");
         STEP_HEIGHT = nbt.getFloat("stepHeight");
         SPRINT_BOOST = nbt.getInt("sprintBoost");
     }
@@ -119,6 +133,8 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
             at = @At(value = "HEAD", target = "Lnet/minecraft/entity/LivingEntity;damage(Lnet/minecraft/entity/damage/DamageSource;F)Z"),
             ordinal = 0)
     private float amount(float amount, DamageSource source) {
+        if (EXPOSED > 0)
+            amount *= 1.1;
         if (source instanceof EntityDamageSource && EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_THE_BLOOD_GOD, thisEntity) > 0 && (rand.nextDouble() < 0.25 || EnchantmentHelper.getEquipmentLevel(ModEnchants.TESTING, thisEntity) > 0))
             amount *= 1.8;
         if (EnchantmentHelper.getEquipmentLevel(ModEnchants.BLAZE_AFFINITY, thisEntity) > 0 && thisEntity.isOnFire())
@@ -151,7 +167,7 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
             index = 1)
     private float armor(float armor) {
         double mult = 1.0D - (float) (1.8D * (level / (2.0D * level + 4.0D)));
-        return (float) (armor * mult);
+        return (EXPOSED > 0) ? (float) (armor * mult) * 0.9F : (float) (armor * mult);
     }
 
     @ModifyArg(
@@ -235,6 +251,8 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
 
     @Inject(at = @At("HEAD"), method = "tick")
     public void tick(CallbackInfo info) {
+        if (EXPOSED > 0)
+            EXPOSED--;
         if (STEP_HEIGHT == 0F)
             STEP_HEIGHT = thisEntity.stepHeight;
         int i = getEquipmentLevel(ModEnchants.WINDSTEP, thisEntity);

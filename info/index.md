@@ -37,6 +37,7 @@
 - [Swiftness](#swiftness)
 - [Terraforming](#terraforming)
 - [Testing](#testing)
+- [Thunderbolt](#thunderbolt)
 - [Tough](#tough)
 - [Warding](#warding)
 - [Weighted](#weighted)
@@ -237,7 +238,7 @@
 - Max level: 1
 - Rarity: Rare
 ### Technical description:
-- Teleports the user to the arrow's location and inflicts the user with 2 fall damage if it hits the ground. If the arrow hits a mob, it will instead teleport the user to the mob and inflict 1 fall damage.
+- Changes arrow particle effect to REVERSE_PORTAL. Teleports the user to the arrow's location and inflicts the user with 2 fall damage if it hits the ground. If the arrow hits a mob, it will instead teleport the user to the mob and inflict 1 fall damage.
 ---
 [Back to top](#enchantment-list)
 
@@ -248,17 +249,18 @@
 - Max level: 2
 - Rarity: Rare
 ### Technical description:
-- The resultant explosion has a power of lvl / 2 + 0.5, if the arrow hits the ground. The explosion power will match the level on direct hits. Arrows deal damage normally during dragon perching. None of the explosions deal block damage. (This will eventually be configurable)
+- Changes arrow particle effect to SMOKE. The resultant explosion has a power of lvl / 2 + 0.5, if the arrow hits the ground. The explosion power will match the level on direct hits. Arrows deal damage normally during dragon perching. None of the explosions deal block damage. (This will eventually be configurable)
 ---
 [Back to top](#enchantment-list)
 
 ## *Exposing*
-- Arrows inflict a glowing status effect. (there will eventually be enchantments designed to take advantage of this)
+- Arrows inflict glowing and exposed.
 - Compatible equipment: Crossbows
+- Incompatible enchantments: Thunderbolt
 - Max level: 3
 - Rarity: Common
 ### Technical description:
-- Inflicts 40 extra ticks, or 2 seconds, of Glowing 20 (no particle) per tick.
+- Inflicts (30 * level) ticks of glowing and exposed on hit. Exposed entities take 10% more damage, and incoming damage ignores 10% of armor. Lightning damage is boosted by 50%.
 ---
 [Back to top](#enchantment-list)
 
@@ -438,6 +440,18 @@
 ---
 [Back to top](#enchantment-list)
 
+## *Terraforming*
+- Greatly increases mining speed. Broken blocks drop nothing.
+- Compatible equipment: Tools
+- Incompatible enchantments: Fortune, Silk Touch
+- Max level: 1
+- Rarity: Rare
+- Type: Treasure
+### Technical description:
+- Increases tool speed by 58. This allows a Terraforming Diamond/Netherite Pickaxe to break stone instantly. Terraforming + Efficiency V allows Diamond/Netherite Pickaxes to instantly break some ores and deepslate.
+---
+[Back to top](#enchantment-list)
+
 ## *Testing*
 - Some RNG effects become guaranteed.
 - Compatible equipment: Any
@@ -448,15 +462,15 @@
 ---
 [Back to top](#enchantment-list)
 
-## *Terraforming*
-- Greatly increases mining speed. Broken blocks drop nothing.
-- Compatible equipment: Tools
-- Incompatible enchantments: Fortune, Silk Touch
+## *Thunderbolt*
+- If arrow has sky access on hit, summons lightning instead of dealing damage.
+- Compatible equipment: Crossbow
+- Incompatible enchantments: Exposing, Quick Charge, Piercing
 - Max level: 1
 - Rarity: Rare
 - Type: Treasure
 ### Technical description:
-- Increases tool speed by 58. This allows a Terraforming Diamond/Netherite Pickaxe to break stone instantly. Terraforming + Efficiency V allows Diamond/Netherite Pickaxes to instantly break some ores and deepslate.
+- Changes arrow particle effect to ELECTRIC_SPARK while arrow has sky access. Summons thunderbolt on hit, centered on block.
 ---
 [Back to top](#enchantment-list)
 

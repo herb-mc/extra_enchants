@@ -1,6 +1,6 @@
 # Extra Enchants
 
-Adds 38 obtainable equipment enchants and 2 experimental enchants, with functions ranging from utility to offense.
+Adds 39 obtainable equipment enchants and 2 experimental enchants, with functions ranging from utility to offense.
 
 Latest: v0.0.9 for Minecraft 1.17.1<br>
 Requires Fabric Loader 0.11.6 and Fabric API 0.37.0+1.17
@@ -19,6 +19,8 @@ Requires Fabric Loader 0.11.6 and Fabric API 0.37.0+1.17
 #### Crossbow
 
 - *Exposing* - Arrows inflict Glowing, and enemies may take more damage
+
+- *Thunderbolt* - Arrows summon lightning on hit
 
 #### Melee weapons
 

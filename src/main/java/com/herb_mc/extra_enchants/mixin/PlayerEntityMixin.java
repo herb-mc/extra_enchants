@@ -1,8 +1,8 @@
 package com.herb_mc.extra_enchants.mixin;
 
-import com.herb_mc.extra_enchants.commons.AttributeModCommons;
+import com.herb_mc.extra_enchants.lib.AttributeModCommons;
 import com.herb_mc.extra_enchants.registry.ModEnchants;
-import com.herb_mc.extra_enchants.commons.UUIDCommons;
+import com.herb_mc.extra_enchants.lib.UUIDCommons;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
@@ -10,12 +10,10 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.util.math.Vec3d;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyArgs;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
