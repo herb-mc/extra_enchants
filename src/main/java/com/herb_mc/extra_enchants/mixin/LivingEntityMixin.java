@@ -3,7 +3,6 @@ package com.herb_mc.extra_enchants.mixin;
 import com.herb_mc.extra_enchants.commons.AttributeModCommons;
 import com.herb_mc.extra_enchants.registry.ModEnchants;
 import com.herb_mc.extra_enchants.commons.UUIDCommons;
-import net.minecraft.block.Material;
 import net.minecraft.block.OreBlock;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.ItemEntity;
@@ -16,12 +15,11 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.passive.FoxEntity;
 import net.minecraft.entity.passive.HorseEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.predicate.entity.EntityPredicates;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
@@ -34,6 +32,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 import java.util.*;
@@ -49,7 +48,8 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
     @Unique private final LivingEntity thisEntity = (LivingEntity) (Object) this;
     @Unique private float STEP_HEIGHT = 0F;
     @Unique private int SPRINT_BOOST = 0;
-    @Unique private static final Random rand = new Random();
+    @Unique private final LivingEntity entityStatic = (LivingEntity) (Object) this;
+    @Unique private final Random rand = entityStatic.getRandom();
     @Unique int level = 0;
 
     @Inject(method = "writeCustomDataToNbt", at = @At("RETURN"))
@@ -62,6 +62,12 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
     protected void readCustomDataFromNbt(NbtCompound nbt, CallbackInfo info) {
         STEP_HEIGHT = nbt.getFloat("stepHeight");
         SPRINT_BOOST = nbt.getInt("sprintBoost");
+    }
+
+    @Inject(method = "canWalkOnFluid", at = @At("HEAD"), cancellable = true)
+    protected void fluidWalk(Fluid fluid,  CallbackInfoReturnable<Boolean> info){
+        if (EnchantmentHelper.getEquipmentLevel(ModEnchants.SURFACE_SKIMMER, thisEntity) > 0 && thisEntity instanceof HorseEntity)
+            info.setReturnValue(true);
     }
 
     @Inject(at = @At("HEAD"), method = "onDeath")
@@ -333,8 +339,6 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
         if (i > 0)
             modAttributeExtended(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, i, BERSERK_ATTRIBUTE_ID, "ber_attack_damage", (thisEntity.getMaxHealth() - thisEntity.getHealth()), 2.0, 2.0, 1.0, 2.0, 0.0, 4.0, 0.0, EntityAttributeModifier.Operation.ADDITION);
         if (thisEntity instanceof HorseEntity) {
-            if (getEquipmentLevel(ModEnchants.SURFACE_SKIMMER, thisEntity) > 0)
-                this.updateFloating();
             i = getEquipmentLevel(ModEnchants.SWIFTNESS, thisEntity);
             removeAttribute(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, SWIFTNESS_ATTRIBUTE_ID);
             if (i > 0)
@@ -349,35 +353,13 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
         if (thisEntity.getHealth() > thisEntity.getMaxHealth())
             thisEntity.setHealth(thisEntity.getMaxHealth());
         if (EnchantmentHelper.getLevel(ModEnchants.MAGNETIC, thisEntity.getMainHandStack()) > 0) {
-            List<ItemEntity> list = getNearestItems(4.5, EnchantmentHelper.getLevel(ModEnchants.MAGNETIC, thisEntity.getMainHandStack()));
+            List<ItemEntity> list = getNearestItems(EnchantmentHelper.getLevel(ModEnchants.MAGNETIC, thisEntity.getMainHandStack()));
             if (!list.isEmpty()) {
-                Iterator var3 = list.iterator();
-                while(var3.hasNext()) {
-                    ItemEntity entity = (ItemEntity) var3.next();
+                for (ItemEntity entity : list) {
                     entity.setVelocity(entity.getVelocity().subtract(entity.getPos().subtract(new Vec3d(thisEntity.getPos().x, thisEntity.getPos().y + 1, thisEntity.getPos().z)).multiply(EnchantmentHelper.getLevel(ModEnchants.MAGNETIC, thisEntity.getMainHandStack()) * 0.025)));
                 }
             }
         }
-    }
-
-    private void updateFloating() {
-        if (this.isInWater()) {
-            thisEntity.setOnGround(true);
-            double vecY = 0.019 + rand.nextGaussian() / 500;
-            thisEntity.setVelocity(thisEntity.getVelocity().add(0.0D, vecY, 0.0D));
-        }
-        BlockPos entityPos = thisEntity.getBlockPos();
-        Material mat = thisEntity.world.getBlockState((new BlockPos(entityPos.getX(), thisEntity.getBoundingBox().getMin(Direction.Axis.Y) + 0.1D, entityPos.getZ()))).getMaterial();
-        if (mat == Material.WATER || mat == Material.UNDERWATER_PLANT) {
-            if (thisEntity.getVelocity().y < 0.0)
-                thisEntity.setVelocity(new Vec3d(thisEntity.getVelocity().x, 0.0, thisEntity.getVelocity().z));
-            thisEntity.setOnGround(true);
-            this.setAir(false);
-        }
-    }
-
-    public boolean isInWater() {
-        return !this.firstUpdate() && this.fluidHeight().getDouble(FluidTags.WATER) > 0.0D;
     }
 
     private Vec3d getNearestOre() {
@@ -413,7 +395,7 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
 
         for(int i = 0; i < 16; ++i) {
             double g = thisEntity.getX() + (thisEntity.getRandom().nextDouble() - 0.5D) * 16.0D;
-            double h = MathHelper.clamp(thisEntity.getY() + (double)(thisEntity.getRandom().nextInt(16) - 8), thisEntity.world.getBottomY(), (double)(thisEntity.world.getBottomY() + ((ServerWorld)thisEntity.world).getLogicalHeight() - 1));
+            double h = MathHelper.clamp(thisEntity.getY() + (double)(thisEntity.getRandom().nextInt(16) - 8), thisEntity.world.getBottomY(), (thisEntity.world.getBottomY() + (thisEntity.world).getLogicalHeight() - 1));
             double j = thisEntity.getZ() + (thisEntity.getRandom().nextDouble() - 0.5D) * 16.0D;
             if (thisEntity.hasVehicle()) {
                 thisEntity.stopRiding();
@@ -422,21 +404,19 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
             if (thisEntity.teleport(g, h, j, true)) {
                 thisEntity.fallDistance = 0;
                 SoundEvent soundEvent = thisEntity instanceof FoxEntity ? SoundEvents.ENTITY_FOX_TELEPORT : SoundEvents.ENTITY_ENDERMAN_TELEPORT;
-                thisEntity.world.playSound((PlayerEntity)null, d, e, f, soundEvent, SoundCategory.PLAYERS, 1.0F, 1.0F);
+                thisEntity.world.playSound(null, d, e, f, soundEvent, SoundCategory.PLAYERS, 1.0F, 1.0F);
                 thisEntity.playSound(soundEvent, 1.0F, 1.0F);
                 break;
             }
         }
     }
 
-    private List<ItemEntity> getNearestItems(double baseRadius, int level) {
+    private List<ItemEntity> getNearestItems(int level) {
         List<ItemEntity> list = thisEntity.world.getEntitiesByClass(ItemEntity.class, thisEntity.getBoundingBox().expand(7.0), EntityPredicates.VALID_ENTITY);
-        double squareDist = Math.pow(baseRadius + level, 2);
+        double squareDist = Math.pow(4.5 + level, 2);
         List<ItemEntity> finalList = new ArrayList<>();
         if (!list.isEmpty()) {
-            Iterator var3 = list.iterator();
-            while(var3.hasNext()) {
-                ItemEntity entity = (ItemEntity) var3.next();
+            for (ItemEntity entity : list) {
                 if (getSquareDist(entity.getPos(), thisEntity.getPos()) < squareDist)
                     finalList.add(entity);
             }

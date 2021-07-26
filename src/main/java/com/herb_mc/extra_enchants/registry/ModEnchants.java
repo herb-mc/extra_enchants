@@ -532,7 +532,6 @@ public class ModEnchants {
             false,
             new Enchantment[]{ModEnchants.LEAPING, ModEnchants.LUNGING, ModEnchants.WINDSTEP, ModEnchants.SLIMEY}
     );
-
     // experimental
     public static Enchantment TESTING = new EnchantBuilder(
             NULL,
