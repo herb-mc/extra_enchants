@@ -42,7 +42,7 @@ import static net.minecraft.enchantment.EnchantmentHelper.getEquipmentLevel;
 import static net.minecraft.enchantment.EnchantmentHelper.getLevel;
 
 @Mixin(LivingEntity.class)
-public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBaseEntityInterfaceMixin, AttributeModCommons, UUIDCommons, LivingEntityMixinAccess {
+public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBaseEntityInterface, AttributeModCommons, UUIDCommons, LivingEntityMixinAccess {
 
     @Shadow public abstract int getArmor();
 

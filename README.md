@@ -1,6 +1,6 @@
 # Extra Enchants
 
-Adds 40 obtainable equipment enchants and 2 experimental enchants, with functions ranging from utility to offense.
+Adds 41 obtainable equipment enchants and 2 experimental enchants, with functions ranging from utility to offense.
 
 Latest: v0.0.9 for Minecraft 1.17.1<br>
 Requires Fabric Loader 0.11.6 and Fabric API 0.37.0+1.17
@@ -89,6 +89,8 @@ Requires Fabric Loader 0.11.6 and Fabric API 0.37.0+1.17
 - *Ace* - Become stronger while flying
 
 - *Propelling* - Elytras guarantee a minimum speed that decreases with height, but prevents firework usage
+
+- *Turbo* - Firework rockets last much less time, but give a greater speed boost
 
 #### Horse armor
 

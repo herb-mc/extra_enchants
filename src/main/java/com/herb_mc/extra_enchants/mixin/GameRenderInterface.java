@@ -6,7 +6,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(GameRenderer.class)
-public interface GameRenderInterfaceMixin {
+public interface GameRenderInterface {
 
     @Accessor("client")
     MinecraftClient getClient();

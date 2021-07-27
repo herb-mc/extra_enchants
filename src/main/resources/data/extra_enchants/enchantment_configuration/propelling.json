@@ -11,6 +11,7 @@
   "is_treasure": "false",
   "incompatible_enchants": [
     "ace",
-    "propelling"
+    "propelling",
+    "turbo"
   ]
 }

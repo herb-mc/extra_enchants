@@ -1,12 +1,10 @@
 {
-  "type": "scalable",
+  "type": "fixed",
   "available": "true",
   "rarity": "rare",
-  "min_power": "15",
-  "min_power_delta": "10",
-  "max_power": "30",
-  "max_power_delta": "10",
-  "max_level": "3",
+  "min_power": "20",
+  "max_power": "50",
+  "max_level": "1",
   "is_curse": "false",
   "is_treasure": "false",
   "incompatible_enchants": [

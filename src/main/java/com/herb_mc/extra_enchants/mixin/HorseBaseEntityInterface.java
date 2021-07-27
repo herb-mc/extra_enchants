@@ -5,7 +5,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin(HorseBaseEntity.class)
-public interface HorseBaseEntityInterfaceMixin {
+public interface HorseBaseEntityInterface {
 
     @Invoker("setInAir")
     void setAir(boolean isInAir);

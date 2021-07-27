@@ -40,6 +40,7 @@
 - [Testing](#testing)
 - [Thunderbolt](#thunderbolt)
 - [Tough](#tough)
+- [Turbo](#turbo)
 - [Warding](#warding)
 - [Weighted](#weighted)
 - [Windstep](#windstep)
@@ -49,10 +50,9 @@
 ## *Ace*
 - Damage reduction, melee and arrow damage are increased
 - Compatible equipment: Elytra
-- Incompatible enchantments: Propelling
+- Incompatible enchantments: Propelling, Turbo
 - Max level: 3
 - Rarity: Rare
-- Type: Treasure
 ### Technical description:
 - Incoming damage is multiplied by a multiplier determined by the following formula:
 
@@ -371,8 +371,9 @@
 ## *Propelling*
 - While flying, the user's speed will be maintained at a minimum, which decreases with height gain. Firework use is disabled.
 - Compatible equipment: Elytra
+- Incompatible enchantments: Ace, Turbo
 - Max level: 3
-- Rarity: Uncommon
+- Rarity: Rare
 ### Technical description:
 - Firework use is disabled in-flight. While in-flight, when the user's speed goes below (0.5 + 0.05 * level), ((unit rotation vector) * (0.005 + *multiplier*)) is added to their velocity, where *multiplier* = (0.01 + 0.01 * level), and decreases above y = 128 until it eventually hits 0 at y = 256.
 ---
@@ -500,6 +501,17 @@
 - Rarity: Uncommon
 ### Technical description:
 - Decreases incoming damage by 3% per level before armor is applied. May be more effective than protection in certain circumstances.
+---
+[Back to top](#enchantment-list)
+
+## *Turbo*
+- Decreases elytra firework boost lifetime, but increases the speed boost
+- Compatible equipment: Elytra
+- Incompatible enchantments: Ace, Propelling
+- Max level: 1
+- Rarity: Rare
+### Technical description:
+- Elytra boost firework duration is cut to 1/3. Base speed boost from rockets is increased by 50%.
 ---
 [Back to top](#enchantment-list)
 

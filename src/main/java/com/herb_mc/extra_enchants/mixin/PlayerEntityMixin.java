@@ -45,10 +45,8 @@ public abstract class PlayerEntityMixin implements AttributeModCommons, UUIDComm
         }
         i = EnchantmentHelper.getEquipmentLevel(ModEnchants.ARCHITECT, thisEntity);
         removeAttribute(thisEntity, ReachEntityAttributes.REACH, ARCHITECT_ATTRIBUTE_ID);
-        removeAttribute(thisEntity, ReachEntityAttributes.ATTACK_RANGE, ARCHITECT_ATTRIBUTE_ID);
         if (i > 0) {
             modAttributeBase(thisEntity, ReachEntityAttributes.REACH, i, ARCHITECT_ATTRIBUTE_ID, "arch_reach_boost", 1.0, EntityAttributeModifier.Operation.ADDITION);
-            modAttributeBase(thisEntity, ReachEntityAttributes.ATTACK_RANGE, i, ARCHITECT_ATTRIBUTE_ID, "arch_range_boost", -1.0, EntityAttributeModifier.Operation.ADDITION);
         }
 
         i = EnchantmentHelper.getEquipmentLevel(ModEnchants.STEADFAST, thisEntity);

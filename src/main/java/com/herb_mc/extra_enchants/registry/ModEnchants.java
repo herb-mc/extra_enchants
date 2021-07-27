@@ -34,7 +34,7 @@ public class ModEnchants {
             3,
             false,
             false,
-            new Enchantment[]{ModEnchants.ACE, ModEnchants.PROPELLING}
+            new Enchantment[]{ModEnchants.PROPELLING, ModEnchants.ACE, ModEnchants.TURBO}
     );
     // Antigravity
     public static Enchantment ANTIGRAVITY = new EnchantBuilder(
@@ -390,7 +390,7 @@ public class ModEnchants {
             3,
             false,
             false,
-            new Enchantment[]{ModEnchants.PROPELLING, ModEnchants.ACE}
+            new Enchantment[]{ModEnchants.PROPELLING, ModEnchants.ACE, ModEnchants.TURBO}
     );
     // Psychic
     public static Enchantment PSYCHIC = new EnchantBuilder(
@@ -520,6 +520,18 @@ public class ModEnchants {
             false,
             new Enchantment[]{Enchantments.PROTECTION, Enchantments.BLAST_PROTECTION, Enchantments.FIRE_PROTECTION, Enchantments.PROJECTILE_PROTECTION}
     );
+    // Turbo
+    public static Enchantment TURBO = new EnchantBuilder(
+            Enchantment.Rarity.RARE,
+            ELYTRA,
+            new EquipmentSlot[]{EquipmentSlot.CHEST},
+            20,
+            50,
+            1,
+            false,
+            false,
+            new Enchantment[]{ModEnchants.PROPELLING, ModEnchants.ACE, ModEnchants.TURBO}
+    );
     // Warding
     public static Enchantment WARDING = new EnchantBuilder(
             Enchantment.Rarity.UNCOMMON,
@@ -624,6 +636,7 @@ public class ModEnchants {
         enchantments.put("testing", ModEnchants.TESTING);
         enchantments.put("thunderbolt", ModEnchants.THUNDERBOLT);
         enchantments.put("tough", ModEnchants.TOUGH);
+        enchantments.put("turbo", ModEnchants.TURBO);
         enchantments.put("warding", ModEnchants.WARDING);
         enchantments.put("weighted", ModEnchants.WEIGHTED);
         enchantments.put("windstep", ModEnchants.WINDSTEP);
@@ -712,6 +725,7 @@ public class ModEnchants {
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "testing"), TESTING);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "thunderbolt"), THUNDERBOLT);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "tough"), TOUGH);
+        Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "turbo"), TURBO);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "warding"), WARDING);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "weighted"), WEIGHTED);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "windstep"), WINDSTEP);

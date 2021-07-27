@@ -15,7 +15,7 @@ import com.herb_mc.extra_enchants.ExtraEnchantsMod;
 import java.util.Objects;
 
 @Mixin(GameRenderer.class)
-public abstract class GameRendererMixin implements UUIDCommons, GameRenderInterfaceMixin {
+public abstract class GameRendererMixin implements UUIDCommons, GameRenderInterface {
 
     @Unique GameRenderer renderer =  (GameRenderer) (Object) this;
 
