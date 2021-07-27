@@ -4,6 +4,7 @@ import com.chocohead.mm.api.ClassTinkerers;
 import com.google.gson.*;
 import com.google.gson.JsonObject;
 import com.herb_mc.extra_enchants.lib.EnchantBuilder;
+import com.herb_mc.extra_enchants.lib.EnchantmentMappings;
 import com.herb_mc.extra_enchants.lib.ScalableEnchantBuilder;
 import com.herb_mc.extra_enchants.registry.ModEnchants;
 import net.fabricmc.fabric.api.resource.*;
@@ -81,14 +82,14 @@ public class ReloadListener extends JsonDataLoader implements SimpleSynchronousR
                 if (incompatibleEnchantments.length > 0) {
                     int index = 0;
                     while (iter.hasNext()) {
-                        incompatibleEnchantments[index] = ModEnchants.valueOf(iter.next().getAsString().toLowerCase());
+                        incompatibleEnchantments[index] = EnchantmentMappings.valueOf(iter.next().getAsString().toLowerCase());
                         index++;
                     }
                 }
                 if (scalable)
-                    ((ScalableEnchantBuilder) ModEnchants.enchantments.get(name)).setAttributes(enabled, rarity, minPower, minPowerDelta, maxPower, maxPowerDelta, maxLevel, isCurse, isTreasure, incompatibleEnchantments);
+                    ((ScalableEnchantBuilder) EnchantmentMappings.enchantments.get(name)).setAttributes(enabled, rarity, minPower, minPowerDelta, maxPower, maxPowerDelta, maxLevel, isCurse, isTreasure, incompatibleEnchantments);
                 else
-                    ((EnchantBuilder) ModEnchants.enchantments.get(name)).setAttributes(enabled, rarity, minPower, maxPower, maxLevel, isCurse, isTreasure, incompatibleEnchantments);
+                    ((EnchantBuilder) EnchantmentMappings.enchantments.get(name)).setAttributes(enabled, rarity, minPower, maxPower, maxLevel, isCurse, isTreasure, incompatibleEnchantments);
                 loaded++;
             } catch (Exception e) {
                 EXTRA_ENCHANTS_LOGGER.error("Error occurred while loading resource json " + id.toString(), e);

@@ -15,7 +15,10 @@ public class ServerPlayerEntityMixin {
 
     @Unique ServerPlayerEntity thisEntity = (ServerPlayerEntity) (Object) this;
 
-    @Inject(method = "copyFrom", at = @At("HEAD"))
+    @Inject(
+            method = "copyFrom",
+            at = @At("HEAD")
+    )
     protected void copySoulbound(ServerPlayerEntity oldPlayer, boolean alive, CallbackInfo info) {
         if (!alive) {
             PlayerInventory inventory = oldPlayer.getInventory();

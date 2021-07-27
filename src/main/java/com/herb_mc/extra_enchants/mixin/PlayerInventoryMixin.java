@@ -11,7 +11,11 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 @Mixin(PlayerInventory.class)
 public class PlayerInventoryMixin {
 
-    @Redirect(method = "dropAll", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;isEmpty()Z"))
+    @Redirect(
+            method = "dropAll",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;isEmpty()Z"
+            )
+    )
     protected boolean keepSoulbound(ItemStack stack) {
         return EnchantmentHelper.getLevel(ModEnchants.SOULBOUND, stack) > 0 || stack.isEmpty();
     }

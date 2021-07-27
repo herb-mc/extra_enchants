@@ -25,14 +25,8 @@ public class HorseArmorRendererMixin {
                     target = "Lnet/minecraft/client/render/VertexConsumerProvider;getBuffer(Lnet/minecraft/client/render/RenderLayer;)Lnet/minecraft/client/render/VertexConsumer;"
             )
     )
-    private VertexConsumer renderHorseArmorGlint(VertexConsumer vertexConsumer, MatrixStack matrixStackIn, VertexConsumerProvider vertexConsumerProvider, int i, HorseEntity horseEntity, float f, float g, float h, float j, float k, float l) {
-        return addGlintLayer(vertexConsumer, vertexConsumerProvider, horseEntity);
-    }
-
-    private VertexConsumer addGlintLayer(VertexConsumer vertexConsumer, VertexConsumerProvider vertexConsumerProvider, HorseEntity horseEntity) {
-        if (horseEntity.getArmorType().hasEnchantments())
-            return VertexConsumers.union(vertexConsumerProvider.getBuffer(RenderLayer.getEntityGlint()), vertexConsumerProvider.getBuffer(RenderLayer.getEntityCutoutNoCull(((HorseArmorItem) horseEntity.getArmorType().getItem()).getEntityTexture())));
-        return vertexConsumer;
+    private VertexConsumer renderHorseArmorEnchantGlint(VertexConsumer vertexConsumer, MatrixStack matrixStackIn, VertexConsumerProvider vertexConsumerProvider, int i, HorseEntity horseEntity, float f, float g, float h, float j, float k, float l) {
+        return (horseEntity.getArmorType().hasEnchantments()) ? VertexConsumers.union(vertexConsumerProvider.getBuffer(RenderLayer.getEntityGlint()), vertexConsumerProvider.getBuffer(RenderLayer.getEntityCutoutNoCull(((HorseArmorItem) horseEntity.getArmorType().getItem()).getEntityTexture()))) : vertexConsumer;
     }
 
 }

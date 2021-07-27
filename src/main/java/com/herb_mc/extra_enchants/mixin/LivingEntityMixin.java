@@ -42,7 +42,7 @@ import static net.minecraft.enchantment.EnchantmentHelper.getEquipmentLevel;
 import static net.minecraft.enchantment.EnchantmentHelper.getLevel;
 
 @Mixin(LivingEntity.class)
-public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBaseEntityInterface, AttributeModCommons, UUIDCommons, LivingEntityMixinAccess {
+public abstract class LivingEntityMixin implements AttributeModCommons, UUIDCommons, LivingEntityMixinAccess {
 
     @Shadow public abstract int getArmor();
 
@@ -64,47 +64,96 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
         EXPOSED = i;
     }
 
-    @Inject(method = "writeCustomDataToNbt", at = @At("RETURN"))
-    protected void writeCustomDataToNbt(NbtCompound nbt, CallbackInfo info) {
-        nbt.putInt("exposedTicks", EXPOSED);
-        nbt.putFloat("stepHeight", STEP_HEIGHT);
-        nbt.putInt("sprintBoost", SPRINT_BOOST);
+    @ModifyArg(
+            method = "applyArmorToDamage",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/entity/DamageUtil;getDamageLeft(FFF)F"
+            ),
+            index = 1
+    )
+    private float applyCleaving(float armor) {
+        double mult = 1.0D - (float) (1.8D * (level / (2.0D * level + 4.0D)));
+        return (EXPOSED > 0) ? (float) (armor * mult) * 0.9F : (float) (armor * mult);
     }
 
-    @Inject(method = "readCustomDataFromNbt", at = @At("RETURN"))
-    protected void readCustomDataFromNbt(NbtCompound nbt, CallbackInfo info) {
-        EXPOSED = nbt.getInt("exposedTicks");
-        STEP_HEIGHT = nbt.getFloat("stepHeight");
-        SPRINT_BOOST = nbt.getInt("sprintBoost");
+    @ModifyArg(
+            method = "jump",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/entity/LivingEntity;setVelocity(DDD)V"
+            ),
+            index = 1
+    )
+    private double addJumpVelocity(double d) {
+        return (EnchantmentHelper.getEquipmentLevel(ModEnchants.LEAPING, thisEntity) > 0) ? d + 0.075F * (float) EnchantmentHelper.getEquipmentLevel(ModEnchants.LEAPING, thisEntity) : d;
     }
 
-    @Inject(method = "canWalkOnFluid", at = @At("HEAD"), cancellable = true)
-    protected void fluidWalk(Fluid fluid,  CallbackInfoReturnable<Boolean> info){
-        if (EnchantmentHelper.getEquipmentLevel(ModEnchants.SURFACE_SKIMMER, thisEntity) > 0 && thisEntity instanceof HorseEntity)
-            info.setReturnValue(true);
+    @ModifyArg(
+            method = "baseTick",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/entity/LivingEntity;setAir(I)V"
+            )
+    )
+    private int neptuneModAirUnderwater(int air) {
+        return (EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_NEPTUNE, thisEntity) > 0 && thisEntity.isSubmergedIn(FluidTags.WATER)) ? air - 3 : air;
     }
 
-    @Inject(at = @At("HEAD"), method = "onDeath")
-    protected void onDeath(DamageSource source, CallbackInfo info){
-        if (source.getAttacker() instanceof LivingEntity && !source.isProjectile() && ((LivingEntity) source.getAttacker()).getActiveHand() != null)
-            ((LivingEntity) source.getAttacker()).heal((float) getLevel(ModEnchants.LIFESTEAL, ((LivingEntity) source.getAttacker()).getStackInHand(((LivingEntity) source.getAttacker()).getActiveHand())));
-        else if (source.getAttacker() instanceof LivingEntity && !source.isProjectile() && ((LivingEntity) source.getAttacker()).getMainHandStack() != null)
-            ((LivingEntity) source.getAttacker()).heal((float) getLevel(ModEnchants.LIFESTEAL, ((LivingEntity) source.getAttacker()).getMainHandStack()));
+    @ModifyArgs(
+            method = "travel",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/entity/LivingEntity;setVelocity(Lnet/minecraft/util/math/Vec3d;)V",
+                    ordinal = 0
+            )
+    )
+    protected void neptuneModSwimSpeed(Args args) {
+        if (EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_NEPTUNE, thisEntity) > 0) {
+            Vec3d vec3d = thisEntity.getVelocity();
+            if (thisEntity.horizontalCollision && thisEntity.isClimbing()) {
+                vec3d = new Vec3d(vec3d.x, 0.2D, vec3d.z);
+            }
+            args.set(0, vec3d.multiply(0.97D, 0.800000011920929D, 0.97D));
+        }
+    }
+
+    @ModifyConstant(
+            method = "travel",
+            constant = @Constant(doubleValue = 0.08D)
+    )
+    private double featherweightFallSpeed(double d){
+        return (EnchantmentHelper.getEquipmentLevel(ModEnchants.FEATHERWEIGHT, thisEntity) > 0 && thisEntity.getVelocity().y < 0 && !thisEntity.isSneaking()) ? d / (EnchantmentHelper.getEquipmentLevel(ModEnchants.FEATHERWEIGHT, thisEntity) + 1) : d;
+    }
+
+    @ModifyConstant(
+            method = "getNextAirOnLand",
+            constant = @Constant(intValue = 4))
+    private int neptuneModAir(int air) {
+        return (EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_NEPTUNE, thisEntity) > 0) ? rand.nextInt(16) % 2 : air;
     }
 
     @ModifyVariable(
             method = "applyArmorToDamage",
-            at = @At(value = "HEAD", target = "Lnet/minecraft/entity/LivingEntity;applyArmorToDamage(Lnet/minecraft/entity/damage/DamageSource;F)F"),
-            ordinal = 0)
-    private float amount(float amount) {
+            at = @At(
+                    value = "HEAD",
+                    target = "Lnet/minecraft/entity/LivingEntity;applyArmorToDamage(Lnet/minecraft/entity/damage/DamageSource;F)F"
+            ),
+            ordinal = 0
+    )
+    private float applyToughnessDR(float amount) {
         return (getEquipmentLevel(ModEnchants.TOUGH, thisEntity) > 0) ? amount * (1.0F - 0.03F * getEquipmentLevel(ModEnchants.TOUGH, thisEntity)) : amount;
     }
 
     @ModifyVariable(
             method = "applyArmorToDamage",
-            at = @At(value = "HEAD", target = "Lnet/minecraft/entity/LivingEntity;applyArmorToDamage(Lnet/minecraft/entity/damage/DamageSource;F)F"),
-            ordinal = 0)
-    private DamageSource source(DamageSource source) {
+            at = @At(
+                    value = "HEAD",
+                    target = "Lnet/minecraft/entity/LivingEntity;applyArmorToDamage(Lnet/minecraft/entity/damage/DamageSource;F)F"
+            ),
+            ordinal = 0
+    )
+    private DamageSource getCleavingLevel(DamageSource source) {
         level = 0;
         if (source.getAttacker() != null)
             if (source.getAttacker() instanceof LivingEntity && !source.isProjectile() && ((LivingEntity) source.getAttacker()).getActiveHand() != null)
@@ -116,9 +165,13 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
 
     @ModifyVariable(
             method = "computeFallDamage",
-            at = @At(value = "HEAD", target = "Lnet/minecraft/entity/LivingEntity;computeFallDamage(FF)I"),
-            ordinal = 0)
-    private float fallDistance(float fallDistance) {
+            at = @At(
+                    value = "HEAD",
+                    target = "Lnet/minecraft/entity/LivingEntity;computeFallDamage(FF)I"
+            ),
+            ordinal = 0
+    )
+    private float enchantmentFallDistanceHandler(float fallDistance) {
         int i = EnchantmentHelper.getEquipmentLevel(ModEnchants.FEATHERWEIGHT, thisEntity);
         if (!thisEntity.isSneaking() && i > 0)
             fallDistance /= 2 * i;
@@ -130,9 +183,13 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
 
     @ModifyVariable(
             method = "damage",
-            at = @At(value = "HEAD", target = "Lnet/minecraft/entity/LivingEntity;damage(Lnet/minecraft/entity/damage/DamageSource;F)Z"),
-            ordinal = 0)
-    private float amount(float amount, DamageSource source) {
+            at = @At(
+                    value = "HEAD",
+                    target = "Lnet/minecraft/entity/LivingEntity;damage(Lnet/minecraft/entity/damage/DamageSource;F)Z"
+            ),
+            ordinal = 0
+    )
+    private float damageCalc(float amount, DamageSource source) {
         if (EnchantmentHelper.getEquipmentLevel(ModEnchants.ACE, thisEntity) > 0 && thisEntity.isFallFlying())
             amount *= 1D / (2 * EnchantmentHelper.getEquipmentLevel(ModEnchants.ACE, thisEntity) + 5) + 0.8;
         if (EXPOSED > 0)
@@ -157,63 +214,64 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
 
     @ModifyVariable(
             method = "travel",
-            at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/block/Block;getSlipperiness()F")
+            at = @At(
+                    value = "INVOKE_ASSIGN",
+                    target = "Lnet/minecraft/block/Block;getSlipperiness()F"
+            )
     )
     private float slimeyFriction(float t) {
         return (EnchantmentHelper.getEquipmentLevel(ModEnchants.SLIMEY, thisEntity) > 0) ? 1.0F : t;
     }
 
-    @ModifyArg(
-            method = "applyArmorToDamage",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/DamageUtil;getDamageLeft(FFF)F"),
-            index = 1)
-    private float armor(float armor) {
-        double mult = 1.0D - (float) (1.8D * (level / (2.0D * level + 4.0D)));
-        return (EXPOSED > 0) ? (float) (armor * mult) * 0.9F : (float) (armor * mult);
-    }
-
-    @ModifyArg(
-            method = "jump",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;setVelocity(DDD)V"),
-            index = 1)
-    private double jumpVelocity(double d) {
-        return (EnchantmentHelper.getEquipmentLevel(ModEnchants.LEAPING, thisEntity) > 0) ? d + 0.075F * (float) EnchantmentHelper.getEquipmentLevel(ModEnchants.LEAPING, thisEntity) : d;
-    }
-
-    @ModifyConstant(method = "travel", constant = @Constant(doubleValue = 0.08D))
-    private double featherweightFallSpeed(double d){
-        return (EnchantmentHelper.getEquipmentLevel(ModEnchants.FEATHERWEIGHT, thisEntity) > 0 && thisEntity.getVelocity().y < 0 && !thisEntity.isSneaking()) ? d / (EnchantmentHelper.getEquipmentLevel(ModEnchants.FEATHERWEIGHT, thisEntity) + 1) : d;
-    }
-
-    @ModifyArg(method = "baseTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;setAir(I)V"))
-    private int neptuneModAirUnderwater(int air) {
-        return (EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_NEPTUNE, thisEntity) > 0 && thisEntity.isSubmergedIn(FluidTags.WATER)) ? air - 3 : air;
-    }
-
-    @ModifyConstant(method = "getNextAirOnLand", constant = @Constant(intValue = 4))
-    private int neptuneModAir(int air) {
-        return (EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_NEPTUNE, thisEntity) > 0) ? rand.nextInt(16) % 2 : air;
-    }
-
     @ModifyVariable(
             method = "getNextAirUnderwater",
-            at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/enchantment/EnchantmentHelper;getRespiration(Lnet/minecraft/entity/LivingEntity;)I"), ordinal = 1)
+            at = @At(
+                    value = "INVOKE_ASSIGN",
+                    target = "Lnet/minecraft/enchantment/EnchantmentHelper;getRespiration(Lnet/minecraft/entity/LivingEntity;)I"
+            ),
+            ordinal = 1)
     protected int respLevel(int i) {
         return (EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_NEPTUNE, thisEntity) > 0) ? 0 : i;
     }
 
-    @ModifyArgs(
-            method = "travel",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;setVelocity(Lnet/minecraft/util/math/Vec3d;)V", ordinal = 0)
+    @Inject(
+            method = "writeCustomDataToNbt",
+            at = @At("RETURN")
     )
-    protected void neptuneSwimmingVelocity(Args args) {
-        if (EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_NEPTUNE, thisEntity) > 0) {
-            Vec3d vec3d = thisEntity.getVelocity();
-            if (thisEntity.horizontalCollision && thisEntity.isClimbing()) {
-                vec3d = new Vec3d(vec3d.x, 0.2D, vec3d.z);
-            }
-            args.set(0, vec3d.multiply(0.97D, 0.800000011920929D, 0.97D));
-        }
+    protected void writeCustomDataToNbt(NbtCompound nbt, CallbackInfo info) {
+        nbt.putInt("exposedTicks", EXPOSED);
+        nbt.putFloat("stepHeight", STEP_HEIGHT);
+        nbt.putInt("sprintBoost", SPRINT_BOOST);
+    }
+
+    @Inject(
+            method = "readCustomDataFromNbt",
+            at = @At("RETURN")
+    )
+    protected void readCustomDataFromNbt(NbtCompound nbt, CallbackInfo info) {
+        EXPOSED = nbt.getInt("exposedTicks");
+        STEP_HEIGHT = nbt.getFloat("stepHeight");
+        SPRINT_BOOST = nbt.getInt("sprintBoost");
+    }
+
+    @Inject(
+            method = "canWalkOnFluid",
+            at = @At("HEAD"), cancellable = true
+    )
+    protected void surfaceSkimmerWaterWalking(Fluid fluid,  CallbackInfoReturnable<Boolean> info){
+        if (EnchantmentHelper.getEquipmentLevel(ModEnchants.SURFACE_SKIMMER, thisEntity) > 0 && thisEntity instanceof HorseEntity)
+            info.setReturnValue(true);
+    }
+
+    @Inject(
+            method = "onDeath",
+            at = @At("HEAD")
+    )
+    protected void handleLifestealKill(DamageSource source, CallbackInfo info){
+        if (source.getAttacker() instanceof LivingEntity && !source.isProjectile() && ((LivingEntity) source.getAttacker()).getActiveHand() != null)
+            ((LivingEntity) source.getAttacker()).heal((float) getLevel(ModEnchants.LIFESTEAL, ((LivingEntity) source.getAttacker()).getStackInHand(((LivingEntity) source.getAttacker()).getActiveHand())));
+        else if (source.getAttacker() instanceof LivingEntity && !source.isProjectile() && ((LivingEntity) source.getAttacker()).getMainHandStack() != null)
+            ((LivingEntity) source.getAttacker()).heal((float) getLevel(ModEnchants.LIFESTEAL, ((LivingEntity) source.getAttacker()).getMainHandStack()));
     }
 
     @Inject(
@@ -251,8 +309,11 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
             thisEntity.setVelocity(0, thisEntity.getVelocity().y, 0);
     }
 
-    @Inject(at = @At("HEAD"), method = "tick")
-    public void tick(CallbackInfo info) {
+    @Inject(
+            at = @At("HEAD"),
+            method = "tick"
+    )
+    public void tickAllEnchants(CallbackInfo info) {
         if (EXPOSED > 0)
             EXPOSED--;
         if (STEP_HEIGHT == 0F)
@@ -386,6 +447,19 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
         }
     }
 
+    private List<ItemEntity> getNearestItems(int level) {
+        List<ItemEntity> list = thisEntity.world.getEntitiesByClass(ItemEntity.class, thisEntity.getBoundingBox().expand(7.0), EntityPredicates.VALID_ENTITY);
+        double squareDist = Math.pow(4.5 + level, 2);
+        List<ItemEntity> finalList = new ArrayList<>();
+        if (!list.isEmpty()) {
+            for (ItemEntity entity : list) {
+                if (getSquareDist(entity.getPos(), thisEntity.getPos()) < squareDist)
+                    finalList.add(entity);
+            }
+        }
+        return finalList;
+    }
+
     private Vec3d getNearestOre() {
         Vec3d vec3d = null;
         double lowestSquareDistance = 30.25;
@@ -433,19 +507,6 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
                 break;
             }
         }
-    }
-
-    private List<ItemEntity> getNearestItems(int level) {
-        List<ItemEntity> list = thisEntity.world.getEntitiesByClass(ItemEntity.class, thisEntity.getBoundingBox().expand(7.0), EntityPredicates.VALID_ENTITY);
-        double squareDist = Math.pow(4.5 + level, 2);
-        List<ItemEntity> finalList = new ArrayList<>();
-        if (!list.isEmpty()) {
-            for (ItemEntity entity : list) {
-                if (getSquareDist(entity.getPos(), thisEntity.getPos()) < squareDist)
-                    finalList.add(entity);
-            }
-        }
-        return finalList;
     }
 
 }

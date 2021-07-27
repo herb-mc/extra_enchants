@@ -1,7 +1,5 @@
 package com.herb_mc.extra_enchants.mixin;
 
-import com.herb_mc.extra_enchants.registry.ModEnchants;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ElytraItem;
 import net.minecraft.item.HorseArmorItem;
 import net.minecraft.item.Item;

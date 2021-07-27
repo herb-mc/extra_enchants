@@ -38,7 +38,7 @@ public class BlockMixin {
                     target = "Lnet/minecraft/block/Block;dropStacks(Lnet/minecraft/block/BlockState;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/entity/BlockEntity;Lnet/minecraft/entity/Entity;Lnet/minecraft/item/ItemStack;)V"
             )
     )
-    public void afterBreak(Args args){
+    public void handleEnchantsAfterBreak(Args args){
         PlayerEntity player = args.get(4);
         if(EnchantmentHelper.getLevel(ModEnchants.TERRAFORMING, player.getStackInHand(player.getActiveHand())) > 0)
             args.set(5, ItemStack.EMPTY);
@@ -55,7 +55,7 @@ public class BlockMixin {
             ),
             locals = LocalCapture.CAPTURE_FAILSOFT
     )
-    private static void setLocals(World world, BlockPos pos, ItemStack stack, CallbackInfo ci) {
+    private static void getLocals(World world, BlockPos pos, ItemStack stack, CallbackInfo ci) {
         rand = world.random;
     }
 

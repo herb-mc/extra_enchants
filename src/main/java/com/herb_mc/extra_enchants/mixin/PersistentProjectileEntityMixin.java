@@ -58,8 +58,41 @@ public abstract class PersistentProjectileEntityMixin {
     @Unique public int launching = 0;
     @Unique private final Random rand = new Random();
 
-    @Inject(at = @At("TAIL"), method = "setOwner")
-    protected void setOwner(@Nullable Entity entity, CallbackInfo info) {
+    @ModifyArgs(
+            method = "tick",
+            at = @At(value = "INVOKE",
+                    target = "Lnet/minecraft/world/World;addParticle(Lnet/minecraft/particle/ParticleEffect;DDDDDD)V"
+            )
+    )
+    private void particle(Args args){
+        if(purity){
+            this.setDamage(0);
+        }
+        if (critical) {
+            if (explosive > 0) {
+                args.set(0, ParticleTypes.SMOKE);
+                args.set(4, (rand.nextDouble() - 0.5) / 15);
+                args.set(5, (rand.nextDouble() - 0.5) / 15);
+                args.set(6, (rand.nextDouble() - 0.5) / 15);
+            } else if (ender) {
+                args.set(0, ParticleTypes.REVERSE_PORTAL);
+                args.set(4, (rand.nextDouble() - 0.5) / 15);
+                args.set(5, (rand.nextDouble() - 0.5) / 15);
+                args.set(6, (rand.nextDouble() - 0.5) / 15);
+            } else if (thunderbolt && thisEntity.world.isSkyVisible(thisEntity.getBlockPos())) {
+                args.set(0, ParticleTypes.ELECTRIC_SPARK);
+                args.set(4, (rand.nextDouble() - 0.5) * 2);
+                args.set(5, (rand.nextDouble() - 0.5) * 2);
+                args.set(6, (rand.nextDouble() - 0.5) * 2);
+            }
+        }
+    }
+
+    @Inject(
+            at = @At("TAIL"),
+            method = "setOwner"
+    )
+    protected void setAttributesFromOwner(@Nullable Entity entity, CallbackInfo info) {
         if (entity instanceof LivingEntity) {
             if (EnchantmentHelper.getEquipmentLevel(ModEnchants.ACE, (LivingEntity) entity) > 0 && ((LivingEntity) entity).isFallFlying()) {
                 thisEntity.setDamage(thisEntity.getDamage() + EnchantmentHelper.getEquipmentLevel(ModEnchants.ACE, (LivingEntity) entity) / 2F);
@@ -97,7 +130,10 @@ public abstract class PersistentProjectileEntityMixin {
         }
     }
 
-    @Inject(method = "writeCustomDataToNbt", at = @At("RETURN"))
+    @Inject(
+            method = "writeCustomDataToNbt",
+            at = @At("RETURN")
+    )
     protected void writeCustomDataToNbt(NbtCompound nbt, CallbackInfo info) {
         nbt.putBoolean("ender", ender);
         nbt.putBoolean("purity", purity);
@@ -112,7 +148,10 @@ public abstract class PersistentProjectileEntityMixin {
         }
     }
 
-    @Inject(method = "readCustomDataFromNbt", at = @At("RETURN"))
+    @Inject(
+            method = "readCustomDataFromNbt",
+            at = @At("RETURN")
+    )
     protected void readCustomDataFromNbt(NbtCompound nbt, CallbackInfo info) {
         ender = nbt.getBoolean("ender");
         purity = nbt.getBoolean("purity");
@@ -127,42 +166,20 @@ public abstract class PersistentProjectileEntityMixin {
         }
     }
 
-    @ModifyArgs(
+    @Inject(
             method = "tick",
-            at = @At(value = "INVOKE",
-                    target = "Lnet/minecraft/world/World;addParticle(Lnet/minecraft/particle/ParticleEffect;DDDDDD)V"))
-    private void particle(Args args){
-        if(purity){
-            this.setDamage(0);
-        }
-        if (critical) {
-            if (explosive > 0) {
-                args.set(0, ParticleTypes.SMOKE);
-                args.set(4, (rand.nextDouble() - 0.5) / 15);
-                args.set(5, (rand.nextDouble() - 0.5) / 15);
-                args.set(6, (rand.nextDouble() - 0.5) / 15);
-            } else if (ender) {
-                args.set(0, ParticleTypes.REVERSE_PORTAL);
-                args.set(4, (rand.nextDouble() - 0.5) / 15);
-                args.set(5, (rand.nextDouble() - 0.5) / 15);
-                args.set(6, (rand.nextDouble() - 0.5) / 15);
-            } else if (thunderbolt && thisEntity.world.isSkyVisible(thisEntity.getBlockPos())) {
-                args.set(0, ParticleTypes.ELECTRIC_SPARK);
-                args.set(4, (rand.nextDouble() - 0.5) * 2);
-                args.set(5, (rand.nextDouble() - 0.5) * 2);
-                args.set(6, (rand.nextDouble() - 0.5) * 2);
-            }
-        }
-    }
-
-    @Inject(method = "tick", at = @At("HEAD"))
+            at = @At("HEAD")
+    )
     protected void setCritical(CallbackInfo info) {
         if (this.isCritical())
             critical = true;
     }
 
-    @Inject(method = "tick", at = @At("TAIL"))
-    protected void tick(CallbackInfo info) {
+    @Inject(
+            method = "tick",
+            at = @At("TAIL")
+    )
+    protected void inGroundChecks(CallbackInfo info) {
         if(thisEntity instanceof ArrowEntity && this.inGround && (critical || !playerOwner)) {
             if (explosive >= 1) {
                 thisEntity.world.createExplosion(thisEntity, thisEntity.getX(), thisEntity.getY(), thisEntity.getZ(), explosive / 2.0F + 0.5F, Explosion.DestructionType.NONE);
@@ -199,8 +216,12 @@ public abstract class PersistentProjectileEntityMixin {
         }
     }
 
-    @Inject(at = @At("HEAD"), method = "onEntityHit", cancellable = true)
-    protected void onEntityCollision(EntityHitResult hitResult, CallbackInfo info) {
+    @Inject(
+            at = @At("HEAD"),
+            method = "onEntityHit",
+            cancellable = true
+    )
+    protected void entityCollisionCheck(EntityHitResult hitResult, CallbackInfo info) {
         if(thisEntity instanceof ArrowEntity) {
             if (this.isCritical() || !playerOwner) {
                 Entity target = hitResult.getEntity();
@@ -245,8 +266,12 @@ public abstract class PersistentProjectileEntityMixin {
         }
     }
 
-    @Inject(at = @At("TAIL"), method = "onEntityHit", cancellable = true)
-    protected void handleEntityEnder(EntityHitResult hitResult, CallbackInfo info) {
+    @Inject(
+            at = @At("TAIL"),
+            method = "onEntityHit",
+            cancellable = true
+    )
+    protected void handleLivingEntityEnder(EntityHitResult hitResult, CallbackInfo info) {
         if(thisEntity instanceof ArrowEntity && !playerOwner && ender && thisEntity.getOwner() != null && thisEntity.getOwner().isAlive()) {
             Entity target = hitResult.getEntity();
             ArrowEntity entity = (ArrowEntity) (Object) this;

@@ -11,8 +11,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(DamageEnchantment.class)
 public class DamageEnchantmentMixin {
 
-    @Inject(method = "isAcceptableItem", at = @At("HEAD"), cancellable = true)
-    public void isAcceptable(ItemStack stack, CallbackInfoReturnable<Boolean> info) {
+    @Inject(
+            method = "isAcceptableItem",
+            at = @At("HEAD"),
+            cancellable = true
+    )
+    public void addDamageEnchToTrident(ItemStack stack, CallbackInfoReturnable<Boolean> info) {
         if (stack.getItem() instanceof TridentItem) info.setReturnValue(true);
     }
 

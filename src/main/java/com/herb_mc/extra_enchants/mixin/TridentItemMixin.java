@@ -17,8 +17,11 @@ public class TridentItemMixin {
 
     @Unique TridentItem thisItem = (TridentItem) (Object) this;
 
-    @Inject(method = "onStoppedUsing", at = @At("HEAD"))
-    public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks, CallbackInfo info) {
+    @Inject(
+            method = "onStoppedUsing",
+            at = @At("HEAD")
+    )
+    public void addLaunchingVelocity(ItemStack stack, World world, LivingEntity user, int remainingUseTicks, CallbackInfo info) {
         int i = thisItem.getMaxUseTime(stack) - remainingUseTicks;
         if (EnchantmentHelper.getLevel(ModEnchants.LAUNCHING, stack) > 0 && i >= 10) {
             user.setVelocity(user.getVelocity().add(user.getRotationVector().multiply(EnchantmentHelper.getLevel(ModEnchants.LAUNCHING, stack))));

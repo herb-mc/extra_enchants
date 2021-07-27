@@ -25,13 +25,20 @@ public abstract class PlayerEntityMixin implements AttributeModCommons, UUIDComm
 
     @ModifyVariable(
             method = "getBlockBreakingSpeed",
-            at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/entity/player/PlayerInventory;getBlockBreakingSpeed(Lnet/minecraft/block/BlockState;)F"))
-    private float f(float f) {
+            at = @At(
+                    value = "INVOKE_ASSIGN",
+                    target = "Lnet/minecraft/entity/player/PlayerInventory;getBlockBreakingSpeed(Lnet/minecraft/block/BlockState;)F"
+            )
+    )
+    private float addTerraformingSpeed(float f) {
         return (thisEntity.getActiveHand() != null && EnchantmentHelper.getLevel(ModEnchants.TERRAFORMING, thisEntity.getStackInHand(thisEntity.getActiveHand())) > 0 && f > 1.0) ? f + 58 : f;
     }
 
-    @Inject(at = @At("HEAD"), method = "tick")
-    public void tick(CallbackInfo info) {
+    @Inject(
+            at = @At("HEAD"),
+            method = "tick"
+    )
+    public void tickAllEnchants(CallbackInfo info) {
         int i = EnchantmentHelper.getEquipmentLevel(ModEnchants.DEXTROUS, thisEntity);
         removeAttribute(thisEntity, EntityAttributes.GENERIC_ATTACK_SPEED, DEXTERITY_ATTRIBUTE_ID);
         if (i > 0)
