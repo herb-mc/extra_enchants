@@ -61,8 +61,12 @@ public abstract class PersistentProjectileEntityMixin {
     @Inject(at = @At("TAIL"), method = "setOwner")
     protected void setOwner(@Nullable Entity entity, CallbackInfo info) {
         if (entity instanceof LivingEntity) {
+            if (EnchantmentHelper.getEquipmentLevel(ModEnchants.ACE, (LivingEntity) entity) > 0 && ((LivingEntity) entity).isFallFlying()) {
+                thisEntity.setDamage(thisEntity.getDamage() + EnchantmentHelper.getEquipmentLevel(ModEnchants.ACE, (LivingEntity) entity) / 2F);
+                sharpshooter = true;
+            }
             if (EnchantmentHelper.getEquipmentLevel(ModEnchants.SHARPSHOOTER, (LivingEntity) entity) > 0 && entity.isSneaking()) {
-                thisEntity.setDamage(thisEntity.getDamage() + EnchantmentHelper.getEquipmentLevel(ModEnchants.SHARPSHOOTER, (LivingEntity) entity));
+                thisEntity.setDamage(thisEntity.getDamage() + 1);
                 sharpshooter = true;
             }
             if (EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_NEPTUNE, (LivingEntity) entity) > 0)

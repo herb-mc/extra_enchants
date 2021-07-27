@@ -45,6 +45,23 @@
 ---
 [Back to top](#enchantment-list)
 
+## *Ace*
+- Damage reduction, melee and arrow damage are increased
+- Compatible equipment: Elytra
+- Incompatible enchantments: Propelling
+- Max level: 3
+- Rarity: Rare
+- Type: Treasure
+### Technical description:
+- Incoming damage is multiplied by a multiplier determined by the following formula:
+
+![ace](https://latex.codecogs.com/gif.latex?multiplier%20%3D%20%5Cfrac%7B1%7D%7B2*level&plus;5%7D&plus;0.8)
+
+- Melee and arrow damage are increased by 1 per level.
+- Aforementioned affects are only active while in elytra flight.
+---
+[Back to top](#enchantment-list)
+
 ## *Antigravity*
 - Removes mined item gravity.
 - Compatible equipment: Tools

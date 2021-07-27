@@ -22,6 +22,20 @@ public class ModEnchants {
     static EnchantmentTarget WEAPONS = ClassTinkerers.getEnum(EnchantmentTarget.class, "WEAPONS");
     static Enchantment.Rarity NULL = ClassTinkerers.getEnum(Enchantment.Rarity.class, "NULL");
 
+    // Ace
+    public static Enchantment ACE = new ScalableEnchantBuilder(
+            Enchantment.Rarity.RARE,
+            ELYTRA,
+            new EquipmentSlot[]{EquipmentSlot.CHEST},
+            15,
+            10,
+            30,
+            10,
+            3,
+            false,
+            false,
+            new Enchantment[]{ModEnchants.ACE, ModEnchants.PROPELLING}
+    );
     // Antigravity
     public static Enchantment ANTIGRAVITY = new EnchantBuilder(
             Enchantment.Rarity.RARE,
@@ -376,7 +390,7 @@ public class ModEnchants {
             3,
             false,
             false,
-            new Enchantment[]{}
+            new Enchantment[]{ModEnchants.PROPELLING, ModEnchants.ACE}
     );
     // Psychic
     public static Enchantment PSYCHIC = new EnchantBuilder(
@@ -571,6 +585,7 @@ public class ModEnchants {
     {
         // extra enchants
         enchantments = new HashMap<>();
+        enchantments.put("ace", ModEnchants.ACE);
         enchantments.put("antigravity", ModEnchants.ANTIGRAVITY);
         enchantments.put("architect", ModEnchants.ARCHITECT);
         enchantments.put("arrow_speed", ModEnchants.ARROW_SPEED);
@@ -658,6 +673,7 @@ public class ModEnchants {
     }
 
     public static void registerEnchants() {
+        Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "ace"), ACE);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "antigravity"), ANTIGRAVITY);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "architect"), ARCHITECT);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "arrow_speed"), ARROW_SPEED);

@@ -133,6 +133,8 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
             at = @At(value = "HEAD", target = "Lnet/minecraft/entity/LivingEntity;damage(Lnet/minecraft/entity/damage/DamageSource;F)Z"),
             ordinal = 0)
     private float amount(float amount, DamageSource source) {
+        if (EnchantmentHelper.getEquipmentLevel(ModEnchants.ACE, thisEntity) > 0 && thisEntity.isFallFlying())
+            amount *= 1D / (2 * EnchantmentHelper.getEquipmentLevel(ModEnchants.ACE, thisEntity) + 5) + 0.8;
         if (EXPOSED > 0)
             amount *= 1.1;
         if (source instanceof EntityDamageSource && EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_THE_BLOOD_GOD, thisEntity) > 0 && (rand.nextDouble() < 0.25 || EnchantmentHelper.getEquipmentLevel(ModEnchants.TESTING, thisEntity) > 0))
@@ -259,6 +261,10 @@ public abstract class LivingEntityMixin implements EntityInterfaceMixin, HorseBa
         thisEntity.stepHeight = STEP_HEIGHT;
         if (i > 0)
             thisEntity.stepHeight += i * 0.4F;
+        removeAttribute(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, ACE_ATTRIBUTE_ID);
+        i = getEquipmentLevel(ModEnchants.ACE, thisEntity);
+        if (i > 0 && thisEntity.isFallFlying())
+            modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, i, ACE_ATTRIBUTE_ID, "ace_attack_damage", 1, EntityAttributeModifier.Operation.ADDITION);
         removeAttribute(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, CORE_OF_NEPTUNE_ATTRIBUTE_ID);
         removeAttribute(thisEntity, EntityAttributes.GENERIC_ATTACK_SPEED, CORE_OF_NEPTUNE_ATTRIBUTE_ID);
         removeAttribute(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, CORE_OF_NEPTUNE_ATTRIBUTE_ID);

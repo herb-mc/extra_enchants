@@ -1,7 +1,7 @@
 {
   "type": "scalable",
   "available": "true",
-  "rarity": "rare",
+  "rarity": "uncommon",
   "min_power": "15",
   "min_power_delta": "10",
   "max_power": "30",
