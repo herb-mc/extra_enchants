@@ -1,6 +1,7 @@
 [Back to readme](/README.md)
 # Enchantment List
 
+- [Ace](#ace)
 - [Antigravity](#antigravity)
 - [Architect](#architect)
 - [Arrow Speed](#arrow-speed)
