@@ -1,6 +1,7 @@
 package com.herb_mc.extra_enchants.mixin;
 
 import com.herb_mc.extra_enchants.lib.LivingEntityMixinAccess;
+import com.herb_mc.extra_enchants.lib.PersistentProjectileEntityMixinAccess;
 import com.herb_mc.extra_enchants.registry.ModEnchants;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -18,45 +19,89 @@ import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.TridentEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.particle.ParticleEffect;
+import net.minecraft.particle.ParticleType;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 import net.minecraft.world.explosion.Explosion;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyArgs;
+import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 import java.util.Random;
 
 @Mixin(PersistentProjectileEntity.class)
-public abstract class PersistentProjectileEntityMixin {
-
-    @Shadow public abstract void setDamage(double damage);
+public abstract class PersistentProjectileEntityMixin implements PersistentProjectileEntityMixinAccess {
 
     @Shadow protected boolean inGround;
 
-    @Shadow public abstract boolean isCritical();
-
     @Unique private final PersistentProjectileEntity thisEntity = (PersistentProjectileEntity) (Object) this;
     @Unique public int explosive;
-    @Unique public boolean ender;
-    @Unique public boolean purity = false;
+    @Unique public boolean explosiveParticles = false;
     @Unique public int exposing = 0;
     @Unique public boolean critical = false;
-    @Unique public boolean thunderbolt = false;
-    @Unique public boolean sharpshooter = false;
-    @Unique public boolean neptune = false;
+    @Unique public boolean ender;
+    @Unique public boolean enderParticles = false;
     @Unique public boolean playerOwner = false;
-    @Unique public int launching = 0;
+    @Unique public boolean purity = false;
+    @Unique public boolean sharpshooter = false;
+    @Unique public boolean thunderbolt = false;
+    @Unique public boolean thunderboltParticles = false;
+    @Unique public boolean neptune = false;
     @Unique private final Random rand = new Random();
+
+    @Override
+    public void setExplosive(int i) {
+        this.explosive = i;
+    }
+
+    @Override
+    public void setExposing(int i) {
+        this.exposing = i;
+    }
+
+    @Override
+    public void setCrit(boolean i) {
+        this.critical = i;
+    }
+
+    @Override
+    public void setEnder(boolean i) {
+        this.ender = i;
+    }
+
+    @Override
+    public void setNeptune(boolean i) {
+        this.neptune = i;
+    }
+
+    @Override
+    public void setPlayerOwner(boolean i) {
+        this.playerOwner = i;
+    }
+
+    @Override
+    public void setPurity(boolean i) {
+        this.purity = i;
+    }
+
+    @Override
+    public void setSharpshooter(boolean i) {
+        this.sharpshooter = i;
+    }
+
+    @Override
+    public void setThunderbolt(boolean i) {
+        this.thunderbolt = i;
+    }
 
     @ModifyArgs(
             method = "tick",
@@ -65,26 +110,21 @@ public abstract class PersistentProjectileEntityMixin {
             )
     )
     private void particle(Args args){
-        if(purity){
-            this.setDamage(0);
-        }
-        if (critical) {
-            if (explosive > 0) {
-                args.set(0, ParticleTypes.SMOKE);
-                args.set(4, (rand.nextDouble() - 0.5) / 15);
-                args.set(5, (rand.nextDouble() - 0.5) / 15);
-                args.set(6, (rand.nextDouble() - 0.5) / 15);
-            } else if (ender) {
-                args.set(0, ParticleTypes.REVERSE_PORTAL);
-                args.set(4, (rand.nextDouble() - 0.5) / 15);
-                args.set(5, (rand.nextDouble() - 0.5) / 15);
-                args.set(6, (rand.nextDouble() - 0.5) / 15);
-            } else if (thunderbolt && thisEntity.world.isSkyVisible(thisEntity.getBlockPos())) {
-                args.set(0, ParticleTypes.ELECTRIC_SPARK);
-                args.set(4, (rand.nextDouble() - 0.5) * 2);
-                args.set(5, (rand.nextDouble() - 0.5) * 2);
-                args.set(6, (rand.nextDouble() - 0.5) * 2);
-            }
+        if (explosiveParticles) {
+            args.set(0, ParticleTypes.SMOKE);
+            args.set(4, (rand.nextDouble() - 0.5) / 15);
+            args.set(5, (rand.nextDouble() - 0.5) / 15);
+            args.set(6, (rand.nextDouble() - 0.5) / 15);
+        } else if (enderParticles) {
+            args.set(0, ParticleTypes.REVERSE_PORTAL);
+            args.set(4, (rand.nextDouble() - 0.5) / 15);
+            args.set(5, (rand.nextDouble() - 0.5) / 15);
+            args.set(6, (rand.nextDouble() - 0.5) / 15);
+        } else if (thunderboltParticles && thisEntity.world.isSkyVisible(thisEntity.getBlockPos())) {
+            args.set(0, ParticleTypes.ELECTRIC_SPARK);
+            args.set(4, (rand.nextDouble() - 0.5) * 2);
+            args.set(5, (rand.nextDouble() - 0.5) * 2);
+            args.set(6, (rand.nextDouble() - 0.5) * 2);
         }
     }
 
@@ -93,7 +133,7 @@ public abstract class PersistentProjectileEntityMixin {
             method = "setOwner"
     )
     protected void setAttributesFromOwner(@Nullable Entity entity, CallbackInfo info) {
-        if (entity instanceof LivingEntity) {
+        if (entity instanceof LivingEntity && !(entity instanceof PlayerEntity)) {
             if (EnchantmentHelper.getEquipmentLevel(ModEnchants.ACE, (LivingEntity) entity) > 0 && ((LivingEntity) entity).isFallFlying()) {
                 thisEntity.setDamage(thisEntity.getDamage() + EnchantmentHelper.getEquipmentLevel(ModEnchants.ACE, (LivingEntity) entity) / 2F);
                 sharpshooter = true;
@@ -102,30 +142,26 @@ public abstract class PersistentProjectileEntityMixin {
                 thisEntity.setDamage(thisEntity.getDamage() + 1);
                 sharpshooter = true;
             }
-            if (EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_NEPTUNE, (LivingEntity) entity) > 0)
-                neptune = true;
             if (EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_PURITY, (LivingEntity) entity) > 0)
                 purity = true;
-            if (((LivingEntity) entity).getActiveHand() != null) {
-                ItemStack stack = ((LivingEntity) entity).getStackInHand(((LivingEntity) entity).getActiveHand());
-                if (EnchantmentHelper.getLevel(ModEnchants.EXPOSING, stack) > 0)
-                    exposing = EnchantmentHelper.getEquipmentLevel(ModEnchants.EXPOSING, (LivingEntity) entity) * 30;
+            if (((LivingEntity) entity).getMainHandStack() != null) {
+                ItemStack stack = ((LivingEntity) entity).getMainHandStack();
                 if (EnchantmentHelper.getLevel(ModEnchants.EXPLOSIVE, stack) > 0)
                     explosive += EnchantmentHelper.getLevel(ModEnchants.EXPLOSIVE, stack);
                 else if (EnchantmentHelper.getLevel(ModEnchants.ENDER, stack) > 0)
                     ender = true;
-                else if (EnchantmentHelper.getLevel(ModEnchants.THUNDERBOLT, stack) > 0)
-                    thunderbolt = true;
-                if (entity instanceof PlayerEntity)
-                    playerOwner = true;
             }
-            else if (((LivingEntity) entity).getMainHandStack() != null) {
-                if (EnchantmentHelper.getLevel(ModEnchants.EXPOSING, ((LivingEntity) entity).getMainHandStack()) > 0)
-                    exposing = EnchantmentHelper.getEquipmentLevel(ModEnchants.EXPOSING, (LivingEntity) entity) * 30;
-                if (EnchantmentHelper.getLevel(ModEnchants.EXPLOSIVE, ((LivingEntity) entity).getMainHandStack()) > 0)
-                    explosive += EnchantmentHelper.getLevel(ModEnchants.EXPLOSIVE, ((LivingEntity) entity).getMainHandStack());
-                else if (EnchantmentHelper.getLevel(ModEnchants.ENDER, ((LivingEntity) entity).getMainHandStack()) > 0)
-                    ender = true;
+        }
+        // yes, custom crit particle booleans need to be defined locally, trying to do so in other mixins actually confused jvm somehow
+        if (entity instanceof PlayerEntity) {
+            if (((LivingEntity) entity).getActiveHand() != null) {
+                ItemStack stack = ((LivingEntity) entity).getStackInHand(((LivingEntity) entity).getActiveHand());
+                if (EnchantmentHelper.getLevel(ModEnchants.EXPLOSIVE, stack) > 0)
+                    explosiveParticles = true;
+                else if (EnchantmentHelper.getLevel(ModEnchants.ENDER, stack) > 0)
+                    enderParticles = true;
+                else if (EnchantmentHelper.getLevel(ModEnchants.THUNDERBOLT, stack) > 0)
+                    thunderboltParticles = true;
             }
         }
     }
@@ -143,9 +179,6 @@ public abstract class PersistentProjectileEntityMixin {
         nbt.putBoolean("sharpshooter", sharpshooter);
         nbt.putBoolean("shotByPlayer", playerOwner);
         nbt.putBoolean("thunderbolt", thunderbolt);
-        if (thisEntity instanceof TridentEntity) {
-            nbt.putInt("launching", launching);
-        }
     }
 
     @Inject(
@@ -161,18 +194,6 @@ public abstract class PersistentProjectileEntityMixin {
         sharpshooter = nbt.getBoolean("sharpshooter");
         playerOwner = nbt.getBoolean("shotByPlayer");
         thunderbolt = nbt.getBoolean("thunderbolt");
-        if (thisEntity instanceof TridentEntity) {
-            launching = nbt.getInt("launching");
-        }
-    }
-
-    @Inject(
-            method = "tick",
-            at = @At("HEAD")
-    )
-    protected void setCritical(CallbackInfo info) {
-        if (this.isCritical())
-            critical = true;
     }
 
     @Inject(
@@ -206,13 +227,8 @@ public abstract class PersistentProjectileEntityMixin {
                 thisEntity.playSound(SoundEvents.ENTITY_ENDERMAN_TELEPORT, 1.0F, 1.0F);
                 thisEntity.discard();
             }
-            else if (thunderbolt && thisEntity.world.isSkyVisible(thisEntity.getBlockPos())) {
-                LightningEntity lightningEntity = EntityType.LIGHTNING_BOLT.create(thisEntity.world);
-                lightningEntity.refreshPositionAfterTeleport(Vec3d.ofBottomCenter(thisEntity.getBlockPos()));
-                lightningEntity.setChanneler(thisEntity.getOwner() instanceof ServerPlayerEntity ? (ServerPlayerEntity)thisEntity.getOwner() : null);
-                thisEntity.world.spawnEntity(lightningEntity);
-                thisEntity.discard();
-            }
+            else if (thunderbolt && thisEntity.world.isSkyVisible(thisEntity.getBlockPos()))
+                lightningAtSelf(thisEntity);
         }
     }
 
@@ -223,7 +239,7 @@ public abstract class PersistentProjectileEntityMixin {
     )
     protected void entityCollisionCheck(EntityHitResult hitResult, CallbackInfo info) {
         if(thisEntity instanceof ArrowEntity) {
-            if (this.isCritical() || !playerOwner) {
+            if (thisEntity.isCritical() || !playerOwner) {
                 Entity target = hitResult.getEntity();
                 int phase = -1;
                 float decreasePower = 1.0F;
@@ -254,13 +270,8 @@ public abstract class PersistentProjectileEntityMixin {
                         entity.fallDistance = 0.0F;
                         entity.damage(DamageSource.FALL, 1.0F);
                     }
-                    else if (thunderbolt && thisEntity.world.isSkyVisible(target.getBlockPos())) {
-                        LightningEntity lightningEntity = EntityType.LIGHTNING_BOLT.create(thisEntity.world);
-                        lightningEntity.refreshPositionAfterTeleport(Vec3d.ofBottomCenter(target.getBlockPos()));
-                        lightningEntity.setChanneler(thisEntity.getOwner() instanceof ServerPlayerEntity ? (ServerPlayerEntity)thisEntity.getOwner() : null);
-                        thisEntity.world.spawnEntity(lightningEntity);
-                        thisEntity.discard();
-                    }
+                    else if (thunderbolt && thisEntity.world.isSkyVisible(target.getBlockPos()))
+                        lightningAtSelf(thisEntity);
                 }
             }
         }
@@ -292,6 +303,14 @@ public abstract class PersistentProjectileEntityMixin {
     public void explosionArrow(Entity target, float powerMod){
         thisEntity.world.createExplosion(thisEntity, target.getX(), (target.getY() + 2.0F * thisEntity.getY()) / 3.0F, target.getZ(), explosive / powerMod, Explosion.DestructionType.NONE);
         thisEntity.discard();
+    }
+
+    public void lightningAtSelf(PersistentProjectileEntity source) {
+        LightningEntity lightningEntity = EntityType.LIGHTNING_BOLT.create(source.world);
+        lightningEntity.refreshPositionAfterTeleport(Vec3d.ofBottomCenter(source.getBlockPos()));
+        lightningEntity.setChanneler(source.getOwner() instanceof ServerPlayerEntity ? (ServerPlayerEntity)source.getOwner() : null);
+        source.world.spawnEntity(lightningEntity);
+        source.discard();
     }
 
 }

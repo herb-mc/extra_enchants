@@ -47,6 +47,7 @@ public class EnchantmentMappings {
         enchantments.put("slimey", ModEnchants.SLIMEY);
         enchantments.put("soulbound", ModEnchants.SOULBOUND);
         enchantments.put("steadfast", ModEnchants.STEADFAST);
+        enchantments.put("strong_draw", ModEnchants.STRONG_DRAW);
         enchantments.put("surface_skimmer", ModEnchants.SURFACE_SKIMMER);
         enchantments.put("swiftness", ModEnchants.SWIFTNESS);
         enchantments.put("terraforming", ModEnchants.TERRAFORMING);

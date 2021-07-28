@@ -11,9 +11,6 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class ModEnchants {
 
     static EnchantmentTarget AXE = ClassTinkerers.getEnum(EnchantmentTarget.class, "AXE");
@@ -254,7 +251,7 @@ public class ModEnchants {
             2,
             false,
             false,
-            new Enchantment[]{Enchantments.POWER, Enchantments.INFINITY, ModEnchants.EXPLOSIVE, ModEnchants.ENDER}
+            new Enchantment[]{Enchantments.POWER, Enchantments.INFINITY, ModEnchants.EXPLOSIVE, ModEnchants.ENDER, ModEnchants.STRONG_DRAW}
     );
     // Exposing
     public static Enchantment EXPOSING = new ScalableEnchantBuilder(
@@ -454,6 +451,20 @@ public class ModEnchants {
             false,
             new Enchantment[]{ModEnchants.STEADFAST, ModEnchants.BOOSTING}
     );
+    // Strong Draw
+    public static Enchantment STRONG_DRAW = new ScalableEnchantBuilder(
+            Enchantment.Rarity.UNCOMMON,
+            EnchantmentTarget.BOW,
+            new EquipmentSlot[]{EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND},
+            20,
+            10,
+            30,
+            20,
+            2,
+            false,
+            false,
+            new Enchantment[]{ModEnchants.EXPLOSIVE}
+    );
     // Surface Skimmer
     public static Enchantment SURFACE_SKIMMER = new ScalableEnchantBuilder(
             Enchantment.Rarity.COMMON,
@@ -625,6 +636,7 @@ public class ModEnchants {
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "slimey"), SLIMEY);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "soulbound"), SOULBOUND);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "steadfast"), STEADFAST);
+        Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "strong_draw"), STRONG_DRAW);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "surface_skimmer"), SURFACE_SKIMMER);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "swiftness"), SWIFTNESS);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "terraforming"), TERRAFORMING);

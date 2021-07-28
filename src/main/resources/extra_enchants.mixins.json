@@ -4,8 +4,10 @@
   "package": "com.herb_mc.extra_enchants.mixin",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
+    "AbstractClientPlayerEntityMixin",
     "BlockMixin",
     "BowItemMixin",
+    "CrossbowItemMixin",
     "DamageEnchantmentMixin",
     "EntityMixin",
     "FireworkRocketEntityInterface",
@@ -17,6 +19,7 @@
     "ItemGroupMixin",
     "ItemMixin",
     "LivingEntityMixin",
+    "ModelPredicateProviderRegistryMixin",
     "PersistentProjectileEntityMixin",
     "PlayerEntityMixin",
     "PlayerInventoryMixin",

@@ -34,6 +34,7 @@
 - [Slimey](#slimey)
 - [Soulbound](#soulbound)
 - [Steadfast](#steadfast)
+- [Strong Draw](#strong-draw)
 - [Surface Skimmer](#surface-skimmer)
 - [Swiftness](#swiftness)
 - [Terraforming](#terraforming)
@@ -432,6 +433,17 @@
 - Rarity: Uncommon
 ### Technical description:
 - While drawing a bow, crossbow or trident: movement speed multiplied by (level + 1).
+---
+[Back to top](#enchantment-list)
+
+## *Strong Draw*
+- Bows take more time to draw, but deal more damage and fly faster.
+- Compatible equipment: Bows
+- Incompatible enchantments: Explosive
+- Max level: 2
+- Rarity: Uncommon
+### Technical description:
+- (10 * level) ticks of extra draw time per level. Increases damage attribute by (2 * level) and velocity by (10 * level)%.
 ---
 [Back to top](#enchantment-list)
 
