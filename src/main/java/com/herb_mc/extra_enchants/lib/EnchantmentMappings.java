@@ -41,6 +41,7 @@ public class EnchantmentMappings {
         enchantments.put("lunging", ModEnchants.LUNGING);
         enchantments.put("magnetic", ModEnchants.MAGNETIC);
         enchantments.put("night_vision", ModEnchants.NIGHT_VISION);
+        enchantments.put("nimble", ModEnchants.NIMBLE);
         enchantments.put("propelling", ModEnchants.PROPELLING);
         enchantments.put("psychic", ModEnchants.PSYCHIC);
         enchantments.put("sharpshooter", ModEnchants.SHARPSHOOTER);

@@ -28,6 +28,7 @@
 - [Lunging](#lunging)
 - [Magnetic](#magnetic)
 - [Night Vision](#night-vision)
+- [Nimble](#nimble)
 - [Propelling](#propelling)
 - [Psychic](#psychic)
 - [Sharpshooter](#sharpshooter)
@@ -264,7 +265,7 @@
 ## *Explosive*
 - On full charge: Arrows are non-retrievable, explode on impact instead of dealing damage normally.
 - Compatible equipment: Bows
-- Incompatible enchantments: Power, Infinity, Ender
+- Incompatible enchantments: Power, Infinity, Ender, Strong Draw, Nimble
 - Max level: 2
 - Rarity: Rare
 ### Technical description:
@@ -369,6 +370,17 @@
 ---
 [Back to top](#enchantment-list)
 
+## *Nimble*
+- Increased bow draw speed but decreased damage.
+- Compatible equipment: Bow
+- Incompatible enchantments: Ender, Explosive, Strong Draw
+- Max level: 5
+- Rarity: Uncommon
+### Technical description:
+- +10% draw speed, -0.2 arrow damage attribute per level.
+---
+[Back to top](#enchantment-list)
+
 ## *Propelling*
 - While flying, the user's speed will be maintained at a minimum, which decreases with height gain. Firework use is disabled.
 - Compatible equipment: Elytra
@@ -439,7 +451,7 @@
 ## *Strong Draw*
 - Bows take more time to draw, but deal more damage and fly faster.
 - Compatible equipment: Bows
-- Incompatible enchantments: Explosive
+- Incompatible enchantments: Explosive, Nimble
 - Max level: 2
 - Rarity: Uncommon
 ### Technical description:

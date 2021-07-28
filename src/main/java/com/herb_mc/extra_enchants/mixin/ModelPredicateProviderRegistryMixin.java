@@ -20,6 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class ModelPredicateProviderRegistryMixin {
 
     private static int strongDrawLevel;
+    private static int nimbleLevel;
 
     @Inject(
             method = "method_27890(Lnet/minecraft/item/ItemStack;Lnet/minecraft/client/world/ClientWorld;Lnet/minecraft/entity/LivingEntity;I)F",
@@ -28,6 +29,7 @@ public class ModelPredicateProviderRegistryMixin {
     )
     private static void getStackStrongDraw(ItemStack stack, ClientWorld world, LivingEntity livingEntity, int seed, CallbackInfoReturnable<Float> info) {
         strongDrawLevel = EnchantmentHelper.getLevel(ModEnchants.STRONG_DRAW, stack);
+        nimbleLevel = EnchantmentHelper.getLevel(ModEnchants.NIMBLE, stack);
     }
 
     @ModifyConstant(
@@ -35,7 +37,7 @@ public class ModelPredicateProviderRegistryMixin {
             constant = @Constant(floatValue = 20.0F)
     )
     private static float modifyDrawSpeed(float in) {
-        return (strongDrawLevel > 0) ? in + 10.0F * strongDrawLevel : in;
+        return (strongDrawLevel > 0) ? in + 10.0F * strongDrawLevel : (nimbleLevel > 0) ? (nimbleLevel <= 9) ? in - nimbleLevel * 2F: 2F: in;
     }
 
 }

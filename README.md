@@ -1,6 +1,6 @@
 # Extra Enchants
 
-Adds 42 obtainable equipment enchants and 2 experimental enchants, with functions ranging from utility to offense.
+Adds 43 obtainable equipment enchants and 2 experimental enchants, with functions ranging from utility to offense.
 
 Latest: v0.0.9 for Minecraft 1.17.1<br>
 Requires Fabric Loader 0.11.6 and Fabric API 0.37.0+1.17
@@ -17,6 +17,8 @@ Requires Fabric Loader 0.11.6 and Fabric API 0.37.0+1.17
 - *Explosive* - On fully charged shot: arrows explode on contact
 
 - *Strong Draw* - Drawing is slower, but arrows deal much more damage
+
+- *Nimble* - Faster drawing, slightly decreased damage
 
 #### Crossbow
 

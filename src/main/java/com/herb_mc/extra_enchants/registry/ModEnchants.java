@@ -237,7 +237,7 @@ public class ModEnchants {
             1,
             false,
             true,
-            new Enchantment[]{Enchantments.POWER, Enchantments.INFINITY, ModEnchants.EXPLOSIVE, ModEnchants.ENDER}
+            new Enchantment[]{Enchantments.POWER, Enchantments.INFINITY, ModEnchants.EXPLOSIVE, ModEnchants.ENDER, ModEnchants.NIMBLE}
     );
     // Explosive
     public static Enchantment EXPLOSIVE = new ScalableEnchantBuilder(
@@ -251,7 +251,7 @@ public class ModEnchants {
             2,
             false,
             false,
-            new Enchantment[]{Enchantments.POWER, Enchantments.INFINITY, ModEnchants.EXPLOSIVE, ModEnchants.ENDER, ModEnchants.STRONG_DRAW}
+            new Enchantment[]{Enchantments.POWER, Enchantments.INFINITY, ModEnchants.EXPLOSIVE, ModEnchants.ENDER, ModEnchants.STRONG_DRAW, ModEnchants.NIMBLE}
     );
     // Exposing
     public static Enchantment EXPOSING = new ScalableEnchantBuilder(
@@ -375,6 +375,20 @@ public class ModEnchants {
             false,
             new Enchantment[]{ModEnchants.DWARVEN, ModEnchants.SHARPSHOOTER, ModEnchants.NIGHT_VISION, ModEnchants.PSYCHIC}
     );
+    // Nimble
+    public static Enchantment NIMBLE = new ScalableEnchantBuilder(
+            Enchantment.Rarity.UNCOMMON,
+            EnchantmentTarget.BOW,
+            new EquipmentSlot[]{EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND},
+            1,
+            9,
+            14,
+            9,
+            5,
+            false,
+            false,
+            new Enchantment[]{ModEnchants.STRONG_DRAW, ModEnchants.ENDER, ModEnchants.EXPLOSIVE, ModEnchants.NIMBLE}
+    );
     // Propelling
     public static Enchantment PROPELLING = new ScalableEnchantBuilder(
             Enchantment.Rarity.UNCOMMON,
@@ -463,7 +477,7 @@ public class ModEnchants {
             2,
             false,
             false,
-            new Enchantment[]{ModEnchants.EXPLOSIVE}
+            new Enchantment[]{ModEnchants.EXPLOSIVE, ModEnchants.NIMBLE}
     );
     // Surface Skimmer
     public static Enchantment SURFACE_SKIMMER = new ScalableEnchantBuilder(
@@ -630,6 +644,7 @@ public class ModEnchants {
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "lunging"), LUNGING);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "magnetic"), MAGNETIC);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "night_vision"), NIGHT_VISION);
+        Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "nimble"), NIMBLE);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "propelling"), PROPELLING);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "psychic"), PSYCHIC);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "sharpshooter"), SHARPSHOOTER);

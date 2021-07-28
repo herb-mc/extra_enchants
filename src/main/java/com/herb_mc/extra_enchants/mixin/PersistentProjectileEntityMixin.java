@@ -154,7 +154,7 @@ public abstract class PersistentProjectileEntityMixin implements PersistentProje
         }
         // yes, custom crit particle booleans need to be defined locally, trying to do so in other mixins actually confused jvm somehow
         if (entity instanceof PlayerEntity) {
-            if (((LivingEntity) entity).getActiveHand() != null) {
+            if (((LivingEntity) entity).getActiveHand() != null && EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_PURITY, (LivingEntity) entity) == 0) {
                 ItemStack stack = ((LivingEntity) entity).getStackInHand(((LivingEntity) entity).getActiveHand());
                 if (EnchantmentHelper.getLevel(ModEnchants.EXPLOSIVE, stack) > 0)
                     explosiveParticles = true;
