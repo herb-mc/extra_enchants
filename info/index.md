@@ -15,6 +15,7 @@
 - [Core of Purity](#core-of-purity)
 - [Core of the Blood God](#core-of-the-blood-god)
 - [Core of the Warp](#core-of-the-warp)
+- [Curse of Instability](#curse-of-instability)
 - [Dextrous](#dextrous)
 - [Dwarven](#dwarven)
 - [Ender](#ender)
@@ -230,6 +231,17 @@
 - Type: Curse, Treasure
 ### Technical description:
 - -50% max health, 40% raw damage reduction before damage calculation, +15% movement speed. 5% chance to teleport on hit in certain biomes.
+---
+[Back to top](#enchantment-list)
+
+## *Curse of Instability*
+- Randomly teleport when blocking.
+- Compatible equipment: Shield
+- Max level: 1
+- Rarity: Rare
+- Type: Curse, Treasure
+### Technical description:
+- Random teleportation on successful block. Identical to chorus fruit.
 ---
 [Back to top](#enchantment-list)
 

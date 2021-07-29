@@ -29,6 +29,7 @@ public class EnchantmentMappings {
         enchantments.put("core_of_purity", ModEnchants.CORE_OF_PURITY);
         enchantments.put("core_of_the_blood_god", ModEnchants.CORE_OF_THE_BLOOD_GOD);
         enchantments.put("core_of_the_warp", ModEnchants.CORE_OF_THE_WARP);
+        enchantments.put("curse_of_instability", ModEnchants.CURSE_OF_INSTABILITY);
         enchantments.put("dextrous", ModEnchants.DEXTROUS);
         enchantments.put("dwarven", ModEnchants.DWARVEN);
         enchantments.put("ender", ModEnchants.ENDER);

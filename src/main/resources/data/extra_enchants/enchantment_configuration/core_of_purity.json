@@ -2,7 +2,7 @@
   "type": "fixed",
   "available": "true",
   "rarity": "very_rare",
-  "min_power": "30",
+  "min_power": "20",
   "max_power": "50",
   "max_level": "1",
   "is_curse": "true",

@@ -202,6 +202,18 @@ public class ModEnchants {
             true,
             new Enchantment[]{ModEnchants.CORE_OF_THE_BLOOD_GOD, ModEnchants.CORE_OF_PURITY, ModEnchants.CORE_OF_THE_WARP, ModEnchants.CORE_OF_NEPTUNE}
     );
+    // Curse of Instability
+    public static Enchantment CURSE_OF_INSTABILITY = new EnchantBuilder(
+            Enchantment.Rarity.RARE,
+            SHIELD,
+            new EquipmentSlot[]{EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND},
+            20,
+            50,
+            1,
+            true,
+            true,
+            new Enchantment[]{}
+    );
     // Dextrous
     public static Enchantment DEXTROUS = new ScalableEnchantBuilder(
             Enchantment.Rarity.RARE,
@@ -684,6 +696,7 @@ public class ModEnchants {
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "core_of_purity"), CORE_OF_PURITY);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "core_of_the_blood_god"), CORE_OF_THE_BLOOD_GOD);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "core_of_the_warp"), CORE_OF_THE_WARP);
+        Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "curse_of_instability"), CURSE_OF_INSTABILITY);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "dextrous"), DEXTROUS);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "dwarven"), DWARVEN);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "ender"), ENDER);

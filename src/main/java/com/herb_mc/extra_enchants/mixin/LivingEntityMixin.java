@@ -249,6 +249,18 @@ public abstract class LivingEntityMixin implements AttributeModCommons, UUIDComm
     }
 
     @Inject(
+            method = "damage",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/entity/LivingEntity;damageShield(F)V"
+            )
+    )
+    protected void instabilityHandler(DamageSource source, float amount, CallbackInfoReturnable<Boolean> info) {
+        if (thisEntity.getActiveItem() != null && EnchantmentHelper.getLevel(ModEnchants.CURSE_OF_INSTABILITY, thisEntity.getActiveItem()) > 0)
+            warpTeleport();
+    }
+
+    @Inject(
             method = "writeCustomDataToNbt",
             at = @At("RETURN")
     )
