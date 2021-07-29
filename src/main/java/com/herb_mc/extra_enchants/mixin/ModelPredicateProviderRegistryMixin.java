@@ -28,7 +28,7 @@ public class ModelPredicateProviderRegistryMixin {
             remap = false
     )
     private static void getStackStrongDraw(ItemStack stack, ClientWorld world, LivingEntity livingEntity, int seed, CallbackInfoReturnable<Float> info) {
-        strongDrawLevel = EnchantmentHelper.getLevel(ModEnchants.STRONG_DRAW, stack);
+        strongDrawLevel = EnchantmentHelper.getLevel(ModEnchants.SNIPER, stack);
         nimbleLevel = EnchantmentHelper.getLevel(ModEnchants.NIMBLE, stack);
     }
 

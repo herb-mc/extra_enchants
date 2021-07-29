@@ -252,7 +252,7 @@ public class ModEnchants {
             2,
             false,
             false,
-            new Enchantment[]{Enchantments.POWER, Enchantments.INFINITY, ModEnchants.EXPLOSIVE, ModEnchants.ENDER, ModEnchants.STRONG_DRAW, ModEnchants.NIMBLE}
+            new Enchantment[]{Enchantments.POWER, Enchantments.INFINITY, ModEnchants.EXPLOSIVE, ModEnchants.ENDER, ModEnchants.SNIPER, ModEnchants.NIMBLE}
     );
     // Exposing
     public static Enchantment EXPOSING = new ScalableEnchantBuilder(
@@ -388,7 +388,7 @@ public class ModEnchants {
             5,
             false,
             false,
-            new Enchantment[]{ModEnchants.STRONG_DRAW, ModEnchants.ENDER, ModEnchants.EXPLOSIVE, ModEnchants.NIMBLE}
+            new Enchantment[]{ModEnchants.SNIPER, ModEnchants.ENDER, ModEnchants.EXPLOSIVE, ModEnchants.NIMBLE}
     );
     // Propelling
     public static Enchantment PROPELLING = new ScalableEnchantBuilder(
@@ -492,8 +492,8 @@ public class ModEnchants {
             false,
             new Enchantment[]{ModEnchants.STEADFAST, ModEnchants.BOOSTING}
     );
-    // Strong Draw
-    public static Enchantment STRONG_DRAW = new ScalableEnchantBuilder(
+    // Sniper
+    public static Enchantment SNIPER = new ScalableEnchantBuilder(
             Enchantment.Rarity.UNCOMMON,
             EnchantmentTarget.BOW,
             new EquipmentSlot[]{EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND},
@@ -678,9 +678,9 @@ public class ModEnchants {
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "reflex"), REFLEX);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "sharpshooter"), SHARPSHOOTER);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "slimey"), SLIMEY);
+        Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "sniper"), SNIPER);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "soulbound"), SOULBOUND);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "steadfast"), STEADFAST);
-        Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "strong_draw"), STRONG_DRAW);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "surface_skimmer"), SURFACE_SKIMMER);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "swiftness"), SWIFTNESS);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "terraforming"), TERRAFORMING);

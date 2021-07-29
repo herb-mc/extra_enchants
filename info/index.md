@@ -37,7 +37,7 @@
 - [Slimey](#slimey)
 - [Soulbound](#soulbound)
 - [Steadfast](#steadfast)
-- [Strong Draw](#strong-draw)
+- [Sniper](#sniper)
 - [Surface Skimmer](#surface-skimmer)
 - [Swiftness](#swiftness)
 - [Terraforming](#terraforming)
@@ -267,7 +267,7 @@
 ## *Explosive*
 - On full charge: Arrows are non-retrievable, explode on impact instead of dealing damage normally.
 - Compatible equipment: Bows
-- Incompatible enchantments: Power, Infinity, Ender, Strong Draw, Nimble
+- Incompatible enchantments: Power, Infinity, Ender, Sniper, Nimble
 - Max level: 2
 - Rarity: Rare
 ### Technical description:
@@ -375,7 +375,7 @@
 ## *Nimble*
 - Increased bow draw speed but decreased damage.
 - Compatible equipment: Bow
-- Incompatible enchantments: Ender, Explosive, Strong Draw
+- Incompatible enchantments: Ender, Explosive, Sniper
 - Max level: 5
 - Rarity: Uncommon
 ### Technical description:
@@ -449,6 +449,17 @@
 ---
 [Back to top](#enchantment-list)
 
+## *Sniper*
+- Bows take more time to draw, but deal more damage and fly faster.
+- Compatible equipment: Bows
+- Incompatible enchantments: Explosive, Nimble
+- Max level: 2
+- Rarity: Uncommon
+### Technical description:
+- (15 * level) ticks of extra draw time per level. Increases damage attribute by (2 * level) and velocity by (10 * level)%.
+---
+[Back to top](#enchantment-list)
+
 ## *Soulbound*
 - Item stays in inventory after death.
 - Compatible equipment: Breakable
@@ -469,17 +480,6 @@
 - Rarity: Uncommon
 ### Technical description:
 - While drawing a bow, crossbow or trident: movement speed multiplied by (level + 1).
----
-[Back to top](#enchantment-list)
-
-## *Strong Draw*
-- Bows take more time to draw, but deal more damage and fly faster.
-- Compatible equipment: Bows
-- Incompatible enchantments: Explosive, Nimble
-- Max level: 2
-- Rarity: Uncommon
-### Technical description:
-- (15 * level) ticks of extra draw time per level. Increases damage attribute by (2 * level) and velocity by (10 * level)%.
 ---
 [Back to top](#enchantment-list)
 

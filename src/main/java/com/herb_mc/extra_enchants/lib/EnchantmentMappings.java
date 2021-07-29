@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class EnchantmentMappings {
+
     public static Map<String, Enchantment> enchantments;
 
     static
@@ -48,9 +49,9 @@ public class EnchantmentMappings {
         enchantments.put("reflex", ModEnchants.REFLEX);
         enchantments.put("sharpshooter", ModEnchants.SHARPSHOOTER);
         enchantments.put("slimey", ModEnchants.SLIMEY);
+        enchantments.put("sniper", ModEnchants.SNIPER);
         enchantments.put("soulbound", ModEnchants.SOULBOUND);
         enchantments.put("steadfast", ModEnchants.STEADFAST);
-        enchantments.put("strong_draw", ModEnchants.STRONG_DRAW);
         enchantments.put("surface_skimmer", ModEnchants.SURFACE_SKIMMER);
         enchantments.put("swiftness", ModEnchants.SWIFTNESS);
         enchantments.put("terraforming", ModEnchants.TERRAFORMING);

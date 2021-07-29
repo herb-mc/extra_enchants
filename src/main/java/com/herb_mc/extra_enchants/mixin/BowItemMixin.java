@@ -27,7 +27,7 @@ public class BowItemMixin {
             at = @At("HEAD")
     )
     private void getEnchantLevels(ItemStack stack, World world, LivingEntity user, int remainingUseTicks, CallbackInfo ci) {
-        strongDrawLevel = EnchantmentHelper.getLevel(ModEnchants.STRONG_DRAW, stack);
+        strongDrawLevel = EnchantmentHelper.getLevel(ModEnchants.SNIPER, stack);
         nimbleLevel = EnchantmentHelper.getLevel(ModEnchants.NIMBLE, stack);
     }
 
@@ -54,9 +54,9 @@ public class BowItemMixin {
                 if (persistentProjectileEntity.getDamage() < 0.5)
                     persistentProjectileEntity.setDamage(0.5);
             }
-            if (EnchantmentHelper.getLevel(ModEnchants.STRONG_DRAW, stack) > 0) {
-                persistentProjectileEntity.setVelocity(persistentProjectileEntity.getVelocity().multiply((10.0F + EnchantmentHelper.getLevel(ModEnchants.STRONG_DRAW, stack)) / 10.0F));
-                persistentProjectileEntity.setDamage(persistentProjectileEntity.getDamage() + 2F * EnchantmentHelper.getLevel(ModEnchants.STRONG_DRAW, stack));
+            if (EnchantmentHelper.getLevel(ModEnchants.SNIPER, stack) > 0) {
+                persistentProjectileEntity.setVelocity(persistentProjectileEntity.getVelocity().multiply((10.0F + EnchantmentHelper.getLevel(ModEnchants.SNIPER, stack)) / 10.0F));
+                persistentProjectileEntity.setDamage(persistentProjectileEntity.getDamage() + 2F * EnchantmentHelper.getLevel(ModEnchants.SNIPER, stack));
             }
             if (EnchantmentHelper.getEquipmentLevel(ModEnchants.ACE, user) > 0 && user.isFallFlying())
                 persistentProjectileEntity.setDamage(persistentProjectileEntity.getDamage() + EnchantmentHelper.getEquipmentLevel(ModEnchants.ACE, user) / 2F);
