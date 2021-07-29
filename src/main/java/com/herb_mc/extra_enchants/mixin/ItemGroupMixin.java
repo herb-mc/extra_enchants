@@ -17,6 +17,8 @@ public class ItemGroupMixin {
 
     @Shadow @Final public static ItemGroup TRANSPORTATION;
 
+    @Shadow @Final public static ItemGroup COMBAT;
+
     @ModifyArg(
             method = "<clinit>",
             at = @At(
@@ -27,7 +29,7 @@ public class ItemGroupMixin {
     private static EnchantmentTarget[] addEnchantmentTargets(EnchantmentTarget... targets) {
         MISC.setEnchantments(ClassTinkerers.getEnum(EnchantmentTarget.class, "HORSE_ARMOR"));
         TRANSPORTATION.setEnchantments(ClassTinkerers.getEnum(EnchantmentTarget.class, "ELYTRA"));
-        return ArrayUtils.addAll(targets, ClassTinkerers.getEnum(EnchantmentTarget.class, "AXE"), ClassTinkerers.getEnum(EnchantmentTarget.class, "WEAPONS"));
+        return ArrayUtils.addAll(targets, ClassTinkerers.getEnum(EnchantmentTarget.class, "AXE"), ClassTinkerers.getEnum(EnchantmentTarget.class, "SHIELD"), ClassTinkerers.getEnum(EnchantmentTarget.class, "WEAPONS"));
     }
 
 }

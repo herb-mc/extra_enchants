@@ -31,6 +31,8 @@
 - [Nimble](#nimble)
 - [Propelling](#propelling)
 - [Psychic](#psychic)
+- [Reflecting](#reflecting)
+- [Reflex](#reflex)
 - [Sharpshooter](#sharpshooter)
 - [Slimey](#slimey)
 - [Soulbound](#soulbound)
@@ -400,6 +402,28 @@
 - Rarity: Rare
 ### Technical description:
 - Any entity within 7 blocks of the user's line of sight (disregarding blocks) will receive Glowing 20 while the user is sneaking.
+---
+[Back to top](#enchantment-list)
+
+## *Reflecting*
+- While blocking, projectiles will be reflecting in the direction the user is facing. Reflected velocity scales with level.
+- Compatible equipment: Shields
+- Incompatible enchantments: Reflex
+- Max level: 3
+- Rarity: Uncommon
+### Technical description:
+- Upon reflecting a projectile, it is reflected with (40 + 10 * level)% of its initial velocity in the direction the user is facing
+---
+[Back to top](#enchantment-list)
+
+## *Reflex*
+- Shield raising is slightly faster.
+- Compatible equipment: Shields
+- Incompatible enchantments: Reflecting
+- Max level: 1
+- Rarity: Uncommon
+### Technical description:
+- Decreases shield raising time to 0 ticks,from the regular 5.
 ---
 [Back to top](#enchantment-list)
 

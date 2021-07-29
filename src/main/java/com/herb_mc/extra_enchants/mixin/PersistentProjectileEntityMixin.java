@@ -19,6 +19,7 @@ import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.TridentEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleType;
 import net.minecraft.particle.ParticleTypes;
@@ -43,6 +44,8 @@ public abstract class PersistentProjectileEntityMixin implements PersistentProje
 
     @Shadow protected boolean inGround;
 
+    @Shadow public abstract void setVelocity(double x, double y, double z, float speed, float divergence);
+
     @Unique private final PersistentProjectileEntity thisEntity = (PersistentProjectileEntity) (Object) this;
     @Unique public int explosive;
     @Unique public boolean explosiveParticles = false;
@@ -57,6 +60,7 @@ public abstract class PersistentProjectileEntityMixin implements PersistentProje
     @Unique public boolean thunderboltParticles = false;
     @Unique public boolean neptune = false;
     @Unique private final Random rand = new Random();
+    private Entity hitResult;
 
     @Override
     public void setExplosive(int i) {
@@ -128,9 +132,33 @@ public abstract class PersistentProjectileEntityMixin implements PersistentProje
         }
     }
 
+    @Redirect(
+            method = "onEntityHit",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/entity/projectile/PersistentProjectileEntity;setVelocity(Lnet/minecraft/util/math/Vec3d;)V"
+            )
+    )
+    private void setReflectedVelocity(PersistentProjectileEntity persistentProjectileEntity, Vec3d velocity) {
+        if (hitResult instanceof LivingEntity && ((LivingEntity) hitResult).isBlocking() && ((LivingEntity) hitResult).getActiveItem() != null && EnchantmentHelper.getLevel(ModEnchants.REFLECTING, ((LivingEntity) hitResult).getActiveItem()) > 0) {
+            double absSpeed = persistentProjectileEntity.getVelocity().length();
+            persistentProjectileEntity.setVelocity(hitResult.getRotationVector().multiply(absSpeed * (0.4 + 0.1 * EnchantmentHelper.getLevel(ModEnchants.REFLECTING, ((LivingEntity) hitResult).getActiveItem()))));
+        }
+        else
+            persistentProjectileEntity.setVelocity(velocity);
+    }
+
     @Inject(
-            at = @At("TAIL"),
-            method = "setOwner"
+            method = "onEntityHit",
+            at = @At("HEAD")
+    )
+    protected void getEntityHitResult(EntityHitResult entityHitResult, CallbackInfo info) {
+        hitResult = entityHitResult.getEntity();
+    }
+
+    @Inject(
+            method = "setOwner",
+            at = @At("TAIL")
     )
     protected void setAttributesFromOwner(@Nullable Entity entity, CallbackInfo info) {
         if (entity instanceof LivingEntity && !(entity instanceof PlayerEntity)) {

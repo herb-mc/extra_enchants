@@ -1,6 +1,6 @@
 # Extra Enchants
 
-Adds 43 obtainable equipment enchants and 2 experimental enchants, with functions ranging from utility to offense.
+Adds 44 obtainable equipment enchants and 2 experimental enchants, with functions ranging from utility to offense.
 
 Latest: v0.0.9 for Minecraft 1.17.1<br>
 Requires Fabric Loader 0.11.6 and Fabric API 0.37.0+1.17
@@ -103,6 +103,12 @@ Requires Fabric Loader 0.11.6 and Fabric API 0.37.0+1.17
 - *Swiftness* - Increases movement speed
 
 - *Warding* - Scares away phantoms
+
+#### Shields
+
+- *Reflecting* - Fired projectiles are reflected in the direction the user is facing
+
+- *Reflex* - Raise your shield slightly faster
 
 #### General
 

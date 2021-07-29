@@ -16,6 +16,7 @@ public class ModEnchants {
     static EnchantmentTarget AXE = ClassTinkerers.getEnum(EnchantmentTarget.class, "AXE");
     static EnchantmentTarget ELYTRA = ClassTinkerers.getEnum(EnchantmentTarget.class, "ELYTRA");
     static EnchantmentTarget HORSE_ARMOR = ClassTinkerers.getEnum(EnchantmentTarget.class, "HORSE_ARMOR");
+    static EnchantmentTarget SHIELD = ClassTinkerers.getEnum(EnchantmentTarget.class, "SHIELD");
     static EnchantmentTarget WEAPONS = ClassTinkerers.getEnum(EnchantmentTarget.class, "WEAPONS");
     static Enchantment.Rarity NULL = ClassTinkerers.getEnum(Enchantment.Rarity.class, "NULL");
 
@@ -415,6 +416,32 @@ public class ModEnchants {
             false,
             new Enchantment[]{ModEnchants.DWARVEN, ModEnchants.SHARPSHOOTER, ModEnchants.NIGHT_VISION, ModEnchants.PSYCHIC}
     );
+    // Reflecting
+    public static Enchantment REFLECTING = new ScalableEnchantBuilder(
+            Enchantment.Rarity.UNCOMMON,
+            SHIELD,
+            new EquipmentSlot[]{EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND},
+            15,
+            10,
+            30,
+            10,
+            3,
+            false,
+            false,
+            new Enchantment[]{ModEnchants.REFLEX, ModEnchants.REFLECTING}
+    );
+    // Reflex
+    public static Enchantment REFLEX = new EnchantBuilder(
+            Enchantment.Rarity.UNCOMMON,
+            SHIELD,
+            new EquipmentSlot[]{EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND},
+            15,
+            50,
+            1,
+            false,
+            false,
+            new Enchantment[]{ModEnchants.REFLEX, ModEnchants.REFLECTING}
+    );
     // Sharpshooter
     public static Enchantment SHARPSHOOTER = new EnchantBuilder(
             Enchantment.Rarity.RARE,
@@ -647,6 +674,8 @@ public class ModEnchants {
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "nimble"), NIMBLE);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "propelling"), PROPELLING);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "psychic"), PSYCHIC);
+        Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "reflecting"), REFLECTING);
+        Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "reflex"), REFLEX);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "sharpshooter"), SHARPSHOOTER);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "slimey"), SLIMEY);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "soulbound"), SOULBOUND);

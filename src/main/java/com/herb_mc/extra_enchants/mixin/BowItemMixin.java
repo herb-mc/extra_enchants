@@ -73,7 +73,7 @@ public class BowItemMixin {
             constant = @Constant(floatValue = 20.0F)
     )
     private static float longbowModPullProgress(float f) {
-        return (strongDrawLevel > 0) ? 20F + 10F * strongDrawLevel : (nimbleLevel > 0) ? (nimbleLevel <= 9) ? 20F - nimbleLevel * 2F: 2F: f;
+        return (strongDrawLevel > 0) ? 20F + 10F * strongDrawLevel : (nimbleLevel > 0) ? (nimbleLevel <= 9) ? 20F - nimbleLevel * 2F: 1F: f;
     }
 
 }

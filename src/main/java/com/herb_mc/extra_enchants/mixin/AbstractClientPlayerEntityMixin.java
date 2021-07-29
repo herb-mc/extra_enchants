@@ -23,7 +23,7 @@ public class AbstractClientPlayerEntityMixin {
     private float FOVMod(float f) {
         int strongDrawLevel = EnchantmentHelper.getLevel(ModEnchants.STRONG_DRAW, thisEntity.getActiveItem());
         int nimbleLevel = EnchantmentHelper.getLevel(ModEnchants.NIMBLE, thisEntity.getActiveItem());
-        return strongDrawLevel > 0 ? f + 10F * strongDrawLevel : nimbleLevel > 0 ? nimbleLevel <= 9 ? f - nimbleLevel * 2F : 2F : f;
+        return strongDrawLevel > 0 ? f + 10F * strongDrawLevel : nimbleLevel > 0 ? nimbleLevel <= 9 ? f - nimbleLevel * 2F : 1F : f;
     }
 
 }

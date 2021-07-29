@@ -145,6 +145,17 @@ public abstract class LivingEntityMixin implements AttributeModCommons, UUIDComm
         return (getEquipmentLevel(ModEnchants.TOUGH, thisEntity) > 0) ? amount * (1.0F - 0.03F * getEquipmentLevel(ModEnchants.TOUGH, thisEntity)) : amount;
     }
 
+    @ModifyConstant(
+            method = "isBlocking",
+            constant = @Constant(intValue = 5)
+    )
+    private int applyReflex(int i) {
+        if (thisEntity.getMainHandStack() != null & EnchantmentHelper.getLevel(ModEnchants.REFLEX, thisEntity.getMainHandStack()) > 0) {
+            return 0;
+        }
+        return i;
+    }
+
     @ModifyVariable(
             method = "applyArmorToDamage",
             at = @At(
@@ -231,7 +242,7 @@ public abstract class LivingEntityMixin implements AttributeModCommons, UUIDComm
             ),
             ordinal = 1)
     protected int respLevel(int i) {
-        return (EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_NEPTUNE, thisEntity) > 0) ? 0 : i;
+        return EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_NEPTUNE, thisEntity) > 0 ? 0 : i;
     }
 
     @Inject(
@@ -314,134 +325,135 @@ public abstract class LivingEntityMixin implements AttributeModCommons, UUIDComm
             method = "tick"
     )
     public void tickAllEnchants(CallbackInfo info) {
-        if (EXPOSED > 0)
-            EXPOSED--;
-        if (STEP_HEIGHT == 0F)
-            STEP_HEIGHT = thisEntity.stepHeight;
-        int i = getEquipmentLevel(ModEnchants.WINDSTEP, thisEntity);
-        thisEntity.stepHeight = STEP_HEIGHT;
-        if (i > 0)
-            thisEntity.stepHeight += i * 0.4F;
-        removeAttribute(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, ACE_ATTRIBUTE_ID);
-        i = getEquipmentLevel(ModEnchants.ACE, thisEntity);
-        if (i > 0 && thisEntity.isFallFlying())
-            modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, i, ACE_ATTRIBUTE_ID, "ace_attack_damage", 1, EntityAttributeModifier.Operation.ADDITION);
-        removeAttribute(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, CORE_OF_NEPTUNE_ATTRIBUTE_ID);
-        removeAttribute(thisEntity, EntityAttributes.GENERIC_ATTACK_SPEED, CORE_OF_NEPTUNE_ATTRIBUTE_ID);
-        removeAttribute(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, CORE_OF_NEPTUNE_ATTRIBUTE_ID);
-        if (EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_NEPTUNE, thisEntity) > 0) {
-            int air = thisEntity.getAir();
-            if (air > 120) {
-                modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, 1, CORE_OF_NEPTUNE_ATTRIBUTE_ID, "nep_attack_damage", (120.0 - air) / 450.0, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
-                modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_SPEED, 1, CORE_OF_NEPTUNE_ATTRIBUTE_ID, "nep_attack_speed", (120.0 - air) / 450.0, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
-                modAttributeBase(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, 1, CORE_OF_NEPTUNE_ATTRIBUTE_ID, "nep_movement_speed", (120.0 - air) / 900.0, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+        if (!thisEntity.isSpectator()) {
+            if (EXPOSED > 0)
+                EXPOSED--;
+            if (STEP_HEIGHT == 0F)
+                STEP_HEIGHT = thisEntity.stepHeight;
+            int i = getEquipmentLevel(ModEnchants.WINDSTEP, thisEntity);
+            thisEntity.stepHeight = STEP_HEIGHT;
+            if (i > 0)
+                thisEntity.stepHeight += i * 0.4F;
+            removeAttribute(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, ACE_ATTRIBUTE_ID);
+            i = getEquipmentLevel(ModEnchants.ACE, thisEntity);
+            if (i > 0 && thisEntity.isFallFlying())
+                modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, i, ACE_ATTRIBUTE_ID, "ace_attack_damage", 1, EntityAttributeModifier.Operation.ADDITION);
+            removeAttribute(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, CORE_OF_NEPTUNE_ATTRIBUTE_ID);
+            removeAttribute(thisEntity, EntityAttributes.GENERIC_ATTACK_SPEED, CORE_OF_NEPTUNE_ATTRIBUTE_ID);
+            removeAttribute(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, CORE_OF_NEPTUNE_ATTRIBUTE_ID);
+            if (EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_NEPTUNE, thisEntity) > 0) {
+                int air = thisEntity.getAir();
+                if (air > 120) {
+                    modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, 1, CORE_OF_NEPTUNE_ATTRIBUTE_ID, "nep_attack_damage", (120.0 - air) / 450.0, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+                    modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_SPEED, 1, CORE_OF_NEPTUNE_ATTRIBUTE_ID, "nep_attack_speed", (120.0 - air) / 450.0, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+                    modAttributeBase(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, 1, CORE_OF_NEPTUNE_ATTRIBUTE_ID, "nep_movement_speed", (120.0 - air) / 900.0, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+                } else if (air < 90) {
+                    modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, 1, CORE_OF_NEPTUNE_ATTRIBUTE_ID, "nep_attack_damage", (90 - air) / 270.0, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+                    modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_SPEED, 1, CORE_OF_NEPTUNE_ATTRIBUTE_ID, "nep_attack_speed", (90 - air) / 270.0, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+                    modAttributeBase(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, 1, CORE_OF_NEPTUNE_ATTRIBUTE_ID, "nep_movement_speed", (90 - air) / 540.0, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+                }
             }
-            else if (air < 90) {
-                modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, 1, CORE_OF_NEPTUNE_ATTRIBUTE_ID, "nep_attack_damage", (90 - air) / 270.0, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
-                modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_SPEED, 1, CORE_OF_NEPTUNE_ATTRIBUTE_ID, "nep_attack_speed", (90 - air) / 270.0, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
-                modAttributeBase(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, 1, CORE_OF_NEPTUNE_ATTRIBUTE_ID, "nep_movement_speed", (90 - air) / 540.0, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+            removeAttribute(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, BLAZE_ATTRIBUTE_ID);
+            i = EnchantmentHelper.getEquipmentLevel(ModEnchants.BLAZE_AFFINITY, thisEntity);
+            if (i > 0 && thisEntity.isOnFire())
+                modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, 1, BLAZE_ATTRIBUTE_ID, "blz_attack_daamge", 0.1, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+            removeAttribute(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, BOOSTING_ATTRIBUTE_ID);
+            i = getEquipmentLevel(ModEnchants.BOOSTING, thisEntity);
+            if (thisEntity.isSprinting() && i > 0 && SPRINT_BOOST >= 0) {
+                SPRINT_BOOST++;
+                if (SPRINT_BOOST < 20 * i)
+                    modAttributeBase(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, i, BOOSTING_ATTRIBUTE_ID, "boost_speed", 0.4, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+                else
+                    SPRINT_BOOST = -60;
             }
-        }
-        removeAttribute(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, BLAZE_ATTRIBUTE_ID);
-        i = EnchantmentHelper.getEquipmentLevel(ModEnchants.BLAZE_AFFINITY, thisEntity);
-        if (i > 0 && thisEntity.isOnFire())
-            modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, 1, BLAZE_ATTRIBUTE_ID, "blz_attack_daamge", 0.1, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
-        removeAttribute(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, BOOSTING_ATTRIBUTE_ID);
-        i = getEquipmentLevel(ModEnchants.BOOSTING, thisEntity);
-        if (thisEntity.isSprinting() && i > 0 && SPRINT_BOOST >= 0) {
-            SPRINT_BOOST++;
-            if (SPRINT_BOOST < 20 * i)
-                modAttributeBase(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, i, BOOSTING_ATTRIBUTE_ID, "boost_speed", 0.4, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
-            else
+            if (SPRINT_BOOST > 0 && !thisEntity.isSprinting())
                 SPRINT_BOOST = -60;
-        }
-        if (SPRINT_BOOST > 0 && !thisEntity.isSprinting())
-            SPRINT_BOOST = -60;
-        if (SPRINT_BOOST < 0 && !thisEntity.isSprinting())
-            SPRINT_BOOST++;
-        i = getEquipmentLevel(ModEnchants.DWARVEN, thisEntity);
-        if (i > 0) {
-            Vec3d vec = getNearestOre();
-            double sneak = 0;
-            if (thisEntity.isInSwimmingPose())
-                sneak = 0.8;
-            if (thisEntity.isSneaking())
-                sneak = 0.2;
-            if (vec != null) {
-                double dx = vec.getX() - thisEntity.getX();
-                double dy = vec.getY() - thisEntity.getY() - 1.0 - sneak;
-                double dz = vec.getZ() - thisEntity.getZ();
-                thisEntity.world.addParticle(ParticleTypes.ELECTRIC_SPARK, true, thisEntity.getX() + dx / 10, thisEntity.getY() + 1.0 - sneak + dy / 10, thisEntity.getZ() + dz / 10, dx / 1.25, dy / 1.25, dz / 1.25);
+            if (SPRINT_BOOST < 0 && !thisEntity.isSprinting())
+                SPRINT_BOOST++;
+            i = getEquipmentLevel(ModEnchants.DWARVEN, thisEntity);
+            if (i > 0) {
+                Vec3d vec = getNearestOre();
+                double sneak = 0;
+                if (thisEntity.isInSwimmingPose())
+                    sneak = 0.8;
+                if (thisEntity.isSneaking())
+                    sneak = 0.2;
+                if (vec != null) {
+                    double dx = vec.getX() - thisEntity.getX();
+                    double dy = vec.getY() - thisEntity.getY() - 1.0 - sneak;
+                    double dz = vec.getZ() - thisEntity.getZ();
+                    thisEntity.world.addParticle(ParticleTypes.ELECTRIC_SPARK, true, thisEntity.getX() + dx / 10, thisEntity.getY() + 1.0 - sneak + dy / 10, thisEntity.getZ() + dz / 10, dx / 1.25, dy / 1.25, dz / 1.25);
+                }
             }
-        }
-        i = getEquipmentLevel(ModEnchants.CORE_OF_THE_BLOOD_GOD, thisEntity);
-        removeAttribute(thisEntity, EntityAttributes.GENERIC_ARMOR, CORE_OF_THE_BLOOD_GOD_ATTRIBUTE_ID);
-        removeAttribute(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, CORE_OF_THE_BLOOD_GOD_ATTRIBUTE_ID);
-        removeAttribute(thisEntity, EntityAttributes.GENERIC_MAX_HEALTH, CORE_OF_THE_BLOOD_GOD_ATTRIBUTE_ID);
-        if (i > 0) {
-            modAttributeBase(thisEntity, EntityAttributes.GENERIC_ARMOR, 1, CORE_OF_THE_BLOOD_GOD_ATTRIBUTE_ID, "bld_armor", -0.2, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
-            modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, 1, CORE_OF_THE_BLOOD_GOD_ATTRIBUTE_ID, "bld_attack_damage", 0.15, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
-            modAttributeBase(thisEntity, EntityAttributes.GENERIC_MAX_HEALTH, 1, CORE_OF_THE_BLOOD_GOD_ATTRIBUTE_ID, "bld_attack_damage", 1.0, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
-        }
-        i = getEquipmentLevel(ModEnchants.CORE_OF_THE_WARP, thisEntity);
-        removeAttribute(thisEntity, EntityAttributes.GENERIC_MAX_HEALTH, CORE_OF_THE_VOID_ATTRIBUTE_ID);
-        removeAttribute(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, CORE_OF_THE_VOID_ATTRIBUTE_ID);
-        if (i > 0) {
-            modAttributeBase(thisEntity, EntityAttributes.GENERIC_MAX_HEALTH, 1, CORE_OF_THE_VOID_ATTRIBUTE_ID, "vd_health", -0.5, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
-            modAttributeBase(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, 1, CORE_OF_THE_VOID_ATTRIBUTE_ID, "vd_speed", 0.15, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+            i = getEquipmentLevel(ModEnchants.CORE_OF_THE_BLOOD_GOD, thisEntity);
+            removeAttribute(thisEntity, EntityAttributes.GENERIC_ARMOR, CORE_OF_THE_BLOOD_GOD_ATTRIBUTE_ID);
+            removeAttribute(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, CORE_OF_THE_BLOOD_GOD_ATTRIBUTE_ID);
+            removeAttribute(thisEntity, EntityAttributes.GENERIC_MAX_HEALTH, CORE_OF_THE_BLOOD_GOD_ATTRIBUTE_ID);
+            if (i > 0) {
+                modAttributeBase(thisEntity, EntityAttributes.GENERIC_ARMOR, 1, CORE_OF_THE_BLOOD_GOD_ATTRIBUTE_ID, "bld_armor", -0.2, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+                modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, 1, CORE_OF_THE_BLOOD_GOD_ATTRIBUTE_ID, "bld_attack_damage", 0.15, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+                modAttributeBase(thisEntity, EntityAttributes.GENERIC_MAX_HEALTH, 1, CORE_OF_THE_BLOOD_GOD_ATTRIBUTE_ID, "bld_attack_damage", 1.0, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+            }
+            i = getEquipmentLevel(ModEnchants.CORE_OF_THE_WARP, thisEntity);
+            removeAttribute(thisEntity, EntityAttributes.GENERIC_MAX_HEALTH, CORE_OF_THE_VOID_ATTRIBUTE_ID);
+            removeAttribute(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, CORE_OF_THE_VOID_ATTRIBUTE_ID);
+            if (i > 0) {
+                modAttributeBase(thisEntity, EntityAttributes.GENERIC_MAX_HEALTH, 1, CORE_OF_THE_VOID_ATTRIBUTE_ID, "vd_health", -0.5, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+                modAttributeBase(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, 1, CORE_OF_THE_VOID_ATTRIBUTE_ID, "vd_speed", 0.15, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
 
-        }
-        i = getEquipmentLevel(ModEnchants.CORE_OF_PURITY, thisEntity);
-        removeAttribute(thisEntity, EntityAttributes.GENERIC_MAX_HEALTH, CORE_OF_PURITY_ATTRIBUTE_ID);
-        removeAttribute(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, CORE_OF_PURITY_ATTRIBUTE_ID);
-        if (i > 0) {
-            modAttributeBase(thisEntity, EntityAttributes.GENERIC_MAX_HEALTH, 1, CORE_OF_PURITY_ATTRIBUTE_ID, "ev_health", 1.0, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
-            modAttributeBase(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, 1, CORE_OF_PURITY_ATTRIBUTE_ID, "ev_speed", -0.1, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
-        }
-        i = getEquipmentLevel(ModEnchants.NIGHT_VISION, thisEntity);
-        if (i > 0 && thisEntity.isSneaking())
-            thisEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.NIGHT_VISION, 2000, 100, true, false, false));
-        if ((i == 0 || i > 0 && !thisEntity.isSneaking()) && thisEntity.getStatusEffect(StatusEffects.NIGHT_VISION) != null)
-            if (Objects.requireNonNull(thisEntity.getStatusEffect(StatusEffects.NIGHT_VISION)).getAmplifier() == 100)
-                thisEntity.removeStatusEffect(StatusEffects.NIGHT_VISION);
-        i = getEquipmentLevel(ModEnchants.PSYCHIC, thisEntity);
-        if (i > 0 && thisEntity.isSneaking()) {
-            EntityHitResult result = raycast();
-            if (result != null)
-                if (result.getEntity() instanceof LivingEntity)
-                    ((LivingEntity) result.getEntity()).addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 2, 20, true, false, false));
-        }
-        removeAttribute(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, BARBARIC_ATTRIBUTE_ID);
-        i = getLevel(ModEnchants.BARBARIC, thisEntity.getMainHandStack());
-        if (i > 0) {
-            if (thisEntity.getActiveHand() != null)
-                modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, 20 - this.getArmor(), BARBARIC_ATTRIBUTE_ID, "bar_attack_damage", 0.04, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
-            else if (thisEntity.getMainHandStack() != null)
-                modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, 20 - this.getArmor(), BARBARIC_ATTRIBUTE_ID, "bar_attack_damage", 0.04, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
-        }
-        i = getEquipmentLevel(ModEnchants.BERSERK, thisEntity);
-        removeAttribute(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, BERSERK_ATTRIBUTE_ID);
-        if (i > 0)
-            modAttributeExtended(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, i, BERSERK_ATTRIBUTE_ID, "ber_attack_damage", (thisEntity.getMaxHealth() - thisEntity.getHealth()), 2.0, 2.0, 1.0, 2.0, 0.0, 4.0, 0.0, EntityAttributeModifier.Operation.ADDITION);
-        if (thisEntity instanceof HorseEntity) {
-            i = getEquipmentLevel(ModEnchants.SWIFTNESS, thisEntity);
-            removeAttribute(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, SWIFTNESS_ATTRIBUTE_ID);
+            }
+            i = getEquipmentLevel(ModEnchants.CORE_OF_PURITY, thisEntity);
+            removeAttribute(thisEntity, EntityAttributes.GENERIC_MAX_HEALTH, CORE_OF_PURITY_ATTRIBUTE_ID);
+            removeAttribute(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, CORE_OF_PURITY_ATTRIBUTE_ID);
+            if (i > 0) {
+                modAttributeBase(thisEntity, EntityAttributes.GENERIC_MAX_HEALTH, 1, CORE_OF_PURITY_ATTRIBUTE_ID, "ev_health", 1.0, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+                modAttributeBase(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, 1, CORE_OF_PURITY_ATTRIBUTE_ID, "ev_speed", -0.1, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+            }
+            i = getEquipmentLevel(ModEnchants.NIGHT_VISION, thisEntity);
+            if (i > 0 && thisEntity.isSneaking())
+                thisEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.NIGHT_VISION, 2000, 100, true, false, false));
+            if ((i == 0 || i > 0 && !thisEntity.isSneaking()) && thisEntity.getStatusEffect(StatusEffects.NIGHT_VISION) != null)
+                if (Objects.requireNonNull(thisEntity.getStatusEffect(StatusEffects.NIGHT_VISION)).getAmplifier() == 100)
+                    thisEntity.removeStatusEffect(StatusEffects.NIGHT_VISION);
+            i = getEquipmentLevel(ModEnchants.PSYCHIC, thisEntity);
+            if (i > 0 && thisEntity.isSneaking()) {
+                EntityHitResult result = raycast();
+                if (result != null)
+                    if (result.getEntity() instanceof LivingEntity)
+                        ((LivingEntity) result.getEntity()).addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 2, 20, true, false, false));
+            }
+            removeAttribute(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, BARBARIC_ATTRIBUTE_ID);
+            i = getLevel(ModEnchants.BARBARIC, thisEntity.getMainHandStack());
+            if (i > 0) {
+                if (thisEntity.getActiveHand() != null)
+                    modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, 20 - this.getArmor(), BARBARIC_ATTRIBUTE_ID, "bar_attack_damage", 0.04, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+                else if (thisEntity.getMainHandStack() != null)
+                    modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, 20 - this.getArmor(), BARBARIC_ATTRIBUTE_ID, "bar_attack_damage", 0.04, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+            }
+            i = getEquipmentLevel(ModEnchants.BERSERK, thisEntity);
+            removeAttribute(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, BERSERK_ATTRIBUTE_ID);
             if (i > 0)
-                modAttributeBase(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, i, SWIFTNESS_ATTRIBUTE_ID, "swift_speed_boost", 0.1, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
-            i = getEquipmentLevel(ModEnchants.BOUNDING, thisEntity);
-            removeAttribute(thisEntity, EntityAttributes.HORSE_JUMP_STRENGTH, BOUNDING_JUMP_BOOST_ID);
-            if (i > 0)
-                modAttributeBase(thisEntity, EntityAttributes.HORSE_JUMP_STRENGTH, i, BOUNDING_JUMP_BOOST_ID, "bounding_jump_height_boost", 0.1, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
-        }
-        if (EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_NEPTUNE, thisEntity) > 0 && thisEntity.getAir() < 0)
-            thisEntity.setAir(0);
-        if (thisEntity.getHealth() > thisEntity.getMaxHealth())
-            thisEntity.setHealth(thisEntity.getMaxHealth());
-        if (EnchantmentHelper.getLevel(ModEnchants.MAGNETIC, thisEntity.getMainHandStack()) > 0) {
-            List<ItemEntity> list = getNearestItems(EnchantmentHelper.getLevel(ModEnchants.MAGNETIC, thisEntity.getMainHandStack()));
-            if (!list.isEmpty()) {
-                for (ItemEntity entity : list) {
-                    entity.setVelocity(entity.getVelocity().subtract(entity.getPos().subtract(new Vec3d(thisEntity.getPos().x, thisEntity.getPos().y + 1, thisEntity.getPos().z)).multiply(EnchantmentHelper.getLevel(ModEnchants.MAGNETIC, thisEntity.getMainHandStack()) * 0.025)));
+                modAttributeExtended(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, i, BERSERK_ATTRIBUTE_ID, "ber_attack_damage", (thisEntity.getMaxHealth() - thisEntity.getHealth()), 2.0, 2.0, 1.0, 2.0, 0.0, 4.0, 0.0, EntityAttributeModifier.Operation.ADDITION);
+            if (thisEntity instanceof HorseEntity) {
+                i = getEquipmentLevel(ModEnchants.SWIFTNESS, thisEntity);
+                removeAttribute(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, SWIFTNESS_ATTRIBUTE_ID);
+                if (i > 0)
+                    modAttributeBase(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, i, SWIFTNESS_ATTRIBUTE_ID, "swift_speed_boost", 0.1, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+                i = getEquipmentLevel(ModEnchants.BOUNDING, thisEntity);
+                removeAttribute(thisEntity, EntityAttributes.HORSE_JUMP_STRENGTH, BOUNDING_JUMP_BOOST_ID);
+                if (i > 0)
+                    modAttributeBase(thisEntity, EntityAttributes.HORSE_JUMP_STRENGTH, i, BOUNDING_JUMP_BOOST_ID, "bounding_jump_height_boost", 0.1, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+            }
+            if (EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_NEPTUNE, thisEntity) > 0 && thisEntity.getAir() < 0)
+                thisEntity.setAir(0);
+            if (thisEntity.getHealth() > thisEntity.getMaxHealth())
+                thisEntity.setHealth(thisEntity.getMaxHealth());
+            if (EnchantmentHelper.getLevel(ModEnchants.MAGNETIC, thisEntity.getMainHandStack()) > 0) {
+                List<ItemEntity> list = getNearestItems(EnchantmentHelper.getLevel(ModEnchants.MAGNETIC, thisEntity.getMainHandStack()));
+                if (!list.isEmpty()) {
+                    for (ItemEntity entity : list) {
+                        entity.setVelocity(entity.getVelocity().subtract(entity.getPos().subtract(new Vec3d(thisEntity.getPos().x, thisEntity.getPos().y + 1, thisEntity.getPos().z)).multiply(EnchantmentHelper.getLevel(ModEnchants.MAGNETIC, thisEntity.getMainHandStack()) * 0.025)));
+                    }
                 }
             }
         }

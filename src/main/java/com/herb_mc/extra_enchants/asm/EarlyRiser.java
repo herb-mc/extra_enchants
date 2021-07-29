@@ -14,6 +14,7 @@ public class EarlyRiser implements Runnable {
         ClassTinkerers.enumBuilder(enchantmentTarget).addEnumSubclass("AXE", "com.herb_mc.extra_enchants.asm.Axe").build();
         ClassTinkerers.enumBuilder(enchantmentTarget).addEnumSubclass("ELYTRA", "com.herb_mc.extra_enchants.asm.Elytra").build();
         ClassTinkerers.enumBuilder(enchantmentTarget).addEnumSubclass("HORSE_ARMOR", "com.herb_mc.extra_enchants.asm.HorseArmor").build();
+        ClassTinkerers.enumBuilder(enchantmentTarget).addEnumSubclass("SHIELD", "com.herb_mc.extra_enchants.asm.Shield").build();
         ClassTinkerers.enumBuilder(enchantmentTarget).addEnumSubclass("WEAPONS", "com.herb_mc.extra_enchants.asm.Weapons").build();
         String enchantmentRarity = remapper.mapClassName("intermediary", "net.minecraft.class_1887$class_1888");
         ClassTinkerers.enumBuilder(enchantmentRarity, int.class).addEnum("NULL", 0).build();
