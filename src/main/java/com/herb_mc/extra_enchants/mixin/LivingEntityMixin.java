@@ -202,7 +202,7 @@ public abstract class LivingEntityMixin implements AttributeModCommons, UUIDComm
     )
     private float damageCalc(float amount, DamageSource source) {
         int level = EnchantmentHelper.getEquipmentLevel(ModEnchants.SHOCK_RESISTANT, thisEntity);
-        if (level > 0)
+        if (level > 0 && source == DamageSource.FLY_INTO_WALL)
             amount *= level <= 4 ? (5F - level) / 5F : 0.2F;
         if (EnchantmentHelper.getEquipmentLevel(ModEnchants.ACE, thisEntity) > 0 && thisEntity.isFallFlying())
             amount *= 1D / (2 * EnchantmentHelper.getEquipmentLevel(ModEnchants.ACE, thisEntity) + 5) + 0.8;
