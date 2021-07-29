@@ -49,10 +49,13 @@ public class BowItemMixin {
                 ((PersistentProjectileEntityMixinAccess) persistentProjectileEntity).setCrit(true);
             if (EnchantmentHelper.getLevel(ModEnchants.ARROW_SPEED, stack) > 0)
                 persistentProjectileEntity.setVelocity(persistentProjectileEntity.getVelocity().multiply((20.0F + 3.0F * EnchantmentHelper.getLevel(ModEnchants.ARROW_SPEED, stack)) / 20.0F));
-            if (EnchantmentHelper.getLevel(ModEnchants.NIMBLE, stack) > 0)
+            if (EnchantmentHelper.getLevel(ModEnchants.NIMBLE, stack) > 0) {
                 persistentProjectileEntity.setDamage(persistentProjectileEntity.getDamage() - 0.2F * EnchantmentHelper.getLevel(ModEnchants.NIMBLE, stack));
+                if (persistentProjectileEntity.getDamage() < 0.5)
+                    persistentProjectileEntity.setDamage(0.5);
+            }
             if (EnchantmentHelper.getLevel(ModEnchants.STRONG_DRAW, stack) > 0) {
-                persistentProjectileEntity.setVelocity(persistentProjectileEntity.getVelocity().multiply((10.0F + 1.0F * EnchantmentHelper.getLevel(ModEnchants.STRONG_DRAW, stack)) / 10.0F));
+                persistentProjectileEntity.setVelocity(persistentProjectileEntity.getVelocity().multiply((10.0F + EnchantmentHelper.getLevel(ModEnchants.STRONG_DRAW, stack)) / 10.0F));
                 persistentProjectileEntity.setDamage(persistentProjectileEntity.getDamage() + 2F * EnchantmentHelper.getLevel(ModEnchants.STRONG_DRAW, stack));
             }
             if (EnchantmentHelper.getEquipmentLevel(ModEnchants.ACE, user) > 0 && user.isFallFlying())
@@ -73,7 +76,7 @@ public class BowItemMixin {
             constant = @Constant(floatValue = 20.0F)
     )
     private static float longbowModPullProgress(float f) {
-        return (strongDrawLevel > 0) ? 20F + 10F * strongDrawLevel : (nimbleLevel > 0) ? (nimbleLevel <= 9) ? 20F - nimbleLevel * 2F: 1F: f;
+        return (strongDrawLevel > 0) ? f + 20F * strongDrawLevel : (nimbleLevel > 0) ? (nimbleLevel <= 9) ? f - nimbleLevel * 2F: 1F: f;
     }
 
 }

@@ -37,7 +37,7 @@ public class ModelPredicateProviderRegistryMixin {
             constant = @Constant(floatValue = 20.0F)
     )
     private static float modifyDrawSpeed(float in) {
-        return (strongDrawLevel > 0) ? in + 10.0F * strongDrawLevel : (nimbleLevel > 0) ? ( (nimbleLevel <= 9) ? in - nimbleLevel * 2F : 1F ) : in;
+        return (strongDrawLevel > 0) ? in + 20F * strongDrawLevel : (nimbleLevel > 0) ? ( (nimbleLevel <= 9) ? in - nimbleLevel * 2F : 1F ) : in;
     }
 
 }

@@ -35,7 +35,7 @@ public class HeldItemRendererMixin {
     private float bowDrawProgress(float f) {
         int strongDrawLevel = EnchantmentHelper.getLevel(ModEnchants.STRONG_DRAW, player.getActiveItem());
         int nimbleLevel = EnchantmentHelper.getLevel(ModEnchants.NIMBLE, player.getActiveItem());
-        return strongDrawLevel > 0 ? f + 10F * strongDrawLevel : nimbleLevel > 0 ? nimbleLevel <= 9 ? f - nimbleLevel * 2F : 1F : f;
+        return strongDrawLevel > 0 ? f + 20F * strongDrawLevel : nimbleLevel > 0 ? nimbleLevel <= 9 ? f - nimbleLevel * 2F : 1F : f;
     }
 
 }

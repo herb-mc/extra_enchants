@@ -379,7 +379,7 @@
 - Max level: 5
 - Rarity: Uncommon
 ### Technical description:
-- +10% draw speed, -0.2 arrow damage attribute per level.
+- (15 * level) tick decrease in draw speed, (-0.2 * level) arrow damage attribute. Minimum damage is capped at 0.5.
 ---
 [Back to top](#enchantment-list)
 
@@ -479,7 +479,7 @@
 - Max level: 2
 - Rarity: Uncommon
 ### Technical description:
-- (10 * level) ticks of extra draw time per level. Increases damage attribute by (2 * level) and velocity by (10 * level)%.
+- (15 * level) ticks of extra draw time per level. Increases damage attribute by (2 * level) and velocity by (10 * level)%.
 ---
 [Back to top](#enchantment-list)
 
