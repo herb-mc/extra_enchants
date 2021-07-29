@@ -1,6 +1,6 @@
 # Extra Enchants
 
-Adds 44 obtainable equipment enchants and 2 experimental enchants, with functions ranging from utility to offense.
+Adds 47 obtainable equipment enchants and 2 experimental enchants, with functions ranging from utility to offense.
 
 Latest: v0.0.9 for Minecraft 1.17.1<br>
 Requires Fabric Loader 0.11.6 and Fabric API 0.37.0+1.17
@@ -94,6 +94,8 @@ Requires Fabric Loader 0.11.6 and Fabric API 0.37.0+1.17
 
 - *Propelling* - Elytras guarantee a minimum speed that decreases with height, but prevents firework usage
 
+- *Shock Resistant* - Take less damage from crashing into things
+
 - *Turbo* - Firework rockets last much less time, but give a greater speed boost
 
 #### Horse armor
@@ -109,6 +111,8 @@ Requires Fabric Loader 0.11.6 and Fabric API 0.37.0+1.17
 - *Reflecting* - Fired projectiles are reflected in the direction the user is facing
 
 - *Reflex* - Raise your shield slightly faster
+
+- *Stalwart* - Cooldown after axe hits is decreased
 
 #### General
 

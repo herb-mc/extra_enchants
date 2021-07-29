@@ -9,6 +9,7 @@
   "is_treasure": "false",
   "incompatible_enchants": [
     "reflex",
-    "reflecting"
+    "reflecting",
+    "stalwart"
   ]
 }

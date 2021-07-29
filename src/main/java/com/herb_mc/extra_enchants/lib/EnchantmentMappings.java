@@ -48,9 +48,11 @@ public class EnchantmentMappings {
         enchantments.put("reflecting", ModEnchants.REFLECTING);
         enchantments.put("reflex", ModEnchants.REFLEX);
         enchantments.put("sharpshooter", ModEnchants.SHARPSHOOTER);
+        enchantments.put("shock_resistant", ModEnchants.SHOCK_RESISTANT);
         enchantments.put("slimey", ModEnchants.SLIMEY);
         enchantments.put("sniper", ModEnchants.SNIPER);
         enchantments.put("soulbound", ModEnchants.SOULBOUND);
+        enchantments.put("stalwart", ModEnchants.STALWART);
         enchantments.put("steadfast", ModEnchants.STEADFAST);
         enchantments.put("surface_skimmer", ModEnchants.SURFACE_SKIMMER);
         enchantments.put("swiftness", ModEnchants.SWIFTNESS);

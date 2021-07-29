@@ -12,9 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 
@@ -22,6 +20,17 @@ import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 public abstract class PlayerEntityMixin implements AttributeModCommons, UUIDCommons {
 
     @Unique private final LivingEntity thisEntity = (PlayerEntity) (Object) this;
+
+    @ModifyArg(
+            method = "disableShield",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/entity/player/ItemCooldownManager;set(Lnet/minecraft/item/Item;I)V"
+            )
+    )
+    private int decreaseShieldCooldown(int i) {
+        return thisEntity.getActiveItem() != null && EnchantmentHelper.getLevel(ModEnchants.STALWART, thisEntity.getActiveItem()) > 0 ? i - 40 : i;
+    }
 
     @ModifyVariable(
             method = "getBlockBreakingSpeed",

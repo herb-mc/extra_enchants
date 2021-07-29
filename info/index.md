@@ -34,10 +34,12 @@
 - [Reflecting](#reflecting)
 - [Reflex](#reflex)
 - [Sharpshooter](#sharpshooter)
+- [Shock Resistant](#shock-resistant)
 - [Slimey](#slimey)
-- [Soulbound](#soulbound)
-- [Steadfast](#steadfast)
 - [Sniper](#sniper)
+- [Soulbound](#soulbound)
+- [Stalwart](#stalwart)
+- [Steadfast](#steadfast)
 - [Surface Skimmer](#surface-skimmer)
 - [Swiftness](#swiftness)
 - [Terraforming](#terraforming)
@@ -54,7 +56,7 @@
 ## *Ace*
 - Damage reduction, melee and arrow damage are increased
 - Compatible equipment: Elytra
-- Incompatible enchantments: Propelling, Turbo
+- Incompatible enchantments: Propelling, Turbo, Shock Resistant
 - Max level: 3
 - Rarity: Rare
 ### Technical description:
@@ -386,7 +388,7 @@
 ## *Propelling*
 - While flying, the user's speed will be maintained at a minimum, which decreases with height gain. Firework use is disabled.
 - Compatible equipment: Elytra
-- Incompatible enchantments: Ace, Turbo
+- Incompatible enchantments: Ace, Turbo, Shock Resistant
 - Max level: 3
 - Rarity: Rare
 ### Technical description:
@@ -408,7 +410,7 @@
 ## *Reflecting*
 - While blocking, projectiles will be reflecting in the direction the user is facing. Reflected velocity scales with level.
 - Compatible equipment: Shields
-- Incompatible enchantments: Reflex
+- Incompatible enchantments: Reflex, Stalwart
 - Max level: 3
 - Rarity: Uncommon
 ### Technical description:
@@ -419,7 +421,7 @@
 ## *Reflex*
 - Shield raising is slightly faster.
 - Compatible equipment: Shields
-- Incompatible enchantments: Reflecting
+- Incompatible enchantments: Reflecting, Stalwart
 - Max level: 1
 - Rarity: Uncommon
 ### Technical description:
@@ -435,6 +437,17 @@
 - Rarity: Rare
 ### Technical description:
 - FOV is multiplied by 1/3. +1 damage to all fired arrows. +5 damage to thrown tridents.
+---
+[Back to top](#enchantment-list)
+
+## *Shock Resistant*
+- Damage taken when ramming into things with an elytra is reduced.
+- Compatible equipment: Elytra
+- Incompatible enchantments: Ace, Propelling
+- Max level: 2
+- Rarity: Uncommon
+### Technical description:
+- (20 * level)% reduction on elytra ramming damage
 ---
 [Back to top](#enchantment-list)
 
@@ -469,6 +482,17 @@
 - Type: Treasure
 ### Technical description:
 - Items with soulbound will be skipped during the dropAll() check. Armor and offhand items stay in their respective slots.
+---
+[Back to top](#enchantment-list)
+
+## *Stalwart*
+- Shield cooldown after axe hits is lowered.
+- Compatible equipment: Shield
+- Incompatible enchantments: Reflecting, Reflex
+- Max level: 1
+- Rarity: Uncommon
+### Technical description:
+- Shield cooldown after axe hits is lowered from 100 to 60 ticks.
 ---
 [Back to top](#enchantment-list)
 

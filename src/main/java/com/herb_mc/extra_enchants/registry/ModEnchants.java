@@ -32,7 +32,7 @@ public class ModEnchants {
             3,
             false,
             false,
-            new Enchantment[]{ModEnchants.PROPELLING, ModEnchants.ACE, ModEnchants.TURBO}
+            new Enchantment[]{ModEnchants.PROPELLING, ModEnchants.ACE, ModEnchants.TURBO, ModEnchants.SHOCK_RESISTANT}
     );
     // Antigravity
     public static Enchantment ANTIGRAVITY = new EnchantBuilder(
@@ -353,7 +353,7 @@ public class ModEnchants {
     // Magnetic
     public static Enchantment MAGNETIC = new ScalableEnchantBuilder(
             Enchantment.Rarity.RARE,
-            EnchantmentTarget.BREAKABLE,
+            EnchantmentTarget.DIGGER,
             new EquipmentSlot[]{},
             15,
             10,
@@ -402,7 +402,7 @@ public class ModEnchants {
             3,
             false,
             false,
-            new Enchantment[]{ModEnchants.PROPELLING, ModEnchants.ACE, ModEnchants.TURBO}
+            new Enchantment[]{ModEnchants.PROPELLING, ModEnchants.ACE, ModEnchants.TURBO, ModEnchants.SHOCK_RESISTANT}
     );
     // Psychic
     public static Enchantment PSYCHIC = new EnchantBuilder(
@@ -428,7 +428,7 @@ public class ModEnchants {
             3,
             false,
             false,
-            new Enchantment[]{ModEnchants.REFLEX, ModEnchants.REFLECTING}
+            new Enchantment[]{ModEnchants.REFLEX, ModEnchants.REFLECTING, ModEnchants.STALWART}
     );
     // Reflex
     public static Enchantment REFLEX = new EnchantBuilder(
@@ -440,7 +440,7 @@ public class ModEnchants {
             1,
             false,
             false,
-            new Enchantment[]{ModEnchants.REFLEX, ModEnchants.REFLECTING}
+            new Enchantment[]{ModEnchants.REFLEX, ModEnchants.REFLECTING, ModEnchants.STALWART}
     );
     // Sharpshooter
     public static Enchantment SHARPSHOOTER = new EnchantBuilder(
@@ -453,6 +453,20 @@ public class ModEnchants {
             false,
             false,
             new Enchantment[]{ModEnchants.DWARVEN, ModEnchants.SHARPSHOOTER, ModEnchants.NIGHT_VISION, ModEnchants.PSYCHIC}
+    );
+    // Shock Resistance
+    public static Enchantment SHOCK_RESISTANT = new ScalableEnchantBuilder(
+            Enchantment.Rarity.UNCOMMON,
+            ELYTRA,
+            new EquipmentSlot[]{EquipmentSlot.CHEST},
+            20,
+            10,
+            30,
+            10,
+            3,
+            false,
+            false,
+            new Enchantment[]{ModEnchants.ACE, ModEnchants.PROPELLING}
     );
     // Slimey
     public static Enchantment SLIMEY = new EnchantBuilder(
@@ -477,6 +491,18 @@ public class ModEnchants {
             false,
             true,
             new Enchantment[]{Enchantments.VANISHING_CURSE}
+    );
+    // Stalwart
+    public static Enchantment STALWART = new EnchantBuilder(
+            Enchantment.Rarity.UNCOMMON,
+            SHIELD,
+            new EquipmentSlot[]{},
+            20,
+            50,
+            1,
+            false,
+            true,
+            new Enchantment[]{ModEnchants.REFLEX, ModEnchants.REFLECTING, ModEnchants.STALWART}
     );
     // Steadfast
     public static Enchantment STEADFAST = new ScalableEnchantBuilder(
@@ -677,9 +703,11 @@ public class ModEnchants {
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "reflecting"), REFLECTING);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "reflex"), REFLEX);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "sharpshooter"), SHARPSHOOTER);
+        Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "shock_resistant"), SHOCK_RESISTANT);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "slimey"), SLIMEY);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "sniper"), SNIPER);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "soulbound"), SOULBOUND);
+        Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "stalwart"), STALWART);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "steadfast"), STEADFAST);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "surface_skimmer"), SURFACE_SKIMMER);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "swiftness"), SWIFTNESS);
