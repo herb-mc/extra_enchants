@@ -1,7 +1,7 @@
 [Back to README](/README.md)
 # Datapack Configurables
 
-###Index
+##Index
 
  - [Datapack structure](#structure)
  - [General configuration](#configuring-general-settings)
