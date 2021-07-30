@@ -2,11 +2,14 @@
 
 Adds 48 obtainable equipment enchants and 4 experimental enchants, with functions ranging from utility to offense.
 
-Latest: v0.0.9 for Minecraft 1.17.1<br>
-Requires Fabric Loader 0.11.6 and Fabric API 0.37.0+1.17
+Latest: [v0.1.0 for Minecraft 1.17.1](https://github.com/herb-mc/extra_enchants/releases/tag/v0.1.0)
+<br>
+Requires Fabric Loader 0.11.6 and [Fabric API 0.37.1+1.17](https://www.curseforge.com/minecraft/mc-mods/fabric-api)
+
+ * [Detailed enchantment descriptions](info/index.md)
+ * [How to configure enchantments via datapack](info/datapack.md)
 
 ## Enchantment List
-##### *This list only provides a basic description of each enchantment - [click here](info/index.md) for more detailed descriptions*
 
 #### Bow
 
@@ -133,7 +136,7 @@ Requires Fabric Loader 0.11.6 and Fabric API 0.37.0+1.17
 - *Core of the Warp* (curse) (treasure) - The power of the warp enhances your mobility and endurance, but your vitality is decreased and you randomly teleport in certain biomes
 
 #### Experimental
-##### *Experimental enchants are disabled normally, and can only be enabled via datapack.*
+##### *Experimental enchants are disabled normally, and can only be enabled via datapack. Essentially not ready for official release.*
 
 - *Blazing* - Snowballs are turned into blaze fireballs
 
