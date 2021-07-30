@@ -467,7 +467,8 @@ public abstract class LivingEntityMixin implements AttributeModCommons, UUIDComm
                 List<ItemEntity> list = getNearestItems(EnchantmentHelper.getLevel(ModEnchants.MAGNETIC, thisEntity.getMainHandStack()));
                 if (!list.isEmpty()) {
                     for (ItemEntity entity : list) {
-                        entity.setVelocity(entity.getVelocity().subtract(entity.getPos().subtract(new Vec3d(thisEntity.getPos().x, thisEntity.getPos().y + 1, thisEntity.getPos().z)).multiply(EnchantmentHelper.getLevel(ModEnchants.MAGNETIC, thisEntity.getMainHandStack()) * 0.025)));
+                        if (entity.getVelocity().length() <= 5)
+                            entity.setVelocity(entity.getVelocity().subtract(entity.getPos().subtract(new Vec3d(thisEntity.getPos().x, thisEntity.getPos().y + 1, thisEntity.getPos().z)).multiply(EnchantmentHelper.getLevel(ModEnchants.MAGNETIC, thisEntity.getMainHandStack()) * 0.025)));
                     }
                 }
             }

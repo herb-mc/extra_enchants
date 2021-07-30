@@ -6,6 +6,7 @@
   "enchantment.extra_enchants.barbaric": "Barbaric",
   "enchantment.extra_enchants.berserk": "Berserk",
   "enchantment.extra_enchants.blaze_affinity": "Blaze Affinity",
+  "enchantment.extra_enchants.blazing": "Blazing",
   "enchantment.extra_enchants.boosting": "Boosting",
   "enchantment.extra_enchants.bounding": "Bounding",
   "enchantment.extra_enchants.cleaving": "Cleaving",
@@ -48,5 +49,6 @@
   "enchantment.extra_enchants.turbo": "Turbo",
   "enchantment.extra_enchants.warding": "Warding",
   "enchantment.extra_enchants.weighted": "Weighted",
-  "enchantment.extra_enchants.windstep": "Windstep"
+  "enchantment.extra_enchants.windstep": "Windstep",
+  "enchantment.extra_enchants.withering": "Withering"
 }

@@ -25,6 +25,7 @@
     "PlayerEntityMixin",
     "PlayerInventoryMixin",
     "ServerPlayerEntityMixin",
+    "SnowballItemMixin",
     "SwoopGoalMixin",
     "TridentEntityMixin",
     "TridentItemMixin"

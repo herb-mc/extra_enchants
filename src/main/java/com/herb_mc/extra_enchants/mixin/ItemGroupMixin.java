@@ -27,7 +27,7 @@ public class ItemGroupMixin {
             )
     )
     private static EnchantmentTarget[] addEnchantmentTargets(EnchantmentTarget... targets) {
-        MISC.setEnchantments(ClassTinkerers.getEnum(EnchantmentTarget.class, "HORSE_ARMOR"));
+        MISC.setEnchantments(ClassTinkerers.getEnum(EnchantmentTarget.class, "HORSE_ARMOR"), ClassTinkerers.getEnum(EnchantmentTarget.class, "SNOWBALL"));
         TRANSPORTATION.setEnchantments(ClassTinkerers.getEnum(EnchantmentTarget.class, "ELYTRA"));
         return ArrayUtils.addAll(targets, ClassTinkerers.getEnum(EnchantmentTarget.class, "AXE"), ClassTinkerers.getEnum(EnchantmentTarget.class, "SHIELD"), ClassTinkerers.getEnum(EnchantmentTarget.class, "WEAPONS"));
     }

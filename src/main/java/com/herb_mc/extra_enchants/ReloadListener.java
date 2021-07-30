@@ -15,6 +15,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.profiler.*;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Iterator;
@@ -45,6 +46,52 @@ public class ReloadListener extends JsonDataLoader implements SimpleSynchronousR
     public void apply(Map<Identifier, JsonElement> loader, ResourceManager manager, Profiler profiler) {
         loaded = 0;
         disabled = 0;
+        for (Identifier id : manager.findResources("general", path -> path.endsWith(".json"))) {
+            if (id.toString().equals("extra_enchants:general/general_configuration.json"))
+                try (InputStream stream = manager.getResource(id).getInputStream()) {
+                    BufferedReader br = new BufferedReader(new InputStreamReader(stream));
+                    String line = "";
+                    StringBuilder strBuilder = new StringBuilder();
+                    while ((line = br.readLine()) != null) {
+                        strBuilder.append(line);
+                    }
+                    stream.close();
+                    JsonObject file = new JsonParser().parse(strBuilder.toString()).getAsJsonObject();
+                    try {
+                        ModEnchants.CAN_ENCHANT_ELYTRA = file.get("directly_enchant_elytra").getAsBoolean();
+                    }
+                    catch (Exception e) {
+                        EXTRA_ENCHANTS_LOGGER.error("Could not set value 'directly_enchant_elytra', defaulting to true");
+                    }
+                    try {
+                        ModEnchants.CAN_ENCHANT_HORSE_ARMOR = file.get("directly_enchant_horse_armor").getAsBoolean();
+                    }
+                    catch (Exception e) {
+                        EXTRA_ENCHANTS_LOGGER.error("Could not set value 'directly_enchant_horse_armor', defaulting to true");
+                    }
+                    try {
+                        ModEnchants.CAN_ENCHANT_SHIELD = file.get("directly_enchant_shields").getAsBoolean();
+                    }
+                    catch (Exception e) {
+                        EXTRA_ENCHANTS_LOGGER.error("Could not set value 'directly_enchant_shields', defaulting to true");
+                    }
+                    try {
+                        ModEnchants.CAN_ENCHANT_SNOWBALL = file.get("directly_enchant_snowballs").getAsBoolean();
+                    }
+                    catch (Exception e) {
+                        EXTRA_ENCHANTS_LOGGER.error("Could not set value 'directly_enchant_snowballs', defaulting to false");
+                    }
+                    try {
+                        ModEnchants.EXTENDED_TRIDENT_ENCHANTS = file.get(  "extended_trident_enchants").getAsBoolean();
+                    }
+                    catch (Exception e) {
+                        EXTRA_ENCHANTS_LOGGER.error("Could not set value 'extended_trident_enchants', defaulting to true");
+                    }
+                    EXTRA_ENCHANTS_LOGGER.info("Loaded general configuration for Extra Enchants");
+                } catch (Exception e) {
+                    EXTRA_ENCHANTS_LOGGER.error("Error occurred while loading general configuration");
+                }
+        }
         for (Identifier id : manager.findResources("enchantment_configuration", path -> path.endsWith(".json"))) {
             try (InputStream stream = manager.getResource(id).getInputStream()) {
                 String name = id.toString().replace("extra_enchants:enchantment_configuration/", "").replace(".json", "");

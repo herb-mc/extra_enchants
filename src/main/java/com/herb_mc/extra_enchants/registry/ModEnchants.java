@@ -17,8 +17,15 @@ public class ModEnchants {
     static EnchantmentTarget ELYTRA = ClassTinkerers.getEnum(EnchantmentTarget.class, "ELYTRA");
     static EnchantmentTarget HORSE_ARMOR = ClassTinkerers.getEnum(EnchantmentTarget.class, "HORSE_ARMOR");
     static EnchantmentTarget SHIELD = ClassTinkerers.getEnum(EnchantmentTarget.class, "SHIELD");
+    static EnchantmentTarget SNOWBALL = ClassTinkerers.getEnum(EnchantmentTarget.class, "SNOWBALL");
     static EnchantmentTarget WEAPONS = ClassTinkerers.getEnum(EnchantmentTarget.class, "WEAPONS");
     static Enchantment.Rarity NULL = ClassTinkerers.getEnum(Enchantment.Rarity.class, "NULL");
+
+    public static boolean CAN_ENCHANT_ELYTRA = true;
+    public static boolean CAN_ENCHANT_HORSE_ARMOR = true;
+    public static boolean CAN_ENCHANT_SHIELD = true;
+    public static boolean CAN_ENCHANT_SNOWBALL = false;
+    public static boolean EXTENDED_TRIDENT_ENCHANTS = true;
 
     // Ace
     public static Enchantment ACE = new ScalableEnchantBuilder(
@@ -102,15 +109,27 @@ public class ModEnchants {
     );
     // Blaze Affinity
     public static Enchantment BLAZE_AFFINITY = new EnchantBuilder(
-            Enchantment.Rarity.UNCOMMON,
+            Enchantment.Rarity.COMMON,
             EnchantmentTarget.ARMOR_LEGS,
             new EquipmentSlot[]{EquipmentSlot.LEGS},
-            30,
+            20,
             50,
             1,
             false,
             true,
             new Enchantment[]{}
+    );
+    // Blaze Affinity
+    public static Enchantment BLAZING = new EnchantBuilder(
+            Enchantment.Rarity.COMMON,
+            SNOWBALL,
+            new EquipmentSlot[]{EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND},
+            30,
+            50,
+            1,
+            false,
+            false,
+            new Enchantment[]{ModEnchants.WITHERING, ModEnchants.BLAZING}
     );
     // Boosting
     public static Enchantment BOOSTING = new ScalableEnchantBuilder(
@@ -660,6 +679,18 @@ public class ModEnchants {
             false,
             new Enchantment[]{ModEnchants.LEAPING, ModEnchants.LUNGING, ModEnchants.WINDSTEP, ModEnchants.SLIMEY}
     );
+    // Withering
+    public static Enchantment WITHERING = new EnchantBuilder(
+            Enchantment.Rarity.COMMON,
+            SNOWBALL,
+            new EquipmentSlot[]{EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND},
+            20,
+            50,
+            1,
+            false,
+            false,
+            new Enchantment[]{ModEnchants.WITHERING, ModEnchants.BLAZING}
+    );
     // experimental
     public static Enchantment TESTING = new EnchantBuilder(
             NULL,
@@ -689,6 +720,7 @@ public class ModEnchants {
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "barbaric"), BARBARIC);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "berserk"), BERSERK);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "blaze_affinity"), BLAZE_AFFINITY);
+        Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "blazing"), BLAZING);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "boosting"), BOOSTING);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "bounding"), BOUNDING);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "cleaving"), CLEAVING);
@@ -732,6 +764,7 @@ public class ModEnchants {
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "warding"), WARDING);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "weighted"), WEIGHTED);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "windstep"), WINDSTEP);
+        Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "withering"), WITHERING);
     }
 
 }

@@ -1,4 +1,4 @@
-[Back to readme](/README.md)
+[Back to README](/README.md)
 # Enchantment List
 
 - [Ace](#ace)
@@ -136,6 +136,18 @@
 - Type: Treasure
 ### Technical description:
 - +10% damage, +5% damage reduction while on fire. Does not decrease fire damage.
+---
+[Back to top](#enchantment-list)
+
+## *Blazing*
+- Turns thrown snowballs into blaze fireballs.
+- Compatible equipment: Snowball
+- Incompatible enchantments: Withering
+- Max level: 1
+- Rarity: Common
+- Type: Experimental
+### Technical description:
+- Snowballs are converted to blaze fireballs on throw.
 ---
 [Back to top](#enchantment-list)
 
@@ -527,6 +539,7 @@
 - Incompatible enchantments: Bounding, Swiftness
 - Max level: 3
 - Rarity: Common
+- Type: Experimental
 ### Technical description:
 - Horses with this equipped will always float in and eventually stand on top of water.
 ---
@@ -560,6 +573,7 @@
 - Compatible equipment: Any
 - Max level: 1
 - Rarity: Unobtainable
+- Type: Experimental
 ### Technical description:
 - The chance that Core of the Warp teleports and Core of the Blood God crits will trigger becomes 100%.
 ---
@@ -628,3 +642,15 @@
 - Rarity: Rare
 ### Technical description:
 - +0.4 step height. (default is 0.6 for entities other than horses)
+  [Back to top](#enchantment-list)
+
+## *Withering*
+- Thrown snowballs are turned into wither skulls
+- Compatible equipment: Snowballs
+- Incompatible enchantments: Withering
+- Max level: 1
+- Rarity: Common
+- Type: Experimental
+### Technical description:
+- Converts snowballs into wither skulls. 10% chance for wither skulls to be charge.
+

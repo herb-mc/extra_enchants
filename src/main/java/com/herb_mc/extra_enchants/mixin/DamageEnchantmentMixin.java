@@ -1,5 +1,6 @@
 package com.herb_mc.extra_enchants.mixin;
 
+import com.herb_mc.extra_enchants.registry.ModEnchants;
 import net.minecraft.enchantment.DamageEnchantment;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.TridentItem;
@@ -17,7 +18,7 @@ public class DamageEnchantmentMixin {
             cancellable = true
     )
     public void addDamageEnchToTrident(ItemStack stack, CallbackInfoReturnable<Boolean> info) {
-        if (stack.getItem() instanceof TridentItem) info.setReturnValue(true);
+        if (stack.getItem() instanceof TridentItem && ModEnchants.EXTENDED_TRIDENT_ENCHANTS) info.setReturnValue(true);
     }
 
 }

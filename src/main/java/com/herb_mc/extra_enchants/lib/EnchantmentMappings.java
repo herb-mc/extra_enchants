@@ -22,6 +22,7 @@ public class EnchantmentMappings {
         enchantments.put("barbaric", ModEnchants.BARBARIC);
         enchantments.put("berserk", ModEnchants.BERSERK);
         enchantments.put("blaze_affinity", ModEnchants.BLAZE_AFFINITY);
+        enchantments.put("blazing", ModEnchants.BLAZING);
         enchantments.put("boosting", ModEnchants.BOOSTING);
         enchantments.put("bounding", ModEnchants.BOUNDING);
         enchantments.put("cleaving", ModEnchants.CLEAVING);
@@ -65,6 +66,7 @@ public class EnchantmentMappings {
         enchantments.put("warding", ModEnchants.WARDING);
         enchantments.put("weighted", ModEnchants.WEIGHTED);
         enchantments.put("windstep", ModEnchants.WINDSTEP);
+        enchantments.put("withering", ModEnchants.WITHERING);
         // vanilla
         enchantments.put("aqua_affinity", Enchantments.AQUA_AFFINITY);
         enchantments.put("bane_of_arthropods", Enchantments.BANE_OF_ARTHROPODS);
