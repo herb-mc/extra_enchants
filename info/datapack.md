@@ -51,7 +51,7 @@ The `.json` files must be placed in the `extra_enchants/enchantment_configuratio
   "max_power_delta": "an integer",
   "max_level": "an integer",
   "is_curse": "true/false",
-  "is_treasure": "true false",
+  "is_treasure": "true/false",
   "incompatible_enchants": [
     "enchantment 1",
     "enchantment 2",
@@ -87,5 +87,5 @@ By default, every enchantment, scalable or fixed, will have a maximum power of 5
    
 `max_level` specifies the enchantment's max level.</br>
 `is_curse` specifies whether an enchantment ought to be considered a curse. Curses cannot be removed via any means.</br>
-`is_treasure` specifies wether an enchantment ought to be considered a treasure. Treasure enchantments cannot be obtained via the enchantment table.</br>
+`is_treasure` specifies whether an enchantment ought to be considered a treasure. Treasure enchantments cannot be obtained via the enchantment table.</br>
 `incompatible_enchants` specifies all enchantments that are not compatible with this enchantment. For two enchantments to be compatible, neither enchantment can have the other in their `incompatible_enchants` field. These take custom strings mapped to enchantments, and a [full list can be found here](enchantment_mappings.md).
