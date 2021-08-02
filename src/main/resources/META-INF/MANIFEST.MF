@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Main-Class: com.herbmc.herb_tweaks.ModEnchants
+Main-Class: com.herb_mc.extra_enchants.ExtraEnchantsMod
 Class-Path: httpclient-4.3.3.jar yarn-1.17+build.13-v2-final.jar lwjgl-o
  penal-3.2.2.jar commons-io-2.5.jar tiny-mappings-parser-0.2.2.14.jar jl
  ine-reader-3.12.1.jar jinput-2.0.5.jar reach-entity-attributes-2.1.1.ja

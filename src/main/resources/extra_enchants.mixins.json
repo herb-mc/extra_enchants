@@ -4,7 +4,6 @@
   "package": "com.herb_mc.extra_enchants.mixin",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
-    "AbstractClientPlayerEntityMixin",
     "BlockMixin",
     "BowItemMixin",
     "CrossbowItemMixin",
@@ -13,14 +12,10 @@
     "FireworkRocketEntityInterface",
     "FireworkRocketEntityMixin",
     "FireworkRocketItemMixin",
-    "GameRendererMixin",
-    "HeldItemRendererMixin",
-    "HorseArmorRendererMixin",
     "ItemEntityMixin",
     "ItemGroupMixin",
     "ItemMixin",
     "LivingEntityMixin",
-    "ModelPredicateProviderRegistryMixin",
     "PersistentProjectileEntityMixin",
     "PlayerEntityMixin",
     "PlayerInventoryMixin",
@@ -31,6 +26,11 @@
     "TridentItemMixin"
   ],
   "client": [
+    "AbstractClientPlayerEntityMixin",
+    "GameRendererMixin",
+    "HeldItemRendererMixin",
+    "HorseArmorRendererMixin",
+    "ModelPredicateProviderRegistryMixin"
   ],
   "injectors": {
     "defaultRequire": 1

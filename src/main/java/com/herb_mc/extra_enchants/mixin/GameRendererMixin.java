@@ -2,6 +2,9 @@ package com.herb_mc.extra_enchants.mixin;
 
 import com.herb_mc.extra_enchants.lib.UUIDCommons;
 import com.herb_mc.extra_enchants.registry.ModEnchants;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -14,10 +17,13 @@ import com.herb_mc.extra_enchants.ExtraEnchantsMod;
 
 import java.util.Objects;
 
+@Environment(EnvType.CLIENT)
 @Mixin(GameRenderer.class)
 public abstract class GameRendererMixin implements UUIDCommons {
 
     @Unique GameRenderer renderer =  (GameRenderer) (Object) this;
+
+    private static final MinecraftClient client = MinecraftClient.getInstance();
 
     @ModifyVariable(
             method = "updateMovementFovMultiplier",
@@ -40,9 +46,9 @@ public abstract class GameRendererMixin implements UUIDCommons {
             cancellable = true
     )
     public void sharpShooterFOVMod(CallbackInfoReturnable<Double> callbackInfo) {
-        ExtraEnchantsMod.client.options.smoothCameraEnabled = false;
+        client.options.smoothCameraEnabled = false;
         if((EnchantmentHelper.getEquipmentLevel(ModEnchants.SHARPSHOOTER, (AbstractClientPlayerEntity)renderer.getClient().getCameraEntity()) > 0 && (Objects.requireNonNull(renderer.getClient().getCameraEntity())).isSneaking())) {
-            ExtraEnchantsMod.client.options.smoothCameraEnabled = true;
+            client.options.smoothCameraEnabled = true;
             double fov = callbackInfo.getReturnValue();
             callbackInfo.setReturnValue(fov / 3);
         }

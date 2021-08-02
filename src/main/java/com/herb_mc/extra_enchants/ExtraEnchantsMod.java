@@ -10,8 +10,6 @@ import org.apache.logging.log4j.Logger;
 
 public class ExtraEnchantsMod implements ModInitializer {
 
-    public static final MinecraftClient client = MinecraftClient.getInstance();
-
     public static final String MOD_ID = "extra_enchants";
 
     public static final Logger EXTRA_ENCHANTS_LOGGER = LogManager.getLogger();
