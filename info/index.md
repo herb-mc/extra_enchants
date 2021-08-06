@@ -63,10 +63,11 @@
 ### Technical description:
 - Incoming damage is multiplied by a multiplier determined by the following formula:
 
-![ace](https://latex.codecogs.com/gif.latex?multiplier%20%3D%20%5Cfrac%7B1%7D%7B2*level&plus;5%7D&plus;0.8)
-
-- Melee and arrow damage are increased by 1 per level.
-- Aforementioned affects are only active while in elytra flight.
+![ace](https://latex.codecogs.com/gif.latex?damagemult%20%3D%201%20-%20%5Clog_%7B10%7D%28level%20&plus;%201%29%20*%200.25)
+- Melee damage is increased by 1 per level.
+- Arrow damage is increased by 0.5 per level.
+- Trident damage is increased by 1.5 per level.
+- Aforementioned affects are only active while in flight.
 ---
 [Back to top](#enchantment-list)
 

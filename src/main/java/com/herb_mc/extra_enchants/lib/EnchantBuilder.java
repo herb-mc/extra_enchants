@@ -5,6 +5,7 @@ import com.herb_mc.extra_enchants.registry.ModEnchants;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.item.ItemStack;
 
 public class EnchantBuilder extends Enchantment {
 
@@ -49,17 +50,22 @@ public class EnchantBuilder extends Enchantment {
     {
         if (ModEnchants.isEnchantType(other, incompatibleEnchantments))
             return false;
-        return super.canAccept(other);
+        return enabled && super.canAccept(other);
+    }
+
+    @Override
+    public boolean isAcceptableItem(ItemStack stack) {
+        return enabled && super.isAcceptableItem(stack);
     }
 
     @Override
     public boolean isCursed() {
-        return isCursed;
+        return enabled && isCursed;
     }
 
     @Override
     public boolean isTreasure() {
-        return isTreasure;
+        return enabled && isTreasure;
     }
 
     @Override

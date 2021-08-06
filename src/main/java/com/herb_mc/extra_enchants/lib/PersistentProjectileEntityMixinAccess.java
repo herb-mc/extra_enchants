@@ -2,6 +2,8 @@ package com.herb_mc.extra_enchants.lib;
 
 public interface PersistentProjectileEntityMixinAccess {
 
+    void setAce(int i);
+
     void setExplosive(int i);
 
     void setExposing(int i);

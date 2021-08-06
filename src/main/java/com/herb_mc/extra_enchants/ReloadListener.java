@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import com.herb_mc.extra_enchants.lib.EnchantBuilder;
 import com.herb_mc.extra_enchants.lib.EnchantmentMappings;
 import com.herb_mc.extra_enchants.lib.ScalableEnchantBuilder;
+import com.herb_mc.extra_enchants.lib.ValueContainer;
 import com.herb_mc.extra_enchants.registry.ModEnchants;
 import net.fabricmc.fabric.api.resource.*;
 import net.minecraft.enchantment.Enchantment;
@@ -29,7 +30,7 @@ public class ReloadListener extends JsonDataLoader implements SimpleSynchronousR
     static int loaded;
     static int disabled;
 
-    public static final Identifier IDENTIFIER = new Identifier(MOD_ID, "enchantment_configuration");
+    public static final Identifier IDENTIFIER = new Identifier(MOD_ID, "enchantments");
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting()
             .disableHtmlEscaping().create();
 
@@ -46,30 +47,9 @@ public class ReloadListener extends JsonDataLoader implements SimpleSynchronousR
     public void apply(Map<Identifier, JsonElement> loader, ResourceManager manager, Profiler profiler) {
         loaded = 0;
         disabled = 0;
-        for (Identifier id : manager.findResources("general", path -> path.endsWith(".json"))) {
-            if (id.toString().equals("extra_enchants:general/general_configuration.json"))
-                try (InputStream stream = manager.getResource(id).getInputStream()) {
-                    BufferedReader br = new BufferedReader(new InputStreamReader(stream));
-                    String line = "";
-                    StringBuilder strBuilder = new StringBuilder();
-                    while ((line = br.readLine()) != null) {
-                        strBuilder.append(line);
-                    }
-                    stream.close();
-                    JsonObject file = new JsonParser().parse(strBuilder.toString()).getAsJsonObject();
-                    for (Map.Entry<String, Boolean> set : EnchantmentMappings.generalConfig.entrySet()) {
-                        String temp = set.getKey();
-                        if (file.get(temp) != null) {
-                            set.setValue(file.get(temp).getAsBoolean());
-                        }
-                    }
-                } catch (Exception e) {
-                    EXTRA_ENCHANTS_LOGGER.error("Error occurred while loading general configuration");
-                }
-        }
-        for (Identifier id : manager.findResources("enchantment_configuration", path -> path.endsWith(".json"))) {
+        for (Identifier id : manager.findResources("enchantment_base", path -> path.endsWith(".json"))) {
             try (InputStream stream = manager.getResource(id).getInputStream()) {
-                String name = id.toString().replace("extra_enchants:enchantment_configuration/", "").replace(".json", "");
+                String name = id.toString().replace("extra_enchants:enchantment_base/", "").replace(".json", "");
                 BufferedReader br = new BufferedReader(new InputStreamReader(stream));
                 String line = "";
                 StringBuilder strBuilder = new StringBuilder();
@@ -117,9 +97,10 @@ public class ReloadListener extends JsonDataLoader implements SimpleSynchronousR
                 EXTRA_ENCHANTS_LOGGER.error("Error occurred while loading resource json " + id.toString(), e);
             }
         }
-        for (Identifier id : manager.findResources("enchantment_values", path -> path.endsWith(".json"))) {
+        EXTRA_ENCHANTS_LOGGER.info("Loaded {} enchantments", loaded);
+        for (Identifier id : manager.findResources("enchantment_configuration", path -> path.endsWith(".json"))) {
             try (InputStream stream = manager.getResource(id).getInputStream()) {
-                String name = id.toString().replace("extra_enchants:enchantment_values/", "").replace(".json", ":");
+                String name = id.toString().replace("extra_enchants:enchantment_configuration/", "").replace(".json", ":");
                 BufferedReader br = new BufferedReader(new InputStreamReader(stream));
                 String line = "";
                 StringBuilder strBuilder = new StringBuilder();
@@ -130,14 +111,14 @@ public class ReloadListener extends JsonDataLoader implements SimpleSynchronousR
                 JsonObject file = new JsonParser().parse(strBuilder.toString()).getAsJsonObject();
                 for (Map.Entry<String, JsonElement> element: file.entrySet()) {
                     if (EnchantmentMappings.enchantmentConfig.get(name + element.getKey()) != null) {
-                        Object temp = EnchantmentMappings.enchantmentConfig.get(name + element.getKey()).getValue();
-                        if (temp instanceof Integer) {
+                        ValueContainer temp = EnchantmentMappings.enchantmentConfig.get(name + element.getKey());
+                        if (temp.getValue() instanceof Integer) {
                             EnchantmentMappings.enchantmentConfig.get(name + element.getKey()).setValue(element.getValue().getAsInt());
-                        } else if (temp instanceof Boolean) {
+                        } else if (temp.getValue() instanceof Boolean) {
                             EnchantmentMappings.enchantmentConfig.get(name + element.getKey()).setValue(element.getValue().getAsBoolean());
-                        } else if (temp instanceof Double) {
+                        } else if (temp.getValue() instanceof Double) {
                             EnchantmentMappings.enchantmentConfig.get(name + element.getKey()).setValue(element.getValue().getAsDouble());
-                        } else if (temp instanceof Float) {
+                        } else if (temp.getValue() instanceof Float) {
                             EnchantmentMappings.enchantmentConfig.get(name + element.getKey()).setValue(element.getValue().getAsFloat());
                         } else {
                             EXTRA_ENCHANTS_LOGGER.error("Invalid data type for {}", name + element.getKey());

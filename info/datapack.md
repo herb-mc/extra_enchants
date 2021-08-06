@@ -13,10 +13,10 @@ The general hierarchy of the datapack is as follows:
 ```
 data
  └ extra_enchants
-    └ general
-       └ general_configuration.json
+    └ enchantment_base
+       └ COMMON ENCHANTMENT CONFIGS GO HERE
     └ enchantment_configurations
-       └ INDIVIDUAL ENCHANTMENT CONFIGS GO HERE
+       └ INDIVIDUAL ENCHANTMENT AND GENERAL CONFIGS GO HERE
 ```
 ---
 ## Configuring general settings
@@ -33,6 +33,8 @@ There are only a few general settings that are configurable at the moment. At so
 ```
 `directly_enchant_item` allows the item to be enchanted in an enchantment table.</br>
 `extended_trident_enchants` allows tridents to have damaging enchantments such as Sharpness or Smite.
+
+
 
 ---
 

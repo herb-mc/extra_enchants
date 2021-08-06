@@ -53,7 +53,7 @@ public class ScalableEnchantBuilder extends Enchantment {
     {
         if (ModEnchants.isEnchantType(other, incompatibleEnchantments))
             return false;
-        return super.canAccept(other);
+        return enabled && super.canAccept(other);
     }
 
     @Override

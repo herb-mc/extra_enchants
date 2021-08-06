@@ -1,17 +1,5 @@
 {
-  "type": "scalable",
-  "available": "true",
-  "rarity": "uncommon",
-  "min_power": "20",
-  "min_power_delta": "10",
-  "max_power": "30",
-  "max_power_delta": "20",
-  "max_level": "2",
-  "is_curse": "false",
-  "is_treasure": "false",
-  "incompatible_enchants": [
-    "explosive",
-    "strong_draw",
-    "nimble"
-  ]
+  "draw_mult": 1.0,
+  "damage_base": 2.0,
+  "velocity_mult": 0.1
 }

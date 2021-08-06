@@ -1,5 +1,6 @@
 package com.herb_mc.extra_enchants.mixin;
 
+import com.herb_mc.extra_enchants.lib.EnchantmentMappings;
 import com.herb_mc.extra_enchants.lib.LivingEntityMixinAccess;
 import com.herb_mc.extra_enchants.lib.PersistentProjectileEntityMixinAccess;
 import com.herb_mc.extra_enchants.registry.ModEnchants;
@@ -59,8 +60,14 @@ public abstract class PersistentProjectileEntityMixin implements PersistentProje
     @Unique public boolean thunderbolt = false;
     @Unique public boolean thunderboltParticles = false;
     @Unique public boolean neptune = false;
+    @Unique public int ace = 0;
     @Unique private final Random rand = new Random();
     private Entity hitResult;
+
+    @Override
+    public void setAce(int i) {
+        this.ace = i;
+    }
 
     @Override
     public void setExplosive(int i) {
@@ -163,11 +170,11 @@ public abstract class PersistentProjectileEntityMixin implements PersistentProje
     protected void setAttributesFromOwner(@Nullable Entity entity, CallbackInfo info) {
         if (entity instanceof LivingEntity && !(entity instanceof PlayerEntity)) {
             if (EnchantmentHelper.getEquipmentLevel(ModEnchants.ACE, (LivingEntity) entity) > 0 && ((LivingEntity) entity).isFallFlying()) {
-                thisEntity.setDamage(thisEntity.getDamage() + EnchantmentHelper.getEquipmentLevel(ModEnchants.ACE, (LivingEntity) entity) / 2F);
-                sharpshooter = true;
+                thisEntity.setDamage(thisEntity.getDamage() + EnchantmentHelper.getEquipmentLevel(ModEnchants.ACE, (LivingEntity) entity) * EnchantmentMappings.aceExtraArrowDamage.getFloat());
+                ace = EnchantmentHelper.getEquipmentLevel(ModEnchants.ACE, (LivingEntity) entity);
             }
             if (EnchantmentHelper.getEquipmentLevel(ModEnchants.SHARPSHOOTER, (LivingEntity) entity) > 0 && entity.isSneaking()) {
-                thisEntity.setDamage(thisEntity.getDamage() + 1);
+                thisEntity.setDamage(thisEntity.getDamage() + EnchantmentMappings.sharpshooterArrowDamage.getFloat());
                 sharpshooter = true;
             }
             if (EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_PURITY, (LivingEntity) entity) > 0)
@@ -199,6 +206,7 @@ public abstract class PersistentProjectileEntityMixin implements PersistentProje
             at = @At("RETURN")
     )
     protected void writeCustomDataToNbt(NbtCompound nbt, CallbackInfo info) {
+        nbt.putInt("ace", ace);
         nbt.putBoolean("ender", ender);
         nbt.putBoolean("purity", purity);
         nbt.putInt("explosive", explosive);
@@ -214,6 +222,7 @@ public abstract class PersistentProjectileEntityMixin implements PersistentProje
             at = @At("RETURN")
     )
     protected void readCustomDataFromNbt(NbtCompound nbt, CallbackInfo info) {
+        ace = nbt.getInt("ace");
         ender = nbt.getBoolean("ender");
         purity = nbt.getBoolean("purity");
         explosive = nbt.getInt("explosive");

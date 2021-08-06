@@ -18,7 +18,7 @@ public class DamageEnchantmentMixin {
             cancellable = true
     )
     public void addDamageEnchToTrident(ItemStack stack, CallbackInfoReturnable<Boolean> info) {
-        if (stack.getItem() instanceof TridentItem && ModEnchants.EXTENDED_TRIDENT_ENCHANTS) info.setReturnValue(true);
+        if (stack.getItem() instanceof TridentItem && ModEnchants.EXTENDED_TRIDENT_ENCHANTS.getBool()) info.setReturnValue(true);
     }
 
 }

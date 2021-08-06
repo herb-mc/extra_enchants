@@ -1,16 +1,7 @@
 {
-  "type": "fixed",
-  "available": "true",
-  "rarity": "very_rare",
-  "min_power": "20",
-  "max_power": "50",
-  "max_level": "1",
-  "is_curse": "true",
-  "is_treasure": "true",
-  "incompatible_enchants": [
-    "core_of_neptune",
-    "core_of_purity",
-    "core_of_the_blood_god",
-    "core_of_the_void"
-  ]
+  "base_damage": 0.0,
+  "damage_mult": 0.3,
+  "damage_mult_threshold": 0.6,
+  "health_mult": 1.0,
+  "speed_penalty": -0.1
 }

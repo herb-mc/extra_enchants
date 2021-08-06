@@ -1,10 +1,8 @@
 package com.herb_mc.extra_enchants.lib;
 
-import com.google.gson.JsonObject;
-
 public class ValueContainer {
 
-    private static Object value;
+    private Object value;
 
     public ValueContainer(Object in) {
         value = in;
@@ -12,10 +10,6 @@ public class ValueContainer {
 
     public Object getValue() {
         return value;
-    }
-
-    public Class<?> getValueType() {
-        return value.getClass();
     }
 
     public void setValue(Object in) {

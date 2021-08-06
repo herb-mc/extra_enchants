@@ -1,5 +1,6 @@
 package com.herb_mc.extra_enchants.mixin;
 
+import com.herb_mc.extra_enchants.lib.EnchantmentMappings;
 import net.minecraft.entity.projectile.TridentEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -16,12 +17,14 @@ public abstract class TridentEntityMixin extends PersistentProjectileEntityMixin
             )
     )
     private float thrownTridentDamageMod(float f) {
+        if (ace > 0)
+            f += ace * EnchantmentMappings.aceExtraTridentDamage.getFloat();
         if (neptune)
             f += 8;
         if (sharpshooter)
-            f += 4;
+            f += EnchantmentMappings.sharpshooterTridentDamage.getFloat();
         if (purity)
-            f = 1;
+            f = EnchantmentMappings.corePurityBaseDamage.getFloat() + 1F;
         return f;
     }
 

@@ -1,5 +1,6 @@
 package com.herb_mc.extra_enchants.mixin;
 
+import com.herb_mc.extra_enchants.lib.EnchantmentMappings;
 import com.herb_mc.extra_enchants.registry.ModEnchants;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -36,8 +37,12 @@ public class ModelPredicateProviderRegistryMixin {
             method = "method_27890(Lnet/minecraft/item/ItemStack;Lnet/minecraft/client/world/ClientWorld;Lnet/minecraft/entity/LivingEntity;I)F",
             constant = @Constant(floatValue = 20.0F)
     )
-    private static float modifyDrawSpeed(float in) {
-        return (strongDrawLevel > 0) ? in + 20F * strongDrawLevel : (nimbleLevel > 0) ? ( (nimbleLevel <= 9) ? in - nimbleLevel * 2F : 1F ) : in;
+    private static float modifyDrawSpeed(float f) {
+        if (strongDrawLevel > 0)
+            f = f + f * EnchantmentMappings.sniperDrawMult.getFloat() * strongDrawLevel;
+        else if (nimbleLevel > 0)
+            f = f + f * nimbleLevel * EnchantmentMappings.nimbleDrawMult.getFloat();
+        return Math.max(f, 1F);
     }
 
 }

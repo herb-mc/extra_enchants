@@ -1,18 +1,6 @@
 {
-  "type": "scalable",
-  "available": "true",
-  "rarity": "rare",
-  "min_power": "15",
-  "min_power_delta": "10",
-  "max_power": "30",
-  "max_power_delta": "10",
-  "max_level": "3",
-  "is_curse": "false",
-  "is_treasure": "false",
-  "incompatible_enchants": [
-    "ace",
-    "propelling",
-    "turbo",
-    "shock_resistance"
-  ]
+  "damage_reduction_mult": 0.25,
+  "extra_arrow_damage": 0.5,
+  "extra_trident_damage": 1.5,
+  "extra_melee_damage": 1.0
 }

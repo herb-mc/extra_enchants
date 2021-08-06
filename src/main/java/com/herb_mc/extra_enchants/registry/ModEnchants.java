@@ -4,6 +4,7 @@ import com.chocohead.mm.api.ClassTinkerers;
 import com.herb_mc.extra_enchants.lib.EnchantBuilder;
 import com.herb_mc.extra_enchants.lib.ScalableEnchantBuilder;
 import com.herb_mc.extra_enchants.ExtraEnchantsMod;
+import com.herb_mc.extra_enchants.lib.ValueContainer;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.enchantment.Enchantments;
@@ -21,11 +22,11 @@ public class ModEnchants {
     static EnchantmentTarget WEAPONS = ClassTinkerers.getEnum(EnchantmentTarget.class, "WEAPONS");
     static Enchantment.Rarity NULL = ClassTinkerers.getEnum(Enchantment.Rarity.class, "NULL");
 
-    public static boolean CAN_ENCHANT_ELYTRA = true;
-    public static boolean CAN_ENCHANT_HORSE_ARMOR = true;
-    public static boolean CAN_ENCHANT_SHIELD = true;
-    public static boolean CAN_ENCHANT_SNOWBALL = false;
-    public static boolean EXTENDED_TRIDENT_ENCHANTS = true;
+    public static ValueContainer CAN_ENCHANT_ELYTRA = new ValueContainer(true);
+    public static ValueContainer CAN_ENCHANT_HORSE_ARMOR = new ValueContainer(true);
+    public static ValueContainer CAN_ENCHANT_SHIELD = new ValueContainer(true);
+    public static ValueContainer CAN_ENCHANT_SNOWBALL = new ValueContainer(false);
+    public static ValueContainer EXTENDED_TRIDENT_ENCHANTS = new ValueContainer(true);
 
     // Ace
     public static Enchantment ACE = new ScalableEnchantBuilder(

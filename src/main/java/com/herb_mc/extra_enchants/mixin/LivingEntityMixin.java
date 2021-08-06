@@ -1,6 +1,7 @@
 package com.herb_mc.extra_enchants.mixin;
 
 import com.herb_mc.extra_enchants.lib.AttributeModCommons;
+import com.herb_mc.extra_enchants.lib.EnchantmentMappings;
 import com.herb_mc.extra_enchants.lib.LivingEntityMixinAccess;
 import com.herb_mc.extra_enchants.registry.ModEnchants;
 import com.herb_mc.extra_enchants.lib.UUIDCommons;
@@ -205,7 +206,7 @@ public abstract class LivingEntityMixin implements AttributeModCommons, UUIDComm
         if (level > 0 && source == DamageSource.FLY_INTO_WALL)
             amount *= level <= 4 ? (5F - level) / 5F : 0.2F;
         if (EnchantmentHelper.getEquipmentLevel(ModEnchants.ACE, thisEntity) > 0 && thisEntity.isFallFlying())
-            amount *= 1D / (2 * EnchantmentHelper.getEquipmentLevel(ModEnchants.ACE, thisEntity) + 5) + 0.8;
+            amount *= 1D - Math.log10(EnchantmentHelper.getEquipmentLevel(ModEnchants.ACE, thisEntity) + 1) * EnchantmentMappings.aceDamageReducerMult.getDouble();
         if (EXPOSED > 0)
             amount *= 1.1;
         if (source instanceof EntityDamageSource && EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_THE_BLOOD_GOD, thisEntity) > 0 && (rand.nextDouble() < 0.25 || EnchantmentHelper.getEquipmentLevel(ModEnchants.TESTING, thisEntity) > 0))
@@ -219,10 +220,10 @@ public abstract class LivingEntityMixin implements AttributeModCommons, UUIDComm
         }
         if (source.getSource() != null && source.getSource() instanceof LivingEntity) {
             if (EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_PURITY, (LivingEntity) source.getSource()) > 0)
-                amount = 1;
+                amount = EnchantmentMappings.corePurityBaseDamage.getFloat() + 1;
         }
-        if (EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_PURITY, thisEntity) > 0 && thisEntity.getHealth() / thisEntity.getMaxHealth() > 0.6)
-            amount *= 0.3;
+        if (EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_PURITY, thisEntity) > 0 && thisEntity.getHealth() / thisEntity.getMaxHealth() > EnchantmentMappings.corePurityThreshold.getFloat())
+            amount *= EnchantmentMappings.corePurityDamageMult.getFloat();
         return amount;
     }
 
@@ -330,9 +331,6 @@ public abstract class LivingEntityMixin implements AttributeModCommons, UUIDComm
         float mult = (float) (1 + 0.1 * i);
         if (i > 0)
             thisEntity.setVelocity(thisEntity.getVelocity().x * mult, thisEntity.getVelocity().y, thisEntity.getVelocity().z * mult);
-        i = EnchantmentHelper.getEquipmentLevel(ModEnchants.SHARPSHOOTER, thisEntity);
-        if (i > 0 && thisEntity.isSneaking())
-            thisEntity.setVelocity(0, thisEntity.getVelocity().y, 0);
     }
 
     @Inject(
@@ -352,7 +350,7 @@ public abstract class LivingEntityMixin implements AttributeModCommons, UUIDComm
             removeAttribute(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, ACE_ATTRIBUTE_ID);
             i = getEquipmentLevel(ModEnchants.ACE, thisEntity);
             if (i > 0 && thisEntity.isFallFlying())
-                modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, i, ACE_ATTRIBUTE_ID, "ace_attack_damage", 1, EntityAttributeModifier.Operation.ADDITION);
+                modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, i, ACE_ATTRIBUTE_ID, "ace_attack_damage", EnchantmentMappings.aceExtraMeleeDamage.getFloat(), EntityAttributeModifier.Operation.ADDITION);
             removeAttribute(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, CORE_OF_NEPTUNE_ATTRIBUTE_ID);
             removeAttribute(thisEntity, EntityAttributes.GENERIC_ATTACK_SPEED, CORE_OF_NEPTUNE_ATTRIBUTE_ID);
             removeAttribute(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, CORE_OF_NEPTUNE_ATTRIBUTE_ID);
@@ -421,8 +419,8 @@ public abstract class LivingEntityMixin implements AttributeModCommons, UUIDComm
             removeAttribute(thisEntity, EntityAttributes.GENERIC_MAX_HEALTH, CORE_OF_PURITY_ATTRIBUTE_ID);
             removeAttribute(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, CORE_OF_PURITY_ATTRIBUTE_ID);
             if (i > 0) {
-                modAttributeBase(thisEntity, EntityAttributes.GENERIC_MAX_HEALTH, 1, CORE_OF_PURITY_ATTRIBUTE_ID, "ev_health", 1.0, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
-                modAttributeBase(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, 1, CORE_OF_PURITY_ATTRIBUTE_ID, "ev_speed", -0.1, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+                modAttributeBase(thisEntity, EntityAttributes.GENERIC_MAX_HEALTH, 1, CORE_OF_PURITY_ATTRIBUTE_ID, "ev_health", EnchantmentMappings.corePurityHealthMult.getFloat(), EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+                modAttributeBase(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, 1, CORE_OF_PURITY_ATTRIBUTE_ID, "ev_speed", EnchantmentMappings.corePuritySpeedPenalty.getFloat(), EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
             }
             i = getEquipmentLevel(ModEnchants.NIGHT_VISION, thisEntity);
             if (i > 0 && thisEntity.isSneaking())

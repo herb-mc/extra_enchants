@@ -1,5 +1,6 @@
 package com.herb_mc.extra_enchants.mixin;
 
+import com.herb_mc.extra_enchants.lib.EnchantmentMappings;
 import com.herb_mc.extra_enchants.lib.PersistentProjectileEntityMixinAccess;
 import com.herb_mc.extra_enchants.registry.ModEnchants;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -30,7 +31,7 @@ public class CrossbowItemMixin {
         ((PersistentProjectileEntityMixinAccess) persistentProjectileEntity).setPlayerOwner(true);
         ((PersistentProjectileEntityMixinAccess) persistentProjectileEntity).setCrit(true);
         if (EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_PURITY, entity) > 0)
-            persistentProjectileEntity.setDamage(0);
+            persistentProjectileEntity.setDamage(EnchantmentMappings.corePurityBaseDamage.getFloat());
         else {
             if (EnchantmentHelper.getLevel(ModEnchants.EXPOSING, crossbow) > 0)
                 ((PersistentProjectileEntityMixinAccess) persistentProjectileEntity).setExposing(EnchantmentHelper.getLevel(ModEnchants.EXPOSING, crossbow) * 30);

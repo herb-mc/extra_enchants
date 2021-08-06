@@ -44,7 +44,7 @@ public class BowItemMixin {
     private void applyBowEnchants(ItemStack stack, World world, LivingEntity user, int remainingUseTicks, CallbackInfo ci, PlayerEntity playerEntity, boolean bl, ItemStack itemStack, int i, float f, boolean bl2, ArrowItem arrowItem, PersistentProjectileEntity persistentProjectileEntity) {
         ((PersistentProjectileEntityMixinAccess) persistentProjectileEntity).setPlayerOwner(true);
         if (EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_PURITY, user) > 0)
-            persistentProjectileEntity.setDamage(0);
+            persistentProjectileEntity.setDamage(EnchantmentMappings.corePurityBaseDamage.getFloat());
         else {
             if (f == 1.0F)
                 ((PersistentProjectileEntityMixinAccess) persistentProjectileEntity).setCrit(true);
@@ -56,13 +56,13 @@ public class BowItemMixin {
                     persistentProjectileEntity.setDamage(0.5);
             }
             if (EnchantmentHelper.getLevel(ModEnchants.SNIPER, stack) > 0) {
-                persistentProjectileEntity.setVelocity(persistentProjectileEntity.getVelocity().multiply((10.0F + EnchantmentHelper.getLevel(ModEnchants.SNIPER, stack)) / 10.0F));
-                persistentProjectileEntity.setDamage(persistentProjectileEntity.getDamage() + 2F * EnchantmentHelper.getLevel(ModEnchants.SNIPER, stack));
+                persistentProjectileEntity.setVelocity(persistentProjectileEntity.getVelocity().multiply(1.0F + EnchantmentHelper.getLevel(ModEnchants.SNIPER, stack) * EnchantmentMappings.sniperVelocityMult.getFloat()));
+                persistentProjectileEntity.setDamage(persistentProjectileEntity.getDamage() + EnchantmentMappings.sniperDamageBase.getFloat() * EnchantmentHelper.getLevel(ModEnchants.SNIPER, stack));
             }
             if (EnchantmentHelper.getEquipmentLevel(ModEnchants.ACE, user) > 0 && user.isFallFlying())
-                persistentProjectileEntity.setDamage(persistentProjectileEntity.getDamage() + EnchantmentHelper.getEquipmentLevel(ModEnchants.ACE, user) / 2F);
+                persistentProjectileEntity.setDamage(persistentProjectileEntity.getDamage() + EnchantmentHelper.getEquipmentLevel(ModEnchants.ACE, user) * EnchantmentMappings.aceExtraArrowDamage.getFloat());
             if (EnchantmentHelper.getEquipmentLevel(ModEnchants.SHARPSHOOTER, user) > 0 && user.isSneaking()) {
-                persistentProjectileEntity.setDamage(persistentProjectileEntity.getDamage() + 1);
+                persistentProjectileEntity.setDamage(persistentProjectileEntity.getDamage() + EnchantmentMappings.sharpshooterArrowDamage.getFloat());
                 ((PersistentProjectileEntityMixinAccess) persistentProjectileEntity).setSharpshooter(true);
             }
             if (EnchantmentHelper.getLevel(ModEnchants.EXPLOSIVE, stack) > 0)

@@ -1,5 +1,6 @@
 package com.herb_mc.extra_enchants.mixin;
 
+import com.herb_mc.extra_enchants.lib.EnchantmentMappings;
 import com.herb_mc.extra_enchants.lib.UUIDCommons;
 import com.herb_mc.extra_enchants.registry.ModEnchants;
 import net.fabricmc.api.EnvType;
@@ -50,7 +51,7 @@ public abstract class GameRendererMixin implements UUIDCommons {
             if((EnchantmentHelper.getEquipmentLevel(ModEnchants.SHARPSHOOTER, (AbstractClientPlayerEntity)renderer.getClient().getCameraEntity()) > 0 && (Objects.requireNonNull(renderer.getClient().getCameraEntity())).isSneaking())) {
                 MinecraftClient.getInstance().options.smoothCameraEnabled = true;
                 double fov = callbackInfo.getReturnValue();
-                callbackInfo.setReturnValue(fov / 3);
+                callbackInfo.setReturnValue(fov * EnchantmentMappings.sharpshooterFOVScale.getFloat());
             }
     }
 

@@ -10,11 +10,24 @@ import java.util.Map;
 public class EnchantmentMappings {
 
     public static Map<String, Enchantment> enchantments;
-    public static Map<String, Boolean> generalConfig;
     public static Map<String, ValueContainer> enchantmentConfig;
 
-    public static ValueContainer sniperDrawMult = new ValueContainer(1.0F);
+    public static ValueContainer aceDamageReducerMult = new ValueContainer(0.25D);
+    public static ValueContainer aceExtraArrowDamage = new ValueContainer(0.5F);
+    public static ValueContainer aceExtraMeleeDamage = new ValueContainer(1.0F);
+    public static ValueContainer aceExtraTridentDamage = new ValueContainer(2.0F);
+    public static ValueContainer corePurityBaseDamage = new ValueContainer(0.0F);
+    public static ValueContainer corePurityHealthMult = new ValueContainer(2.0F);
+    public static ValueContainer corePuritySpeedPenalty = new ValueContainer(-0.1F);
+    public static ValueContainer corePurityDamageMult = new ValueContainer(0.3F);
+    public static ValueContainer corePurityThreshold = new ValueContainer(0.6F);
     public static ValueContainer nimbleDrawMult = new ValueContainer(-0.1F);
+    public static ValueContainer sharpshooterArrowDamage = new ValueContainer(1.0F);
+    public static ValueContainer sharpshooterTridentDamage = new ValueContainer(3.0F);
+    public static ValueContainer sharpshooterFOVScale = new ValueContainer(0.33F);
+    public static ValueContainer sniperDrawMult = new ValueContainer(1.0F);
+    public static ValueContainer sniperDamageBase = new ValueContainer(2.0F);
+    public static ValueContainer sniperVelocityMult = new ValueContainer(0.1F);
 
     static
     {
@@ -112,20 +125,30 @@ public class EnchantmentMappings {
         enchantments.put("thorns", Enchantments.THORNS);
         enchantments.put("unbreaking", Enchantments.UNBREAKING);
 
-        generalConfig = new HashMap<>();
-        generalConfig.put("directly_enchant_elytra", ModEnchants.CAN_ENCHANT_ELYTRA);
-        generalConfig.put("directly_enchant_horse_armor", ModEnchants.CAN_ENCHANT_HORSE_ARMOR);
-        generalConfig.put("directly_enchant_shields", ModEnchants.CAN_ENCHANT_SHIELD);
-        generalConfig.put("directly_enchant_snowballs", ModEnchants.CAN_ENCHANT_SNOWBALL);
-        generalConfig.put("extended_trident_enchants", ModEnchants.EXTENDED_TRIDENT_ENCHANTS);
-
         enchantmentConfig = new HashMap<>();
-        enchantmentConfig.put("sniper:draw_mult", sniperDrawMult);
+        enchantmentConfig.put("general_configuration:directly_enchant_elytra", ModEnchants.CAN_ENCHANT_ELYTRA);
+        enchantmentConfig.put("general_configuration:directly_enchant_horse_armor", ModEnchants.CAN_ENCHANT_HORSE_ARMOR);
+        enchantmentConfig.put("general_configuration:directly_enchant_shields", ModEnchants.CAN_ENCHANT_SHIELD);
+        enchantmentConfig.put("general_configuration:directly_enchant_snowballs", ModEnchants.CAN_ENCHANT_SNOWBALL);
+        enchantmentConfig.put("general_configuration:extended_trident_enchants", ModEnchants.EXTENDED_TRIDENT_ENCHANTS);
+        enchantmentConfig.put("ace:damage_reduction_multiplier", aceDamageReducerMult);
+        enchantmentConfig.put("ace:extra_arrow_damage", aceExtraArrowDamage);
+        enchantmentConfig.put("ace:extra_melee_damage", aceExtraMeleeDamage);
+        enchantmentConfig.put("ace:extra_trident_damage", aceExtraTridentDamage);
+        enchantmentConfig.put("core_of_purity:base_damage", corePurityBaseDamage);
+        enchantmentConfig.put("core_of_purity:damage_mult", corePurityDamageMult);
+        enchantmentConfig.put("core_of_purity:damage_mult_threshold", corePurityThreshold);
+        enchantmentConfig.put("core_of_purity:health_mult", corePurityHealthMult);
+        enchantmentConfig.put("core_of_purity:speed_penalty", corePuritySpeedPenalty);
         enchantmentConfig.put("nimble:draw_mult", nimbleDrawMult);
+        enchantmentConfig.put("sharpshooter:extra_arrow_damage", sharpshooterArrowDamage);
+        enchantmentConfig.put("sharpshooter:extra_trident_damage", sharpshooterTridentDamage);
+        enchantmentConfig.put("sharpshooter:fov_mod", sharpshooterFOVScale);
+        enchantmentConfig.put("sniper:draw_mult", sniperDrawMult);
+        enchantmentConfig.put("sniper:base_damage", sniperDamageBase);
+        enchantmentConfig.put("sniper:velocity_mult", sniperVelocityMult);
 
     }
-
-
 
     public static Enchantment valueOf(String key) {
         return enchantments.get(key);

@@ -47,6 +47,8 @@ public class TridentItemMixin {
     )
     public void addAttributes(ItemStack stack, World world, LivingEntity user, int remainingUseTicks, CallbackInfo info, PlayerEntity playerEntity, int i, TridentEntity tridentEntity){
         tridentEntity.setVelocity(tridentEntity.getVelocity().subtract(velocity.multiply(0.7)));
+        if (EnchantmentHelper.getEquipmentLevel(ModEnchants.ACE, user) > 0)
+            ((PersistentProjectileEntityMixinAccess) tridentEntity).setAce(EnchantmentHelper.getEquipmentLevel(ModEnchants.ACE, user));
         if (EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_NEPTUNE, user) > 0)
             ((PersistentProjectileEntityMixinAccess) tridentEntity).setNeptune(true);
         if (EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_PURITY, user) > 0)

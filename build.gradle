@@ -30,7 +30,6 @@ dependencies {
 	modImplementation "com.github.Chocohead:Fabric-ASM:${project.fabric_asm_version}"
 	include "com.github.Chocohead:Fabric-ASM:${project.fabric_asm_version}"
 	include modImplementation("com.jamieswhiteshirt:reach-entity-attributes:${project.reach_entity_version}")
-	implementation "org.cheffo:jeplite:0.8.7a"
 }
 
 minecraft {

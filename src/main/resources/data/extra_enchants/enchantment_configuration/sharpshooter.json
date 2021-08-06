@@ -1,16 +1,5 @@
 {
-  "type": "fixed",
-  "available": "true",
-  "rarity": "rare",
-  "min_power": "20",
-  "max_power": "50",
-  "max_level": "1",
-  "is_curse": "false",
-  "is_treasure": "false",
-  "incompatible_enchants": [
-    "dwarven",
-    "sharpshooter",
-    "night_vision",
-    "psychic"
-  ]
+  "extra_arrow_damage": 1.0,
+  "extra_trident_damage": 3.0,
+  "fov_mod": 0.33
 }
