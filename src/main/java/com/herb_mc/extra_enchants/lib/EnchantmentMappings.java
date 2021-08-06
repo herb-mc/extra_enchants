@@ -10,10 +10,15 @@ import java.util.Map;
 public class EnchantmentMappings {
 
     public static Map<String, Enchantment> enchantments;
+    public static Map<String, Boolean> generalConfig;
+    public static Map<String, ValueContainer> enchantmentConfig;
+
+    public static ValueContainer sniperDrawMult = new ValueContainer(1.0F);
+    public static ValueContainer nimbleDrawMult = new ValueContainer(-0.1F);
 
     static
     {
-        // extra enchants
+        // enchantment mappings
         enchantments = new HashMap<>();
         enchantments.put("ace", ModEnchants.ACE);
         enchantments.put("antigravity", ModEnchants.ANTIGRAVITY);
@@ -106,7 +111,21 @@ public class EnchantmentMappings {
         enchantments.put("sweeping_edge", Enchantments.SWEEPING);
         enchantments.put("thorns", Enchantments.THORNS);
         enchantments.put("unbreaking", Enchantments.UNBREAKING);
+
+        generalConfig = new HashMap<>();
+        generalConfig.put("directly_enchant_elytra", ModEnchants.CAN_ENCHANT_ELYTRA);
+        generalConfig.put("directly_enchant_horse_armor", ModEnchants.CAN_ENCHANT_HORSE_ARMOR);
+        generalConfig.put("directly_enchant_shields", ModEnchants.CAN_ENCHANT_SHIELD);
+        generalConfig.put("directly_enchant_snowballs", ModEnchants.CAN_ENCHANT_SNOWBALL);
+        generalConfig.put("extended_trident_enchants", ModEnchants.EXTENDED_TRIDENT_ENCHANTS);
+
+        enchantmentConfig = new HashMap<>();
+        enchantmentConfig.put("sniper:draw_mult", sniperDrawMult);
+        enchantmentConfig.put("nimble:draw_mult", nimbleDrawMult);
+
     }
+
+
 
     public static Enchantment valueOf(String key) {
         return enchantments.get(key);

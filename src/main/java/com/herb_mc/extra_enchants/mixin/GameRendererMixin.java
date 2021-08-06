@@ -23,8 +23,6 @@ public abstract class GameRendererMixin implements UUIDCommons {
 
     @Unique GameRenderer renderer =  (GameRenderer) (Object) this;
 
-    private static final MinecraftClient client = MinecraftClient.getInstance();
-
     @ModifyVariable(
             method = "updateMovementFovMultiplier",
             at = @At(
@@ -33,10 +31,11 @@ public abstract class GameRendererMixin implements UUIDCommons {
             )
     )
     public float removeFOVModFromSteadfast(float f) {
-        AbstractClientPlayerEntity player = (AbstractClientPlayerEntity)renderer.getClient().getCameraEntity();
-        int i = EnchantmentHelper.getEquipmentLevel(ModEnchants.STEADFAST, player);
-        if (player != null && Objects.requireNonNull(player.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).getModifier(STEADFAST_ATTRIBUTE_ID) != null)
-            f = (player.isSprinting()) ? (float) (((f - 1) * 2 + 1) / (1.15 * i + 1.15)) : ((f - 1) * 2 + 1) / (i + 1);
+        if (renderer.getClient().getCameraEntity() instanceof AbstractClientPlayerEntity player) {
+            int i = EnchantmentHelper.getEquipmentLevel(ModEnchants.STEADFAST, player);
+            if (Objects.requireNonNull(player.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).getModifier(STEADFAST_ATTRIBUTE_ID) != null)
+                f = (player.isSprinting()) ? (float) (((f - 1) * 2 + 1) / (1.15 * i + 1.15)) : ((f - 1) * 2 + 1) / (i + 1);
+        }
         return f;
     }
 
@@ -46,12 +45,13 @@ public abstract class GameRendererMixin implements UUIDCommons {
             cancellable = true
     )
     public void sharpShooterFOVMod(CallbackInfoReturnable<Double> callbackInfo) {
-        client.options.smoothCameraEnabled = false;
-        if((EnchantmentHelper.getEquipmentLevel(ModEnchants.SHARPSHOOTER, (AbstractClientPlayerEntity)renderer.getClient().getCameraEntity()) > 0 && (Objects.requireNonNull(renderer.getClient().getCameraEntity())).isSneaking())) {
-            client.options.smoothCameraEnabled = true;
-            double fov = callbackInfo.getReturnValue();
-            callbackInfo.setReturnValue(fov / 3);
-        }
+        MinecraftClient.getInstance().options.smoothCameraEnabled = false;
+        if (renderer.getClient().getCameraEntity() instanceof AbstractClientPlayerEntity)
+            if((EnchantmentHelper.getEquipmentLevel(ModEnchants.SHARPSHOOTER, (AbstractClientPlayerEntity)renderer.getClient().getCameraEntity()) > 0 && (Objects.requireNonNull(renderer.getClient().getCameraEntity())).isSneaking())) {
+                MinecraftClient.getInstance().options.smoothCameraEnabled = true;
+                double fov = callbackInfo.getReturnValue();
+                callbackInfo.setReturnValue(fov / 3);
+            }
     }
 
 }

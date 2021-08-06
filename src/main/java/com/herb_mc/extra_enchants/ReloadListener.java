@@ -57,37 +57,12 @@ public class ReloadListener extends JsonDataLoader implements SimpleSynchronousR
                     }
                     stream.close();
                     JsonObject file = new JsonParser().parse(strBuilder.toString()).getAsJsonObject();
-                    try {
-                        ModEnchants.CAN_ENCHANT_ELYTRA = file.get("directly_enchant_elytra").getAsBoolean();
+                    for (Map.Entry<String, Boolean> set : EnchantmentMappings.generalConfig.entrySet()) {
+                        String temp = set.getKey();
+                        if (file.get(temp) != null) {
+                            set.setValue(file.get(temp).getAsBoolean());
+                        }
                     }
-                    catch (Exception e) {
-                        EXTRA_ENCHANTS_LOGGER.error("Could not set value 'directly_enchant_elytra', defaulting to true");
-                    }
-                    try {
-                        ModEnchants.CAN_ENCHANT_HORSE_ARMOR = file.get("directly_enchant_horse_armor").getAsBoolean();
-                    }
-                    catch (Exception e) {
-                        EXTRA_ENCHANTS_LOGGER.error("Could not set value 'directly_enchant_horse_armor', defaulting to true");
-                    }
-                    try {
-                        ModEnchants.CAN_ENCHANT_SHIELD = file.get("directly_enchant_shields").getAsBoolean();
-                    }
-                    catch (Exception e) {
-                        EXTRA_ENCHANTS_LOGGER.error("Could not set value 'directly_enchant_shields', defaulting to true");
-                    }
-                    try {
-                        ModEnchants.CAN_ENCHANT_SNOWBALL = file.get("directly_enchant_snowballs").getAsBoolean();
-                    }
-                    catch (Exception e) {
-                        EXTRA_ENCHANTS_LOGGER.error("Could not set value 'directly_enchant_snowballs', defaulting to false");
-                    }
-                    try {
-                        ModEnchants.EXTENDED_TRIDENT_ENCHANTS = file.get(  "extended_trident_enchants").getAsBoolean();
-                    }
-                    catch (Exception e) {
-                        EXTRA_ENCHANTS_LOGGER.error("Could not set value 'extended_trident_enchants', defaulting to true");
-                    }
-                    EXTRA_ENCHANTS_LOGGER.info("Loaded general configuration for Extra Enchants");
                 } catch (Exception e) {
                     EXTRA_ENCHANTS_LOGGER.error("Error occurred while loading general configuration");
                 }
@@ -142,7 +117,37 @@ public class ReloadListener extends JsonDataLoader implements SimpleSynchronousR
                 EXTRA_ENCHANTS_LOGGER.error("Error occurred while loading resource json " + id.toString(), e);
             }
         }
-        EXTRA_ENCHANTS_LOGGER.info("Loaded {} enchantments, {} disabled", loaded, disabled);
+        for (Identifier id : manager.findResources("enchantment_values", path -> path.endsWith(".json"))) {
+            try (InputStream stream = manager.getResource(id).getInputStream()) {
+                String name = id.toString().replace("extra_enchants:enchantment_values/", "").replace(".json", ":");
+                BufferedReader br = new BufferedReader(new InputStreamReader(stream));
+                String line = "";
+                StringBuilder strBuilder = new StringBuilder();
+                while ((line = br.readLine()) != null) {
+                    strBuilder.append(line);
+                }
+                stream.close();
+                JsonObject file = new JsonParser().parse(strBuilder.toString()).getAsJsonObject();
+                for (Map.Entry<String, JsonElement> element: file.entrySet()) {
+                    if (EnchantmentMappings.enchantmentConfig.get(name + element.getKey()) != null) {
+                        Object temp = EnchantmentMappings.enchantmentConfig.get(name + element.getKey()).getValue();
+                        if (temp instanceof Integer) {
+                            EnchantmentMappings.enchantmentConfig.get(name + element.getKey()).setValue(element.getValue().getAsInt());
+                        } else if (temp instanceof Boolean) {
+                            EnchantmentMappings.enchantmentConfig.get(name + element.getKey()).setValue(element.getValue().getAsBoolean());
+                        } else if (temp instanceof Double) {
+                            EnchantmentMappings.enchantmentConfig.get(name + element.getKey()).setValue(element.getValue().getAsDouble());
+                        } else if (temp instanceof Float) {
+                            EnchantmentMappings.enchantmentConfig.get(name + element.getKey()).setValue(element.getValue().getAsFloat());
+                        } else {
+                            EXTRA_ENCHANTS_LOGGER.error("Invalid data type for {}", name + element.getKey());
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                EXTRA_ENCHANTS_LOGGER.error("Failed to apply enchantment attribute change at " + id.toString(), e);
+            }
+        }
     }
 
     @Override

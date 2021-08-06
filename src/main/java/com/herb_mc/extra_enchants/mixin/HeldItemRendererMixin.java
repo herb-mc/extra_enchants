@@ -1,5 +1,6 @@
 package com.herb_mc.extra_enchants.mixin;
 
+import com.herb_mc.extra_enchants.lib.EnchantmentMappings;
 import com.herb_mc.extra_enchants.registry.ModEnchants;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -38,7 +39,11 @@ public class HeldItemRendererMixin {
     private float bowDrawProgress(float f) {
         int strongDrawLevel = EnchantmentHelper.getLevel(ModEnchants.SNIPER, player.getActiveItem());
         int nimbleLevel = EnchantmentHelper.getLevel(ModEnchants.NIMBLE, player.getActiveItem());
-        return strongDrawLevel > 0 ? f + 20F * strongDrawLevel : nimbleLevel > 0 ? nimbleLevel <= 9 ? f - nimbleLevel * 2F : 1F : f;
+        if (strongDrawLevel > 0)
+            f = f + f * EnchantmentMappings.sniperDrawMult.getFloat() * strongDrawLevel;
+        else if (nimbleLevel > 0)
+            f = f + f * nimbleLevel * EnchantmentMappings.nimbleDrawMult.getFloat();
+        return Math.max(f, 1F);
     }
 
 }

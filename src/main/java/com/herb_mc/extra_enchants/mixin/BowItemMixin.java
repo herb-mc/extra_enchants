@@ -1,5 +1,6 @@
 package com.herb_mc.extra_enchants.mixin;
 
+import com.herb_mc.extra_enchants.lib.EnchantmentMappings;
 import com.herb_mc.extra_enchants.lib.PersistentProjectileEntityMixinAccess;
 import com.herb_mc.extra_enchants.registry.ModEnchants;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -76,7 +77,11 @@ public class BowItemMixin {
             constant = @Constant(floatValue = 20.0F)
     )
     private static float longbowModPullProgress(float f) {
-        return (strongDrawLevel > 0) ? f + 20F * strongDrawLevel : (nimbleLevel > 0) ? (nimbleLevel <= 9) ? f - nimbleLevel * 2F: 1F: f;
+        if (strongDrawLevel > 0)
+            f = f + f * EnchantmentMappings.sniperDrawMult.getFloat() * strongDrawLevel;
+        else if (nimbleLevel > 0)
+            f = f + f * nimbleLevel * EnchantmentMappings.nimbleDrawMult.getFloat();
+        return Math.max(f, 1F);
     }
 
 }
