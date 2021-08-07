@@ -241,9 +241,11 @@ Breath gained on land for a tick is given by the formula `random_int[0, breath_g
 [Back to top](#enchantment-list)
 
 ## *Sharpshooter*
+
 `extra_arrow_damage` - amount of damage to be added to fired arrows while active. Default: 1.0</br>
 `extra_trident_damage` - amount of damage to be added to thrown tridents while active. Default: 3.0</br>
 `fov_mod` - amount FOV is multiplied by while active. Default: 0.33
+
 ---
 [Back to top](#enchantment-list)
 
