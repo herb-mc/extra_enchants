@@ -1,6 +1,7 @@
 package com.herb_mc.extra_enchants.mixin;
 
 import com.herb_mc.extra_enchants.lib.AttributeModCommons;
+import com.herb_mc.extra_enchants.lib.EnchantmentMappings;
 import com.herb_mc.extra_enchants.registry.ModEnchants;
 import com.herb_mc.extra_enchants.lib.UUIDCommons;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -61,10 +62,8 @@ public abstract class PlayerEntityMixin implements AttributeModCommons, UUIDComm
         }
         i = EnchantmentHelper.getEquipmentLevel(ModEnchants.ARCHITECT, thisEntity);
         removeAttribute(thisEntity, ReachEntityAttributes.REACH, ARCHITECT_ATTRIBUTE_ID);
-        if (i > 0) {
-            modAttributeBase(thisEntity, ReachEntityAttributes.REACH, i, ARCHITECT_ATTRIBUTE_ID, "arch_reach_boost", 1.0, EntityAttributeModifier.Operation.ADDITION);
-        }
-
+        if (i > 0)
+            modAttributeBase(thisEntity, ReachEntityAttributes.REACH, i, ARCHITECT_ATTRIBUTE_ID, "arch_reach_boost", EnchantmentMappings.architectRangeBoost.getDouble(), EntityAttributeModifier.Operation.ADDITION);
         i = EnchantmentHelper.getEquipmentLevel(ModEnchants.STEADFAST, thisEntity);
         if (i > 0) {
             ItemStack itemStack = thisEntity.getActiveItem();

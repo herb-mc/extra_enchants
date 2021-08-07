@@ -1,0 +1,15 @@
+{
+  "breath_gain_mod": 2,
+  "breath_gain_rand_range": 16,
+  "breath_loss_rate": 3,
+  "trident_damage_boost": 8.0,
+  "water_drag": 0.97,
+  "air_penalty_threshold": 120,
+  "attack_damage_max_penalty": 0.3,
+  "attack_speed_max_penalty": 0.3,
+  "movement_speed_max_penalty": 0.2,
+  "air_buff_threshold": 90,
+  "attack_damage_max_buff": 0.3,
+  "attack_speed_max_buff": 0.3,
+  "movement_speed_max_buff": 0.2
+}

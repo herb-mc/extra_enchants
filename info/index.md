@@ -1,6 +1,8 @@
 [Back to README](/README.md)
 # Enchantment List
 
+All of the information here is only applicable to unmodified enchantments. Most of the values here can be tweaked via datapack.
+
 - [Ace](#ace)
 - [Antigravity](#antigravity)
 - [Architect](#architect)
@@ -122,10 +124,8 @@
 ### Technical description:
 - Extra damage is added directly. The precise formula for determining the amount of damage added is the following:<br>
 
-![berserk](https://latex.codecogs.com/gif.latex?%28maxhealth-remhealth%29%20*%20%5Cfrac%7Blevel%5E2%7D%7B2%20*%20level%5E2%20&plus;%204%7D)
+![berserk](https://latex.codecogs.com/gif.latex?extradamage%3D0.629*%5Clog_%7B10%7D%28level%29&plus;0.2)
 
-- This equates to about 16.7% of lost health at level 1, 33.3% of lost health at level 2, and 40.9% of lost health at level 3.<br>
-  The effect scales infinitely, and damage added approaches but never reaches 50% of lost health.
 ---
 [Back to top](#enchantment-list)
 
@@ -181,12 +181,7 @@
 - Max level: 4
 - Rarity: Uncommon
 ### Technical description:
-- The amount of armor ignored scales with level, with diminishing returns. The precise formula for determining the percentage ignored is the following:
-
-![cleaving](https://latex.codecogs.com/gif.latex?1.8%20*%20%5Cfrac%7Blevel%7D%7B2%20*%20level%20&plus;%204%7D)
-
-- This equates to 30% armor ignored at level 1, 45% armor ignored at level 2, 54% armor ignored at level 3, and 60% armor ignored at level 4.<br>
-  As level increases, the armor ignored will approach but never exceed 90%.
+- The amount of armor ignored scales with level, with diminishing returns. 18% of armor is ignored per level.
 ---
 [Back to top](#enchantment-list)
 

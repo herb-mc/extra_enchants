@@ -22,7 +22,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 public class TridentItemMixin {
 
     @Unique TridentItem thisItem = (TridentItem) (Object) this;
-    Vec3d velocity;
+    @Unique Vec3d velocity;
 
     @Inject(
             method = "onStoppedUsing",

@@ -73,9 +73,9 @@ public abstract class LivingEntityMixin implements AttributeModCommons, UUIDComm
             ),
             index = 1
     )
-    private float applyCleaving(float armor) {
-        double mult = 1.0D - (float) (1.8D * (level / (2.0D * level + 4.0D)));
-        return (EXPOSED > 0) ? (float) (armor * mult) * 0.9F : (float) (armor * mult);
+    private float applyArmorEffects(float armor) {
+        armor *= 1.0D - level * EnchantmentMappings.cleavingArmorPierce.getDouble();
+        return armor > 0 ? (EXPOSED > 0) ? armor * 0.9F : armor : 0;
     }
 
     @ModifyArg(
@@ -98,7 +98,7 @@ public abstract class LivingEntityMixin implements AttributeModCommons, UUIDComm
             )
     )
     private int neptuneModAirUnderwater(int air) {
-        return (EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_NEPTUNE, thisEntity) > 0 && thisEntity.isSubmergedIn(FluidTags.WATER)) ? air - 3 : air;
+        return (EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_NEPTUNE, thisEntity) > 0 && thisEntity.isSubmergedIn(FluidTags.WATER)) ? air - EnchantmentMappings.coreNeptuneBreathLoss.getInt() : air;
     }
 
     @ModifyArgs(
@@ -115,7 +115,7 @@ public abstract class LivingEntityMixin implements AttributeModCommons, UUIDComm
             if (thisEntity.horizontalCollision && thisEntity.isClimbing()) {
                 vec3d = new Vec3d(vec3d.x, 0.2D, vec3d.z);
             }
-            args.set(0, vec3d.multiply(0.97D, 0.800000011920929D, 0.97D));
+            args.set(0, vec3d.multiply(EnchantmentMappings.coreNeptuneWaterDrag.getDouble(), 0.800000011920929D, EnchantmentMappings.coreNeptuneWaterDrag.getDouble()));
         }
     }
 
@@ -131,7 +131,7 @@ public abstract class LivingEntityMixin implements AttributeModCommons, UUIDComm
             method = "getNextAirOnLand",
             constant = @Constant(intValue = 4))
     private int neptuneModAir(int air) {
-        return (EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_NEPTUNE, thisEntity) > 0) ? rand.nextInt(16) % 2 : air;
+        return (EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_NEPTUNE, thisEntity) > 0) ? rand.nextInt(EnchantmentMappings.coreNeptuneBreathGainRand.getInt()) % EnchantmentMappings.coreNeptuneBreathGainMod.getInt() : air;
     }
 
     @ModifyVariable(
@@ -212,7 +212,7 @@ public abstract class LivingEntityMixin implements AttributeModCommons, UUIDComm
         if (source instanceof EntityDamageSource && EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_THE_BLOOD_GOD, thisEntity) > 0 && (rand.nextDouble() < 0.25 || EnchantmentHelper.getEquipmentLevel(ModEnchants.TESTING, thisEntity) > 0))
             amount *= 1.8;
         if (EnchantmentHelper.getEquipmentLevel(ModEnchants.BLAZE_AFFINITY, thisEntity) > 0 && thisEntity.isOnFire())
-            amount *= 0.95;
+            amount *= EnchantmentMappings.blazeAffinityIncomingMult.getDouble();
         if (EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_THE_WARP, thisEntity) > 0) {
             amount *= 0.6;
             if ((rand.nextDouble() < 0.05 || EnchantmentHelper.getEquipmentLevel(ModEnchants.TESTING, thisEntity) > 0) && (thisEntity.world.getBiome(thisEntity.getBlockPos()).getCategory() == Biome.Category.THEEND || thisEntity.world.getBiomeKey(thisEntity.getBlockPos()).get().getValue().toString().equals("minecraft:warped_forest")))
@@ -356,31 +356,35 @@ public abstract class LivingEntityMixin implements AttributeModCommons, UUIDComm
             removeAttribute(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, CORE_OF_NEPTUNE_ATTRIBUTE_ID);
             if (EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_NEPTUNE, thisEntity) > 0) {
                 int air = thisEntity.getAir();
-                if (air > 120) {
-                    modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, 1, CORE_OF_NEPTUNE_ATTRIBUTE_ID, "nep_attack_damage", (120.0 - air) / 450.0, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
-                    modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_SPEED, 1, CORE_OF_NEPTUNE_ATTRIBUTE_ID, "nep_attack_speed", (120.0 - air) / 450.0, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
-                    modAttributeBase(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, 1, CORE_OF_NEPTUNE_ATTRIBUTE_ID, "nep_movement_speed", (120.0 - air) / 900.0, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
-                } else if (air < 90) {
-                    modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, 1, CORE_OF_NEPTUNE_ATTRIBUTE_ID, "nep_attack_damage", (90 - air) / 270.0, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
-                    modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_SPEED, 1, CORE_OF_NEPTUNE_ATTRIBUTE_ID, "nep_attack_speed", (90 - air) / 270.0, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
-                    modAttributeBase(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, 1, CORE_OF_NEPTUNE_ATTRIBUTE_ID, "nep_movement_speed", (90 - air) / 540.0, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+                double penaltyThreshold = EnchantmentMappings.coreNeptuneAirPenaltyThreshold.getDouble();
+                double buffThreshold = EnchantmentMappings.coreNeptuneAirBuffThreshold.getDouble();
+                if (air > penaltyThreshold) {
+                    double airMult = (penaltyThreshold - air) / (300 - penaltyThreshold);
+                    modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, 1, CORE_OF_NEPTUNE_ATTRIBUTE_ID, "nep_attack_damage", airMult * EnchantmentMappings.coreNeptuneMaxDamagePenalty.getDouble(), EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+                    modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_SPEED, 1, CORE_OF_NEPTUNE_ATTRIBUTE_ID, "nep_attack_speed", airMult * EnchantmentMappings.coreNeptuneMaxAttackSpeedPenalty.getDouble(), EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+                    modAttributeBase(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, 1, CORE_OF_NEPTUNE_ATTRIBUTE_ID, "nep_movement_speed", airMult * EnchantmentMappings.coreNeptuneMaxMoveSpeedPenalty.getDouble(), EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+                } else if (air < buffThreshold) {
+                    double airMult = (buffThreshold - air) / buffThreshold;
+                    modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, 1, CORE_OF_NEPTUNE_ATTRIBUTE_ID, "nep_attack_damage", airMult * EnchantmentMappings.coreNeptuneMaxDamageBuff.getDouble(), EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+                    modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_SPEED, 1, CORE_OF_NEPTUNE_ATTRIBUTE_ID, "nep_attack_speed", airMult * EnchantmentMappings.coreNeptuneMaxAttackSpeedBuff.getDouble(), EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+                    modAttributeBase(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, 1, CORE_OF_NEPTUNE_ATTRIBUTE_ID, "nep_movement_speed", airMult * EnchantmentMappings.coreNeptuneMaxMoveSpeedBuff.getDouble(), EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
                 }
             }
             removeAttribute(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, BLAZE_ATTRIBUTE_ID);
             i = EnchantmentHelper.getEquipmentLevel(ModEnchants.BLAZE_AFFINITY, thisEntity);
             if (i > 0 && thisEntity.isOnFire())
-                modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, 1, BLAZE_ATTRIBUTE_ID, "blz_attack_daamge", 0.1, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+                modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, 1, BLAZE_ATTRIBUTE_ID, "blz_attack_daamge", EnchantmentMappings.blazeAffinityExtraDamage.getDouble(), EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
             removeAttribute(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, BOOSTING_ATTRIBUTE_ID);
             i = getEquipmentLevel(ModEnchants.BOOSTING, thisEntity);
             if (thisEntity.isSprinting() && i > 0 && SPRINT_BOOST >= 0) {
                 SPRINT_BOOST++;
-                if (SPRINT_BOOST < 20 * i)
-                    modAttributeBase(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, i, BOOSTING_ATTRIBUTE_ID, "boost_speed", 0.4, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+                if (SPRINT_BOOST < EnchantmentMappings.boostingDuration.getInt() * i)
+                    modAttributeBase(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, i, BOOSTING_ATTRIBUTE_ID, "boost_speed", EnchantmentMappings.boostingSpeedBoost.getDouble(), EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
                 else
-                    SPRINT_BOOST = -60;
+                    SPRINT_BOOST = -EnchantmentMappings.boostingCooldown.getInt();
             }
             if (SPRINT_BOOST > 0 && !thisEntity.isSprinting())
-                SPRINT_BOOST = -60;
+                SPRINT_BOOST = -EnchantmentMappings.boostingCooldown.getInt();
             if (SPRINT_BOOST < 0 && !thisEntity.isSprinting())
                 SPRINT_BOOST++;
             i = getEquipmentLevel(ModEnchants.DWARVEN, thisEntity);
@@ -439,14 +443,14 @@ public abstract class LivingEntityMixin implements AttributeModCommons, UUIDComm
             i = getLevel(ModEnchants.BARBARIC, thisEntity.getMainHandStack());
             if (i > 0) {
                 if (thisEntity.getActiveHand() != null)
-                    modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, 20 - this.getArmor(), BARBARIC_ATTRIBUTE_ID, "bar_attack_damage", 0.04, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+                    modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, 20 - this.getArmor(), BARBARIC_ATTRIBUTE_ID, "bar_attack_damage", EnchantmentMappings.barbaricBasePercent.getDouble(), EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
                 else if (thisEntity.getMainHandStack() != null)
-                    modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, 20 - this.getArmor(), BARBARIC_ATTRIBUTE_ID, "bar_attack_damage", 0.04, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+                    modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, 20 - this.getArmor(), BARBARIC_ATTRIBUTE_ID, "bar_attack_damage", EnchantmentMappings.barbaricBasePercent.getDouble(), EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
             }
             i = getEquipmentLevel(ModEnchants.BERSERK, thisEntity);
             removeAttribute(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, BERSERK_ATTRIBUTE_ID);
             if (i > 0)
-                modAttributeExtended(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, i, BERSERK_ATTRIBUTE_ID, "ber_attack_damage", (thisEntity.getMaxHealth() - thisEntity.getHealth()), 2.0, 2.0, 1.0, 2.0, 0.0, 4.0, 0.0, EntityAttributeModifier.Operation.ADDITION);
+                modAttributeLogarithmic(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, (thisEntity.getMaxHealth() - thisEntity.getHealth()) * i, BERSERK_ATTRIBUTE_ID, "ber_attack_damage", EnchantmentMappings.berserkMult.getDouble(), EnchantmentMappings.berserkLogBase.getInt(), EnchantmentMappings.berserkBase.getDouble(), EntityAttributeModifier.Operation.ADDITION);
             if (thisEntity instanceof HorseEntity) {
                 i = getEquipmentLevel(ModEnchants.SWIFTNESS, thisEntity);
                 removeAttribute(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, SWIFTNESS_ATTRIBUTE_ID);
@@ -455,7 +459,7 @@ public abstract class LivingEntityMixin implements AttributeModCommons, UUIDComm
                 i = getEquipmentLevel(ModEnchants.BOUNDING, thisEntity);
                 removeAttribute(thisEntity, EntityAttributes.HORSE_JUMP_STRENGTH, BOUNDING_JUMP_BOOST_ID);
                 if (i > 0)
-                    modAttributeBase(thisEntity, EntityAttributes.HORSE_JUMP_STRENGTH, i, BOUNDING_JUMP_BOOST_ID, "bounding_jump_height_boost", 0.1, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+                    modAttributeBase(thisEntity, EntityAttributes.HORSE_JUMP_STRENGTH, i, BOUNDING_JUMP_BOOST_ID, "bounding_jump_height_boost", EnchantmentMappings.boundingJumpBoost.getDouble(), EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
             }
             if (EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_NEPTUNE, thisEntity) > 0 && thisEntity.getAir() < 0)
                 thisEntity.setAir(0);

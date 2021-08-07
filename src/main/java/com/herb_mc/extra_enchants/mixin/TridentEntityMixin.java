@@ -20,7 +20,7 @@ public abstract class TridentEntityMixin extends PersistentProjectileEntityMixin
         if (ace > 0)
             f += ace * EnchantmentMappings.aceExtraTridentDamage.getFloat();
         if (neptune)
-            f += 8;
+            f += EnchantmentMappings.coreNeptuneTridentDamage.getFloat();
         if (sharpshooter)
             f += EnchantmentMappings.sharpshooterTridentDamage.getFloat();
         if (purity)

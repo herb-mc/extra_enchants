@@ -56,51 +56,76 @@
 
 ## *Ace*
 `damage_reduction_mult` - value of the multiplier in the damage reduction formula - see [Ace damage reduction formula](index.md#ace). Default: 1.0</br>
-`extra_arrow_damage` - additional arrow damage while in flight</br>
-`extra_melee_damage` - additional melee damage while in flight</br>
-`extra_trident_damage` - additional trident damage while in flight
----
-[Back to top](#enchantment-list)
-
-## *Antigravity*
+`extra_arrow_damage` - additional arrow damage per level while in flight. Default: 0.5</br>
+`extra_melee_damage` - additional melee damage per level while in flight. Default: 1.0</br>
+`extra_trident_damage` - additional trident damage per level while in flight. Default: 1.5
 ---
 [Back to top](#enchantment-list)
 
 ## *Architect*
+`range_boost` - amount of placement range to be added per level. Default: 1.0
+
 ---
 [Back to top](#enchantment-list)
 ## *Arrow Speed*
+`velocity_mult` - additional proportion of velocity to be added to fired arrows. Default: 0.15
+
 ---
 [Back to top](#enchantment-list)
 ## *Barbaric*
+`damage_mult` - amount to multiply missing armor by when calculating attack damage multiplier. Default: 0.04
+
 ---
 [Back to top](#enchantment-list)
-
 ## *Berserk*
+`base_mult` - Default: 0.2</br>
+`log_mult` - Default: 0.629</br>
+`log_base` - Default: 10</br>
+Values are used in added damage calculation: `base_mult * log10(level) / log10(log_base) + base_mult`
+
 ---
 [Back to top](#enchantment-list)
 
 ## *Blaze Affinity*
----
-[Back to top](#enchantment-list)
-
-## *Blazing*
+`incoming_damage_mult` - multiplier of incoming damage while on fire. Default: 0.95</br>
+`extra_damage_mult` - proportion of additional damage to be added while on fire. Default: 0.1
 ---
 [Back to top](#enchantment-list)
 
 ## *Boosting*
+`base_duration` - duration in ticks, per level, of speed boost. Default: 20</br>
+`cooldown` - length in ticks of cooldown. Default: 60</br>
+`speed_boost` - proportion of additional speed per level. Default: 0.4
 ---
 [Back to top](#enchantment-list)
 
 ## *Bounding*
+`jump_boost` - proportion of additional jump boost per level. Default: 0.1
+
 ---
 [Back to top](#enchantment-list)
 
 ## *Cleaving*
+`armor_ignored` - proportion of armor ignored per level. Default: 0.18
+
 ---
 [Back to top](#enchantment-list)
 
 ## *Core of Neptune*
+`breath_gain_mod` - Default: 2</br>
+`breath_gain_rand_range` - Default: 16</br>
+Breath gained on land for a tick is given by the formula `random_int[0, breath_gain_rand_range) % breath_gain_mod`
+`breath_loss_rate` - extra breath lost per tick while underwater. Default: 3 </br>
+`trident_damage_boost` - damage to be added to thrown tridents. Default: 8.0 </br>
+`water_drag` - drag multiplier applied to velocity while in water. Default: 0.97 </br>
+`air_penalty_threshold` - the amount of air above which damage, attack speed, and movement speed are steadily decreased. Default: 120</br>
+`attack_damage_max_penalty` - the proportion of damage decreased at full air. Default: 0.3 </br>
+`attack_speed_max_penalty` - the proportion of attack speed decreased at full air. Default: 0.3 </br>
+`move_speed_max_penalty` - the proportion of movement speed decreased at full air. Default: 0.2 </br>
+`air_buff_threshold` - the amount of air below which damage, attack speed, and movement speed are steadily increased. Default: 90</br>
+`attack_damage_max_buff` - the proportion of damage increased at no air. Default: 0.3 </br>
+`attack_speed_max_buff` - the proportion of attack speed increased at no air. Default: 0.3 </br>
+`move_speed_max_buff` - the proportion of movement speed increased at no air. Default: 0.2 </br>
 ---
 [Back to top](#enchantment-list)
 
@@ -108,8 +133,8 @@
 `base damage` - the amount that most damage values are set to while equipped. Default: 0.0</br>
 `damage_mult` - amount incoming damage is multiplied by while above the health threshold. Default: 0.3</br>
 `damage_mult_threshold` - the portion of health required for damage reduction to apply. Default: 0.6
-`health_mult` - percent health added while equipped. Default: 1.0
-`speed_penalty` - percent speed is decreased by while equipped. Default: -0.1
+`health_mult` - proportion of health added while equipped. Default: 1.0
+`speed_penalty` - proportion speed is decreased by while equipped. Default: -0.1
 ---
 [Back to top](#enchantment-list)
 
@@ -178,7 +203,7 @@
 [Back to top](#enchantment-list)
 
 ## *Nimble*
-`draw_mult` - percent decrease in draw speed per level. Default: -0.1
+`draw_mult` - proportional decrease in draw speed per level. Default: -0.1
 
 ---
 [Back to top](#enchantment-list)

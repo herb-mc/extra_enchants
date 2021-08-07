@@ -126,7 +126,7 @@ public class ReloadListener extends JsonDataLoader implements SimpleSynchronousR
                     }
                 }
             } catch (Exception e) {
-                EXTRA_ENCHANTS_LOGGER.error("Failed to apply enchantment attribute change at " + id.toString(), e);
+                EXTRA_ENCHANTS_LOGGER.error("Failed to apply enchantment config change at " + id.toString(), e);
             }
         }
     }

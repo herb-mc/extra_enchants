@@ -4,6 +4,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 
@@ -34,6 +35,16 @@ public interface AttributeModCommons {
             instance.addTemporaryModifier(new EntityAttributeModifier(uuid,
                     str,
                     mult * (numerMult * Math.pow(inVar, numerPower) + numerConst) / (denomMult * Math.pow(inVar, denomPower) + denomConst) + fConst,
+                    operation));
+        }
+    }
+
+    default void modAttributeLogarithmic(LivingEntity entity, EntityAttribute entityAttribute, double inVar, UUID uuid, String str, double mult, int logBase, double base, EntityAttributeModifier.Operation operation) {
+        EntityAttributeInstance instance = entity.getAttributeInstance(entityAttribute);
+        if (instance != null) {
+            instance.addTemporaryModifier(new EntityAttributeModifier(uuid,
+                    str,
+                    (float) (mult * Math.log10(inVar) / Math.log10(logBase) + base),
                     operation));
         }
     }

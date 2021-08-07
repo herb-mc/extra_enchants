@@ -49,7 +49,7 @@ public class BowItemMixin {
             if (f == 1.0F)
                 ((PersistentProjectileEntityMixinAccess) persistentProjectileEntity).setCrit(true);
             if (EnchantmentHelper.getLevel(ModEnchants.ARROW_SPEED, stack) > 0)
-                persistentProjectileEntity.setVelocity(persistentProjectileEntity.getVelocity().multiply((20.0F + 3.0F * EnchantmentHelper.getLevel(ModEnchants.ARROW_SPEED, stack)) / 20.0F));
+                persistentProjectileEntity.setVelocity(persistentProjectileEntity.getVelocity().multiply((1.0F + EnchantmentMappings.arrowSpeedVelocityMult.getFloat() * EnchantmentHelper.getLevel(ModEnchants.ARROW_SPEED, stack))));
             if (EnchantmentHelper.getLevel(ModEnchants.NIMBLE, stack) > 0) {
                 persistentProjectileEntity.setDamage(persistentProjectileEntity.getDamage() - 0.2F * EnchantmentHelper.getLevel(ModEnchants.NIMBLE, stack));
                 if (persistentProjectileEntity.getDamage() < 0.5)
