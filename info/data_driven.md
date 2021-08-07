@@ -127,7 +127,7 @@ Values are used in added damage calculation: `base_mult * log10(level) / log10(l
 
 `breath_gain_mod` - Default: 2</br>
 `breath_gain_rand_range` - Default: 16</br>
-Breath gained on land for a tick is given by the formula `random_int[0, breath_gain_rand_range) % breath_gain_mod`
+Breath gained on land for a tick is given by the formula `random_int[0, breath_gain_rand_range) % breath_gain_mod`</br>
 `breath_loss_rate` - extra breath lost per tick while underwater. Default: 3 </br>
 `trident_damage_boost` - damage to be added to thrown tridents. Default: 8.0 </br>
 `water_drag` - drag multiplier applied to velocity while in water. Default: 0.97 </br>
