@@ -55,29 +55,35 @@
 [Back to top](#enchantment-list)
 
 ## *Ace*
+
 `damage_reduction_mult` - value of the multiplier in the damage reduction formula - see [Ace damage reduction formula](index.md#ace). Default: 1.0</br>
 `extra_arrow_damage` - additional arrow damage per level while in flight. Default: 0.5</br>
 `extra_melee_damage` - additional melee damage per level while in flight. Default: 1.0</br>
 `extra_trident_damage` - additional trident damage per level while in flight. Default: 1.5
+
 ---
 [Back to top](#enchantment-list)
 
 ## *Architect*
+
 `range_boost` - amount of placement range to be added per level. Default: 1.0
 
 ---
 [Back to top](#enchantment-list)
 ## *Arrow Speed*
+
 `velocity_mult` - additional proportion of velocity to be added to fired arrows. Default: 0.15
 
 ---
 [Back to top](#enchantment-list)
 ## *Barbaric*
+
 `damage_mult` - amount to multiply missing armor by when calculating attack damage multiplier. Default: 0.04
 
 ---
 [Back to top](#enchantment-list)
 ## *Berserk*
+
 `base_mult` - Default: 0.2</br>
 `log_mult` - Default: 0.629</br>
 `log_base` - Default: 10</br>
@@ -87,31 +93,38 @@ Values are used in added damage calculation: `base_mult * log10(level) / log10(l
 [Back to top](#enchantment-list)
 
 ## *Blaze Affinity*
+
 `incoming_damage_mult` - multiplier of incoming damage while on fire. Default: 0.95</br>
 `extra_damage_mult` - proportion of additional damage to be added while on fire. Default: 0.1
+
 ---
 [Back to top](#enchantment-list)
 
 ## *Boosting*
+
 `base_duration` - duration in ticks, per level, of speed boost. Default: 20</br>
 `cooldown` - length in ticks of cooldown. Default: 60</br>
 `speed_boost` - proportion of additional speed per level. Default: 0.4
+
 ---
 [Back to top](#enchantment-list)
 
 ## *Bounding*
+
 `jump_boost` - proportion of additional jump boost per level. Default: 0.1
 
 ---
 [Back to top](#enchantment-list)
 
 ## *Cleaving*
+
 `armor_ignored` - proportion of armor ignored per level. Default: 0.18
 
 ---
 [Back to top](#enchantment-list)
 
 ## *Core of Neptune*
+
 `breath_gain_mod` - Default: 2</br>
 `breath_gain_rand_range` - Default: 16</br>
 Breath gained on land for a tick is given by the formula `random_int[0, breath_gain_rand_range) % breath_gain_mod`
@@ -126,15 +139,18 @@ Breath gained on land for a tick is given by the formula `random_int[0, breath_g
 `attack_damage_max_buff` - the proportion of damage increased at no air. Default: 0.3 </br>
 `attack_speed_max_buff` - the proportion of attack speed increased at no air. Default: 0.3 </br>
 `move_speed_max_buff` - the proportion of movement speed increased at no air. Default: 0.2 </br>
+
 ---
 [Back to top](#enchantment-list)
 
 ## *Core of Purity*
+
 `base damage` - the amount that most damage values are set to while equipped. Default: 0.0</br>
 `damage_mult` - amount incoming damage is multiplied by while above the health threshold. Default: 0.3</br>
 `damage_mult_threshold` - the portion of health required for damage reduction to apply. Default: 0.6
 `health_mult` - proportion of health added while equipped. Default: 1.0
 `speed_penalty` - proportion speed is decreased by while equipped. Default: -0.1
+
 ---
 [Back to top](#enchantment-list)
 
