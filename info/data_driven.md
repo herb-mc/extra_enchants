@@ -147,8 +147,8 @@ Breath gained on land for a tick is given by the formula `random_int[0, breath_g
 
 `base damage` - the amount that most damage values are set to while equipped. Default: 0.0</br>
 `damage_mult` - amount incoming damage is multiplied by while above the health threshold. Default: 0.3</br>
-`damage_mult_threshold` - the portion of health required for damage reduction to apply. Default: 0.6
-`health_mult` - proportion of health added while equipped. Default: 1.0
+`damage_mult_threshold` - the portion of health required for damage reduction to apply. Default: 0.6</br>
+`health_mult` - proportion of health added while equipped. Default: 1.0</br>
 `speed_penalty` - proportion speed is decreased by while equipped. Default: -0.1
 
 ---
