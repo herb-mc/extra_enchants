@@ -13,7 +13,6 @@ These mappings are used for the configuration datapack.
 `"barbaric"`- `extra_enchants:barbaric`</br>
 `"berserk"`- `extra_enchants:berserk`</br>
 `"blaze_affinity"`- `extra_enchants:blaze_affinity`</br>
-`"blazing"`- `extra_enchants:blazing`</br>
 `"boosting"`- `extra_enchants:boosting`</br>
 `"bounding"`- `extra_enchants:bounding`</br>
 `"cleaving"`- `extra_enchants:cleaving`</br>
@@ -47,17 +46,14 @@ These mappings are used for the configuration datapack.
 `"soulbound"`- `extra_enchants:soulbound`</br>
 `"stalwart"`- `extra_enchants:stalwart`</br>
 `"steadfast"`- `extra_enchants:steadfast`</br>
-`"surface_skimmer"`- `extra_enchants:surface_skimmer`</br>
 `"swiftness"`- `extra_enchants:swiftness`</br>
 `"terraforming"`- `extra_enchants:terraforming`</br>
-`"testing"`- `extra_enchants:testing`</br>
 `"thunderbolt"`- `extra_enchants:thunderbolt`</br>
 `"tough"`- `extra_enchants:tough`</br>
 `"turbo"`- `extra_enchants:turbo`</br>
 `"warding"`- `extra_enchants:warding`</br>
 `"weighted"`- `extra_enchants:weighted`</br>
 `"windstep"`- `extra_enchants:windstep`</br>
-`"withering"`- `extra_enchants:withering`</br>
 
 ### Vanilla mappings
 

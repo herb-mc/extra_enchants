@@ -6,7 +6,6 @@
   "enchantment.extra_enchants.barbaric": "Barbaric",
   "enchantment.extra_enchants.berserk": "Berserk",
   "enchantment.extra_enchants.blaze_affinity": "Blaze Affinity",
-  "enchantment.extra_enchants.blazing": "Blazing",
   "enchantment.extra_enchants.boosting": "Boosting",
   "enchantment.extra_enchants.bounding": "Bounding",
   "enchantment.extra_enchants.cleaving": "Cleaving",
@@ -40,15 +39,12 @@
   "enchantment.extra_enchants.soulbound": "Soulbound",
   "enchantment.extra_enchants.stalwart": "Stalwart",
   "enchantment.extra_enchants.steadfast": "Steadfast",
-  "enchantment.extra_enchants.surface_skimmer": "Surface Skimmer",
   "enchantment.extra_enchants.swiftness": "Swiftness",
   "enchantment.extra_enchants.terraforming": "Terraforming",
-  "enchantment.extra_enchants.testing": "Testing",
   "enchantment.extra_enchants.thunderbolt": "Thunderbolt",
   "enchantment.extra_enchants.tough": "Tough",
   "enchantment.extra_enchants.turbo": "Turbo",
   "enchantment.extra_enchants.warding": "Warding",
   "enchantment.extra_enchants.weighted": "Weighted",
-  "enchantment.extra_enchants.windstep": "Windstep",
-  "enchantment.extra_enchants.withering": "Withering"
+  "enchantment.extra_enchants.windstep": "Windstep"
 }

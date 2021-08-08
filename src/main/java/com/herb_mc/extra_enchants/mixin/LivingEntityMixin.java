@@ -216,13 +216,13 @@ public abstract class LivingEntityMixin implements AttributeModCommons, UUIDComm
             amount *= 1D - Math.log10(EnchantmentHelper.getEquipmentLevel(ModEnchants.ACE, thisEntity) + 1) * EnchantmentMappings.aceDamageReducerMult.getDouble();
         if (EXPOSED > 0)
             amount *= 1.1;
-        if (source instanceof EntityDamageSource && EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_THE_BLOOD_GOD, thisEntity) > 0 && (rand.nextDouble() < EnchantmentMappings.coreBloodCritChance.getDouble() || EnchantmentHelper.getEquipmentLevel(ModEnchants.TESTING, thisEntity) > 0))
+        if (source instanceof EntityDamageSource && EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_THE_BLOOD_GOD, thisEntity) > 0 && (rand.nextDouble() < EnchantmentMappings.coreBloodCritChance.getDouble()))
             amount *= EnchantmentMappings.coreBloodCritMult.getDouble();
         if (EnchantmentHelper.getEquipmentLevel(ModEnchants.BLAZE_AFFINITY, thisEntity) > 0 && thisEntity.isOnFire())
             amount *= EnchantmentMappings.blazeAffinityIncomingMult.getDouble();
         if (EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_THE_WARP, thisEntity) > 0) {
             amount *= EnchantmentMappings.coreWarpIncomingDamage.getDouble();
-            if ((rand.nextDouble() < EnchantmentMappings.coreWarpTeleportChance.getDouble() || EnchantmentHelper.getEquipmentLevel(ModEnchants.TESTING, thisEntity) > 0) && (thisEntity.world.getBiome(thisEntity.getBlockPos()).getCategory() == Biome.Category.THEEND || thisEntity.world.getBiomeKey(thisEntity.getBlockPos()).get().getValue().toString().equals("minecraft:warped_forest")))
+            if (rand.nextDouble() < EnchantmentMappings.coreWarpTeleportChance.getDouble() && (thisEntity.world.getBiome(thisEntity.getBlockPos()).getCategory() == Biome.Category.THEEND || thisEntity.world.getBiomeKey(thisEntity.getBlockPos()).get().getValue().toString().equals("minecraft:warped_forest")))
                 randomTeleport(EnchantmentMappings.coreWarpTeleportRange.getInt(), EnchantmentMappings.coreWarpTeleportTries.getInt());
         }
         if (source.getSource() != null && source.getSource() instanceof LivingEntity) {
@@ -303,15 +303,6 @@ public abstract class LivingEntityMixin implements AttributeModCommons, UUIDComm
         EXPOSED = nbt.getInt("exposedTicks");
         STEP_HEIGHT = nbt.getFloat("stepHeight");
         SPRINT_BOOST = nbt.getInt("sprintBoost");
-    }
-
-    @Inject(
-            method = "canWalkOnFluid",
-            at = @At("HEAD"), cancellable = true
-    )
-    protected void surfaceSkimmerWaterWalking(Fluid fluid,  CallbackInfoReturnable<Boolean> info){
-        if (EnchantmentHelper.getEquipmentLevel(ModEnchants.SURFACE_SKIMMER, thisEntity) > 0 && thisEntity instanceof HorseEntity)
-            info.setReturnValue(true);
     }
 
     @Inject(

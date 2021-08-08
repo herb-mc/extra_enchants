@@ -96,7 +96,6 @@ public class EnchantmentMappings {
         enchantments.put("barbaric", ModEnchants.BARBARIC);
         enchantments.put("berserk", ModEnchants.BERSERK);
         enchantments.put("blaze_affinity", ModEnchants.BLAZE_AFFINITY);
-        enchantments.put("blazing", ModEnchants.BLAZING);
         enchantments.put("boosting", ModEnchants.BOOSTING);
         enchantments.put("bounding", ModEnchants.BOUNDING);
         enchantments.put("cleaving", ModEnchants.CLEAVING);
@@ -130,17 +129,14 @@ public class EnchantmentMappings {
         enchantments.put("soulbound", ModEnchants.SOULBOUND);
         enchantments.put("stalwart", ModEnchants.STALWART);
         enchantments.put("steadfast", ModEnchants.STEADFAST);
-        enchantments.put("surface_skimmer", ModEnchants.SURFACE_SKIMMER);
         enchantments.put("swiftness", ModEnchants.SWIFTNESS);
         enchantments.put("terraforming", ModEnchants.TERRAFORMING);
-        enchantments.put("testing", ModEnchants.TESTING);
         enchantments.put("thunderbolt", ModEnchants.THUNDERBOLT);
         enchantments.put("tough", ModEnchants.TOUGH);
         enchantments.put("turbo", ModEnchants.TURBO);
         enchantments.put("warding", ModEnchants.WARDING);
         enchantments.put("weighted", ModEnchants.WEIGHTED);
         enchantments.put("windstep", ModEnchants.WINDSTEP);
-        enchantments.put("withering", ModEnchants.WITHERING);
         // vanilla
         enchantments.put("aqua_affinity", Enchantments.AQUA_AFFINITY);
         enchantments.put("bane_of_arthropods", Enchantments.BANE_OF_ARTHROPODS);

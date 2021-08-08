@@ -43,10 +43,8 @@ All of the information here is only applicable to unmodified enchantments. Most 
 - [Soulbound](#soulbound)
 - [Stalwart](#stalwart)
 - [Steadfast](#steadfast)
-- [Surface Skimmer](#surface-skimmer)
 - [Swiftness](#swiftness)
 - [Terraforming](#terraforming)
-- [Testing](#testing)
 - [Thunderbolt](#thunderbolt)
 - [Tough](#tough)
 - [Turbo](#turbo)
@@ -137,18 +135,6 @@ All of the information here is only applicable to unmodified enchantments. Most 
 - Type: Treasure
 ### Technical description:
 - +10% damage, +5% damage reduction while on fire. Does not decrease fire damage.
----
-[Back to top](#enchantment-list)
-
-## *Blazing*
-- Turns thrown snowballs into blaze fireballs.
-- Compatible equipment: Snowball
-- Incompatible enchantments: Withering
-- Max level: 1
-- Rarity: Common
-- Type: Experimental
-### Technical description:
-- Snowballs are converted to blaze fireballs on throw.
 ---
 [Back to top](#enchantment-list)
 
@@ -527,20 +513,6 @@ All of the information here is only applicable to unmodified enchantments. Most 
 ---
 [Back to top](#enchantment-list)
 
-## *Surface Skimmer*
-- **Experimental**: disabled by default
-- Allows the user to walk on water.
-- Must be enabled via datapack
-- Compatible equipment: Horse armors
-- Incompatible enchantments: Bounding, Swiftness
-- Max level: 3
-- Rarity: Common
-- Type: Experimental
-### Technical description:
-- Horses with this equipped will always float in and eventually stand on top of water.
----
-[Back to top](#enchantment-list)
-
 ## *Swiftness*
 - Increases movement speed.
 - Compatible equipment: Horse armors
@@ -561,17 +533,6 @@ All of the information here is only applicable to unmodified enchantments. Most 
 - Type: Treasure
 ### Technical description:
 - Increases tool speed by 58. This allows a Terraforming Diamond/Netherite Pickaxe to break stone instantly. Terraforming + Efficiency V allows Diamond/Netherite Pickaxes to instantly break some ores and deepslate.
----
-[Back to top](#enchantment-list)
-
-## *Testing*
-- Some RNG effects become guaranteed.
-- Compatible equipment: Any
-- Max level: 1
-- Rarity: Unobtainable
-- Type: Experimental
-### Technical description:
-- The chance that Core of the Warp teleports and Core of the Blood God crits will trigger becomes 100%.
 ---
 [Back to top](#enchantment-list)
 
@@ -638,15 +599,3 @@ All of the information here is only applicable to unmodified enchantments. Most 
 - Rarity: Rare
 ### Technical description:
 - +0.4 step height. (default is 0.6 for entities other than horses)
-  [Back to top](#enchantment-list)
-
-## *Withering*
-- Thrown snowballs are turned into wither skulls
-- Compatible equipment: Snowballs
-- Incompatible enchantments: Withering
-- Max level: 1
-- Rarity: Common
-- Type: Experimental
-### Technical description:
-- Converts snowballs into wither skulls. 10% chance for wither skulls to be charge.
-

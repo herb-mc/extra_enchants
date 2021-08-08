@@ -120,18 +120,6 @@ public class ModEnchants {
             true,
             new Enchantment[]{}
     );
-    // Blaze Affinity
-    public static Enchantment BLAZING = new EnchantBuilder(
-            Enchantment.Rarity.COMMON,
-            SNOWBALL,
-            new EquipmentSlot[]{EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND},
-            30,
-            50,
-            1,
-            false,
-            false,
-            new Enchantment[]{ModEnchants.WITHERING, ModEnchants.BLAZING}
-    );
     // Boosting
     public static Enchantment BOOSTING = new ScalableEnchantBuilder(
             Enchantment.Rarity.UNCOMMON,
@@ -158,7 +146,7 @@ public class ModEnchants {
             3,
             false,
             false,
-            new Enchantment[]{ModEnchants.BOUNDING, ModEnchants.SURFACE_SKIMMER, ModEnchants.SWIFTNESS}
+            new Enchantment[]{ModEnchants.BOUNDING, ModEnchants.SWIFTNESS}
     );
     // Cleaving
     public static Enchantment CLEAVING = new ScalableEnchantBuilder(
@@ -564,20 +552,6 @@ public class ModEnchants {
             false,
             new Enchantment[]{ModEnchants.EXPLOSIVE, ModEnchants.NIMBLE}
     );
-    // Surface Skimmer
-    public static Enchantment SURFACE_SKIMMER = new ScalableEnchantBuilder(
-            Enchantment.Rarity.COMMON,
-            HORSE_ARMOR,
-            new EquipmentSlot[]{EquipmentSlot.CHEST},
-            1,
-            10,
-            20,
-            15,
-            3,
-            false,
-            false,
-            new Enchantment[]{ModEnchants.BOUNDING, ModEnchants.SURFACE_SKIMMER, ModEnchants.SWIFTNESS}
-    );
     // Swiftness
     public static Enchantment SWIFTNESS = new ScalableEnchantBuilder(
             Enchantment.Rarity.COMMON,
@@ -590,7 +564,7 @@ public class ModEnchants {
             3,
             false,
             false,
-            new Enchantment[]{ModEnchants.BOUNDING, ModEnchants.SURFACE_SKIMMER, ModEnchants.SWIFTNESS}
+            new Enchantment[]{ModEnchants.BOUNDING, ModEnchants.SWIFTNESS}
     );
     // Terraforming
     public static Enchantment TERRAFORMING = new EnchantBuilder(
@@ -680,30 +654,6 @@ public class ModEnchants {
             false,
             new Enchantment[]{ModEnchants.LEAPING, ModEnchants.LUNGING, ModEnchants.WINDSTEP, ModEnchants.SLIMEY}
     );
-    // Withering
-    public static Enchantment WITHERING = new EnchantBuilder(
-            Enchantment.Rarity.COMMON,
-            SNOWBALL,
-            new EquipmentSlot[]{EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND},
-            20,
-            50,
-            1,
-            false,
-            false,
-            new Enchantment[]{ModEnchants.WITHERING, ModEnchants.BLAZING}
-    );
-    // experimental
-    public static Enchantment TESTING = new EnchantBuilder(
-            NULL,
-            EnchantmentTarget.BREAKABLE,
-            new EquipmentSlot[]{EquipmentSlot.OFFHAND, EquipmentSlot.MAINHAND, EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET},
-            50,
-            50,
-            1,
-            false,
-            false,
-            new Enchantment[]{}
-    );
 
     public static boolean isEnchantType(Enchantment other, Enchantment[] type) {
         if (type == null) return false;
@@ -721,7 +671,6 @@ public class ModEnchants {
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "barbaric"), BARBARIC);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "berserk"), BERSERK);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "blaze_affinity"), BLAZE_AFFINITY);
-        Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "blazing"), BLAZING);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "boosting"), BOOSTING);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "bounding"), BOUNDING);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "cleaving"), CLEAVING);
@@ -755,17 +704,14 @@ public class ModEnchants {
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "soulbound"), SOULBOUND);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "stalwart"), STALWART);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "steadfast"), STEADFAST);
-        Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "surface_skimmer"), SURFACE_SKIMMER);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "swiftness"), SWIFTNESS);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "terraforming"), TERRAFORMING);
-        Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "testing"), TESTING);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "thunderbolt"), THUNDERBOLT);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "tough"), TOUGH);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "turbo"), TURBO);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "warding"), WARDING);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "weighted"), WEIGHTED);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "windstep"), WINDSTEP);
-        Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "withering"), WITHERING);
     }
 
 }
