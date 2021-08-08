@@ -65,7 +65,7 @@ public class ReloadListener extends JsonDataLoader implements SimpleSynchronousR
                 if (!enabled)
                     disabled++;
                 Enchantment.Rarity rarity;
-                if (file.get("rarity").getAsString().toUpperCase().equals("NULL"))
+                if (file.get("rarity").getAsString().equalsIgnoreCase("NULL"))
                     rarity = ClassTinkerers.getEnum(Enchantment.Rarity.class, "NULL");
                 else
                     rarity = Enchantment.Rarity.valueOf(file.get("rarity").getAsString().toUpperCase());
@@ -99,7 +99,7 @@ public class ReloadListener extends JsonDataLoader implements SimpleSynchronousR
                 EXTRA_ENCHANTS_LOGGER.error("Error occurred while loading resource json " + id.toString(), e);
             }
         }
-        EXTRA_ENCHANTS_LOGGER.info("Loaded {} enchantments", loaded);
+        EXTRA_ENCHANTS_LOGGER.info("Loaded {} enchantments, {} disabled", loaded, disabled);
         for (Identifier id : manager.findResources("enchantment_configuration", path -> path.endsWith(".json"))) {
             try (InputStream stream = manager.getResource(id).getInputStream()) {
                 String name = id.toString().replace("extra_enchants:enchantment_configuration/", "").replace(".json", ":");

@@ -73,6 +73,16 @@ public class EnchantBuilder extends Enchantment {
         return enabled ? this.rarity : NULL;
     }
 
+    @Override
+    public boolean isAvailableForEnchantedBookOffer() {
+        return enabled && super.isAvailableForEnchantedBookOffer();
+    }
+
+    @Override
+    public boolean isAvailableForRandomSelection() {
+        return enabled && super.isAvailableForRandomSelection();
+    }
+
     public void setAttributes(boolean enabled, Rarity weight, int minPower, int maxPower, int maxLevel, boolean isCursed, boolean isTreasure, Enchantment[] incompatibleEnchantments) {
         this.setEnabled(enabled);
         this.setRarity(weight);

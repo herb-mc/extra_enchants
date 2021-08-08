@@ -14,7 +14,7 @@
   },
 
   "license": "MIT",
-  "icon": "assets/extra_enchants/icon.gif",
+  "icon": "assets/extra_enchants/icon.png",
 
   "environment": "*",
   "entrypoints": {

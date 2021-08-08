@@ -5,6 +5,7 @@ import com.herb_mc.extra_enchants.registry.ModEnchants;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.item.ItemStack;
 
 public class ScalableEnchantBuilder extends Enchantment {
 
@@ -57,18 +58,33 @@ public class ScalableEnchantBuilder extends Enchantment {
     }
 
     @Override
+    public boolean isAcceptableItem(ItemStack stack) {
+        return enabled && super.isAcceptableItem(stack);
+    }
+
+    @Override
     public boolean isCursed() {
-        return isCursed;
+        return enabled && isCursed;
     }
 
     @Override
     public boolean isTreasure() {
-        return isTreasure;
+        return enabled && isTreasure;
     }
 
     @Override
     public Rarity getRarity() {
         return enabled ? this.rarity : NULL;
+    }
+
+    @Override
+    public boolean isAvailableForEnchantedBookOffer() {
+        return enabled && super.isAvailableForEnchantedBookOffer();
+    }
+
+    @Override
+    public boolean isAvailableForRandomSelection() {
+        return enabled && super.isAvailableForRandomSelection();
     }
 
     public void setAttributes(boolean enabled, Rarity weight, int minPower, int minPowerDelta, int maxPower, int maxPowerDelta, int maxLevel, boolean isCursed, boolean isTreasure, Enchantment[] incompatibleEnchantments) {
