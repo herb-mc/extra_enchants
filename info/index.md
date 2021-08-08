@@ -353,11 +353,11 @@ All of the information here is only applicable to unmodified enchantments. Most 
 
 ## *Lifesteal*
 - Drains a small amount of health upon dealing damage.
-- Compatible equipment: Swords
+- Compatible equipment: Weapons
 - Max level: 3
 - Rarity: Rare
 ### Technical description:
-- Heals 4% of damage dealt per level. Heal amount has an absolute cap of 3. On kill, directly heals (level) health. The healing factor is hardcapped at 3 health.
+- Heals 3% of damage dealt per level. Heal amount has an absolute cap of 3.
 ---
 [Back to top](#enchantment-list)
 
@@ -368,7 +368,7 @@ All of the information here is only applicable to unmodified enchantments. Most 
 - Max level: 3
 - Rarity: Uncommon
 ### Technical description:
-- 10% increase per level to horizontal velocities while jumping.
+- 15% increase per level to horizontal velocities on jump.
 ---
 [Back to top](#enchantment-list)
 

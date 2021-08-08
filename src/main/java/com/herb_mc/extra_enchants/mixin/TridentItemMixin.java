@@ -1,5 +1,6 @@
 package com.herb_mc.extra_enchants.mixin;
 
+import com.herb_mc.extra_enchants.lib.EnchantmentMappings;
 import com.herb_mc.extra_enchants.lib.PersistentProjectileEntityMixinAccess;
 import com.herb_mc.extra_enchants.registry.ModEnchants;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -30,7 +31,7 @@ public class TridentItemMixin {
     )
     public void addLaunchingVelocity(ItemStack stack, World world, LivingEntity user, int remainingUseTicks, CallbackInfo info) {
         int i = thisItem.getMaxUseTime(stack) - remainingUseTicks;
-        velocity = user.getRotationVector().multiply(EnchantmentHelper.getLevel(ModEnchants.LAUNCHING, stack));
+        velocity = user.getRotationVector().multiply(EnchantmentHelper.getLevel(ModEnchants.LAUNCHING, stack)).multiply(EnchantmentMappings.launchingVelocityScale.getDouble());
         if (EnchantmentHelper.getLevel(ModEnchants.LAUNCHING, stack) > 0 && i >= 10 && EnchantmentHelper.getLevel(Enchantments.RIPTIDE, stack) <= 0) {
             user.setVelocity(user.getVelocity().add(velocity));
             user.fallDistance = 0;

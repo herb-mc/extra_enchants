@@ -28,6 +28,7 @@ import static com.herb_mc.extra_enchants.ExtraEnchantsMod.MOD_ID;
 public class ReloadListener extends JsonDataLoader implements SimpleSynchronousResourceReloadListener {
 
     static int loaded;
+    static int modified;
     static int disabled;
 
     public static final Identifier IDENTIFIER = new Identifier(MOD_ID, "enchantments");
@@ -46,6 +47,7 @@ public class ReloadListener extends JsonDataLoader implements SimpleSynchronousR
     @Override
     public void apply(Map<Identifier, JsonElement> loader, ResourceManager manager, Profiler profiler) {
         loaded = 0;
+        modified = 0;
         disabled = 0;
         for (Identifier id : manager.findResources("enchantment_base", path -> path.endsWith(".json"))) {
             try (InputStream stream = manager.getResource(id).getInputStream()) {
@@ -128,7 +130,9 @@ public class ReloadListener extends JsonDataLoader implements SimpleSynchronousR
             } catch (Exception e) {
                 EXTRA_ENCHANTS_LOGGER.error("Failed to apply enchantment config change at " + id.toString(), e);
             }
+            modified++;
         }
+        EXTRA_ENCHANTS_LOGGER.info("Modified {} enchantments", modified);
     }
 
     @Override

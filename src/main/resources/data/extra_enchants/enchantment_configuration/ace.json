@@ -1,6 +1,6 @@
 {
   "damage_reduction_mult": 0.25,
-  "extra_arrow_damage": 0.5,
-  "extra_trident_damage": 1.5,
-  "extra_melee_damage": 1.0
+  "arrow_damage_boost": 0.5,
+  "trident_damage_boost": 1.5,
+  "melee_damage_boost": 1.0
 }

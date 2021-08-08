@@ -1,5 +1,5 @@
 {
-  "extra_arrow_damage": 1.0,
-  "extra_trident_damage": 3.0,
+  "arrow_damage_boost": 1.0,
+  "trident_damage_boost": 3.0,
   "fov_mod": 0.33
 }

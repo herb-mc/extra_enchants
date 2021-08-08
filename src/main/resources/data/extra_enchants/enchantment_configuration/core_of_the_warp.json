@@ -1,0 +1,8 @@
+{
+  "health_penalty": -0.5,
+  "incoming_damage_mult": 0.6,
+  "speed_boost": 0.15,
+  "teleport_chance": 0.05,
+  "teleport_range": 16,
+  "teleport_tries": 16
+}

@@ -1,0 +1,6 @@
+{
+  "additional_radius": 1.0,
+  "base_radius": 5.0,
+  "max_velocity": 5.0,
+  "velocity_scalar": 0.25
+}

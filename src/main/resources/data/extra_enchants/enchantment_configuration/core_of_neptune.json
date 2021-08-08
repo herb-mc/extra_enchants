@@ -8,8 +8,8 @@
   "attack_damage_max_penalty": 0.3,
   "attack_speed_max_penalty": 0.3,
   "movement_speed_max_penalty": 0.2,
-  "air_buff_threshold": 90,
-  "attack_damage_max_buff": 0.3,
-  "attack_speed_max_buff": 0.3,
-  "movement_speed_max_buff": 0.2
+  "air_boost_threshold": 90,
+  "attack_damage_max_boost": 0.3,
+  "attack_speed_max_boost": 0.3,
+  "movement_speed_max_boost": 0.2
 }

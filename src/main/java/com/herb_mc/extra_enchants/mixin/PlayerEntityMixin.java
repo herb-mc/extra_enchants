@@ -52,7 +52,7 @@ public abstract class PlayerEntityMixin implements AttributeModCommons, UUIDComm
         int i = EnchantmentHelper.getEquipmentLevel(ModEnchants.DEXTROUS, thisEntity);
         removeAttribute(thisEntity, EntityAttributes.GENERIC_ATTACK_SPEED, DEXTERITY_ATTRIBUTE_ID);
         if (i > 0)
-            modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_SPEED, i, DEXTERITY_ATTRIBUTE_ID, "dex_attack_speed", 0.1D, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+            modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_SPEED, i, DEXTERITY_ATTRIBUTE_ID, "dex_attack_speed", EnchantmentMappings.dextrousAttackSpeedBoost.getDouble(), EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
         i = EnchantmentHelper.getEquipmentLevel(ModEnchants.WEIGHTED, thisEntity);
         removeAttribute(thisEntity, EntityAttributes.GENERIC_ATTACK_SPEED, WEIGHTED_ATTRIBUTE_ID);
         removeAttribute(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, WEIGHTED_ATTRIBUTE_ID);

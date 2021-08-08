@@ -5,6 +5,9 @@ import com.herb_mc.extra_enchants.lib.EnchantmentMappings;
 import com.herb_mc.extra_enchants.lib.LivingEntityMixinAccess;
 import com.herb_mc.extra_enchants.registry.ModEnchants;
 import com.herb_mc.extra_enchants.lib.UUIDCommons;
+import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
+import net.fabricmc.fabric.impl.tool.attribute.ToolManagerImpl;
+import net.minecraft.block.Block;
 import net.minecraft.block.OreBlock;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.ItemEntity;
@@ -19,6 +22,7 @@ import net.minecraft.entity.passive.FoxEntity;
 import net.minecraft.entity.passive.HorseEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.fluid.Fluid;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.predicate.entity.EntityPredicates;
@@ -35,6 +39,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 import java.util.*;
@@ -46,6 +51,8 @@ import static net.minecraft.enchantment.EnchantmentHelper.getLevel;
 public abstract class LivingEntityMixin implements AttributeModCommons, UUIDCommons, LivingEntityMixinAccess {
 
     @Shadow public abstract int getArmor();
+
+    @Shadow public abstract void heal(float amount);
 
     @Unique private final LivingEntity thisEntity = (LivingEntity) (Object) this;
     @Unique private int EXPOSED;
@@ -87,7 +94,7 @@ public abstract class LivingEntityMixin implements AttributeModCommons, UUIDComm
             index = 1
     )
     private double addJumpVelocity(double d) {
-        return (EnchantmentHelper.getEquipmentLevel(ModEnchants.LEAPING, thisEntity) > 0) ? d + 0.075F * (float) EnchantmentHelper.getEquipmentLevel(ModEnchants.LEAPING, thisEntity) : d;
+        return (EnchantmentHelper.getEquipmentLevel(ModEnchants.LEAPING, thisEntity) > 0) ? d + EnchantmentMappings.leapingBaseVelocity.getFloat() * (float) EnchantmentHelper.getEquipmentLevel(ModEnchants.LEAPING, thisEntity) : d;
     }
 
     @ModifyArg(
@@ -124,7 +131,7 @@ public abstract class LivingEntityMixin implements AttributeModCommons, UUIDComm
             constant = @Constant(doubleValue = 0.08D)
     )
     private double featherweightFallSpeed(double d){
-        return (EnchantmentHelper.getEquipmentLevel(ModEnchants.FEATHERWEIGHT, thisEntity) > 0 && thisEntity.getVelocity().y < 0 && !thisEntity.isSneaking()) ? d / (EnchantmentHelper.getEquipmentLevel(ModEnchants.FEATHERWEIGHT, thisEntity) + 1) : d;
+        return (EnchantmentHelper.getEquipmentLevel(ModEnchants.FEATHERWEIGHT, thisEntity) > 0 && thisEntity.getVelocity().y < 0 && !thisEntity.isSneaking()) ? d / (EnchantmentHelper.getEquipmentLevel(ModEnchants.FEATHERWEIGHT, thisEntity) + 1) * EnchantmentMappings.featherweightFallSpeedScale.getDouble() : d;
     }
 
     @ModifyConstant(
@@ -186,7 +193,7 @@ public abstract class LivingEntityMixin implements AttributeModCommons, UUIDComm
     private float enchantmentFallDistanceHandler(float fallDistance) {
         int i = EnchantmentHelper.getEquipmentLevel(ModEnchants.FEATHERWEIGHT, thisEntity);
         if (!thisEntity.isSneaking() && i > 0)
-            fallDistance /= 2 * i;
+            fallDistance /= 2 * i / EnchantmentMappings.featherweightFallSpeedScale.getDouble();
         i = EnchantmentHelper.getEquipmentLevel(ModEnchants.LEAPING, thisEntity);
         if (i > 0)
             fallDistance -= (float) i - 1.0F;
@@ -209,14 +216,14 @@ public abstract class LivingEntityMixin implements AttributeModCommons, UUIDComm
             amount *= 1D - Math.log10(EnchantmentHelper.getEquipmentLevel(ModEnchants.ACE, thisEntity) + 1) * EnchantmentMappings.aceDamageReducerMult.getDouble();
         if (EXPOSED > 0)
             amount *= 1.1;
-        if (source instanceof EntityDamageSource && EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_THE_BLOOD_GOD, thisEntity) > 0 && (rand.nextDouble() < 0.25 || EnchantmentHelper.getEquipmentLevel(ModEnchants.TESTING, thisEntity) > 0))
-            amount *= 1.8;
+        if (source instanceof EntityDamageSource && EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_THE_BLOOD_GOD, thisEntity) > 0 && (rand.nextDouble() < EnchantmentMappings.coreBloodCritChance.getDouble() || EnchantmentHelper.getEquipmentLevel(ModEnchants.TESTING, thisEntity) > 0))
+            amount *= EnchantmentMappings.coreBloodCritMult.getDouble();
         if (EnchantmentHelper.getEquipmentLevel(ModEnchants.BLAZE_AFFINITY, thisEntity) > 0 && thisEntity.isOnFire())
             amount *= EnchantmentMappings.blazeAffinityIncomingMult.getDouble();
         if (EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_THE_WARP, thisEntity) > 0) {
-            amount *= 0.6;
-            if ((rand.nextDouble() < 0.05 || EnchantmentHelper.getEquipmentLevel(ModEnchants.TESTING, thisEntity) > 0) && (thisEntity.world.getBiome(thisEntity.getBlockPos()).getCategory() == Biome.Category.THEEND || thisEntity.world.getBiomeKey(thisEntity.getBlockPos()).get().getValue().toString().equals("minecraft:warped_forest")))
-                warpTeleport();
+            amount *= EnchantmentMappings.coreWarpIncomingDamage.getDouble();
+            if ((rand.nextDouble() < EnchantmentMappings.coreWarpTeleportChance.getDouble() || EnchantmentHelper.getEquipmentLevel(ModEnchants.TESTING, thisEntity) > 0) && (thisEntity.world.getBiome(thisEntity.getBlockPos()).getCategory() == Biome.Category.THEEND || thisEntity.world.getBiomeKey(thisEntity.getBlockPos()).get().getValue().toString().equals("minecraft:warped_forest")))
+                randomTeleport(EnchantmentMappings.coreWarpTeleportRange.getInt(), EnchantmentMappings.coreWarpTeleportTries.getInt());
         }
         if (source.getSource() != null && source.getSource() instanceof LivingEntity) {
             if (EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_PURITY, (LivingEntity) source.getSource()) > 0)
@@ -225,6 +232,23 @@ public abstract class LivingEntityMixin implements AttributeModCommons, UUIDComm
         if (EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_PURITY, thisEntity) > 0 && thisEntity.getHealth() / thisEntity.getMaxHealth() > EnchantmentMappings.corePurityThreshold.getFloat())
             amount *= EnchantmentMappings.corePurityDamageMult.getFloat();
         return amount;
+    }
+
+    @Inject(
+            method = "applyDamage",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/entity/LivingEntity;setHealth(F)V"
+            ),
+            locals = LocalCapture.CAPTURE_FAILSOFT
+    )
+    private void applyLifesteal(DamageSource source, float amount, CallbackInfo info, float health) {
+        float baseHealAmount = Math.min(amount, health);
+        if ((source.name.equals("mob") || source.name.equals("player")) && source.getAttacker() != null) {
+            int level = EnchantmentHelper.getLevel(ModEnchants.LIFESTEAL, ((LivingEntity) source.getAttacker()).getMainHandStack());
+            if (level > 0)
+                ((LivingEntity) source.getAttacker()).heal(Math.min(EnchantmentMappings.lifestealBasePercent.getFloat() * level * baseHealAmount, EnchantmentMappings.lifestealMax.getFloat()));
+        }
     }
 
     @ModifyVariable(
@@ -258,7 +282,7 @@ public abstract class LivingEntityMixin implements AttributeModCommons, UUIDComm
     )
     protected void instabilityHandler(DamageSource source, float amount, CallbackInfoReturnable<Boolean> info) {
         if (thisEntity.getActiveItem() != null && EnchantmentHelper.getLevel(ModEnchants.CURSE_OF_INSTABILITY, thisEntity.getActiveItem()) > 0)
-            warpTeleport();
+            randomTeleport(EnchantmentMappings.instabilityTeleportRange.getInt(), EnchantmentMappings.instabilityTeleportTries.getInt());
     }
 
     @Inject(
@@ -291,17 +315,6 @@ public abstract class LivingEntityMixin implements AttributeModCommons, UUIDComm
     }
 
     @Inject(
-            method = "onDeath",
-            at = @At("HEAD")
-    )
-    protected void handleLifestealKill(DamageSource source, CallbackInfo info){
-        if (source.getAttacker() instanceof LivingEntity && !source.isProjectile() && ((LivingEntity) source.getAttacker()).getActiveHand() != null)
-            ((LivingEntity) source.getAttacker()).heal((float) getLevel(ModEnchants.LIFESTEAL, ((LivingEntity) source.getAttacker()).getStackInHand(((LivingEntity) source.getAttacker()).getActiveHand())));
-        else if (source.getAttacker() instanceof LivingEntity && !source.isProjectile() && ((LivingEntity) source.getAttacker()).getMainHandStack() != null)
-            ((LivingEntity) source.getAttacker()).heal((float) getLevel(ModEnchants.LIFESTEAL, ((LivingEntity) source.getAttacker()).getMainHandStack()));
-    }
-
-    @Inject(
             method = "travel",
             at = @At(
                     value = "INVOKE_ASSIGN",
@@ -328,7 +341,7 @@ public abstract class LivingEntityMixin implements AttributeModCommons, UUIDComm
     )
     private void changeVelocity(CallbackInfo info) {
         int i = EnchantmentHelper.getEquipmentLevel(ModEnchants.LUNGING, thisEntity);
-        float mult = (float) (1 + 0.1 * i);
+        float mult = 1F + EnchantmentMappings.lungingJumpVelocityBoost.getFloat() * i;
         if (i > 0)
             thisEntity.setVelocity(thisEntity.getVelocity().x * mult, thisEntity.getVelocity().y, thisEntity.getVelocity().z * mult);
     }
@@ -388,7 +401,7 @@ public abstract class LivingEntityMixin implements AttributeModCommons, UUIDComm
             if (SPRINT_BOOST < 0 && !thisEntity.isSprinting())
                 SPRINT_BOOST++;
             i = getEquipmentLevel(ModEnchants.DWARVEN, thisEntity);
-            if (i > 0) {
+            if (i > 0 && (thisEntity.isSneaking() || EnchantmentMappings.dwarvenAlwaysActive.getBool())) {
                 Vec3d vec = getNearestOre();
                 double sneak = 0;
                 if (thisEntity.isInSwimmingPose())
@@ -407,17 +420,16 @@ public abstract class LivingEntityMixin implements AttributeModCommons, UUIDComm
             removeAttribute(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, CORE_OF_THE_BLOOD_GOD_ATTRIBUTE_ID);
             removeAttribute(thisEntity, EntityAttributes.GENERIC_MAX_HEALTH, CORE_OF_THE_BLOOD_GOD_ATTRIBUTE_ID);
             if (i > 0) {
-                modAttributeBase(thisEntity, EntityAttributes.GENERIC_ARMOR, 1, CORE_OF_THE_BLOOD_GOD_ATTRIBUTE_ID, "bld_armor", -0.2, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
-                modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, 1, CORE_OF_THE_BLOOD_GOD_ATTRIBUTE_ID, "bld_attack_damage", 0.15, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
-                modAttributeBase(thisEntity, EntityAttributes.GENERIC_MAX_HEALTH, 1, CORE_OF_THE_BLOOD_GOD_ATTRIBUTE_ID, "bld_attack_damage", 1.0, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+                modAttributeBase(thisEntity, EntityAttributes.GENERIC_ARMOR, 1, CORE_OF_THE_BLOOD_GOD_ATTRIBUTE_ID, "bld_armor", EnchantmentMappings.coreBloodArmorPenalty.getDouble(), EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+                modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, 1, CORE_OF_THE_BLOOD_GOD_ATTRIBUTE_ID, "bld_attack_damage", EnchantmentMappings.coreBloodAttackBuff.getDouble(), EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+                modAttributeBase(thisEntity, EntityAttributes.GENERIC_MAX_HEALTH, 1, CORE_OF_THE_BLOOD_GOD_ATTRIBUTE_ID, "bld_health", EnchantmentMappings.coreBloodHealthBoost.getDouble(), EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
             }
             i = getEquipmentLevel(ModEnchants.CORE_OF_THE_WARP, thisEntity);
-            removeAttribute(thisEntity, EntityAttributes.GENERIC_MAX_HEALTH, CORE_OF_THE_VOID_ATTRIBUTE_ID);
-            removeAttribute(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, CORE_OF_THE_VOID_ATTRIBUTE_ID);
+            removeAttribute(thisEntity, EntityAttributes.GENERIC_MAX_HEALTH, CORE_OF_THE_WARP_ATTRIBUTE_ID);
+            removeAttribute(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, CORE_OF_THE_WARP_ATTRIBUTE_ID);
             if (i > 0) {
-                modAttributeBase(thisEntity, EntityAttributes.GENERIC_MAX_HEALTH, 1, CORE_OF_THE_VOID_ATTRIBUTE_ID, "vd_health", -0.5, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
-                modAttributeBase(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, 1, CORE_OF_THE_VOID_ATTRIBUTE_ID, "vd_speed", 0.15, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
-
+                modAttributeBase(thisEntity, EntityAttributes.GENERIC_MAX_HEALTH, 1, CORE_OF_THE_WARP_ATTRIBUTE_ID, "warp_health", EnchantmentMappings.coreWarpHealthPenalty.getDouble(), EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+                modAttributeBase(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, 1, CORE_OF_THE_WARP_ATTRIBUTE_ID, "warp_speed", EnchantmentMappings.coreWarpSpeedBuff.getDouble(), EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
             }
             i = getEquipmentLevel(ModEnchants.CORE_OF_PURITY, thisEntity);
             removeAttribute(thisEntity, EntityAttributes.GENERIC_MAX_HEALTH, CORE_OF_PURITY_ATTRIBUTE_ID);
@@ -427,7 +439,7 @@ public abstract class LivingEntityMixin implements AttributeModCommons, UUIDComm
                 modAttributeBase(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, 1, CORE_OF_PURITY_ATTRIBUTE_ID, "ev_speed", EnchantmentMappings.corePuritySpeedPenalty.getFloat(), EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
             }
             i = getEquipmentLevel(ModEnchants.NIGHT_VISION, thisEntity);
-            if (i > 0 && thisEntity.isSneaking())
+            if (i > 0 && (thisEntity.isSneaking() || EnchantmentMappings.nightVisionAlwaysActive.getBool()))
                 thisEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.NIGHT_VISION, 2000, 100, true, false, false));
             if ((i == 0 || i > 0 && !thisEntity.isSneaking()) && thisEntity.getStatusEffect(StatusEffects.NIGHT_VISION) != null)
                 if (Objects.requireNonNull(thisEntity.getStatusEffect(StatusEffects.NIGHT_VISION)).getAmplifier() == 100)
@@ -469,8 +481,8 @@ public abstract class LivingEntityMixin implements AttributeModCommons, UUIDComm
                 List<ItemEntity> list = getNearestItems(EnchantmentHelper.getLevel(ModEnchants.MAGNETIC, thisEntity.getMainHandStack()));
                 if (!list.isEmpty()) {
                     for (ItemEntity entity : list) {
-                        if (entity.getVelocity().length() <= 5)
-                            entity.setVelocity(entity.getVelocity().subtract(entity.getPos().subtract(new Vec3d(thisEntity.getPos().x, thisEntity.getPos().y + 1, thisEntity.getPos().z)).multiply(EnchantmentHelper.getLevel(ModEnchants.MAGNETIC, thisEntity.getMainHandStack()) * 0.025)));
+                        if (entity.getVelocity().length() <= EnchantmentMappings.magneticMaxVelocity.getDouble())
+                            entity.setVelocity(entity.getVelocity().subtract(entity.getPos().subtract(new Vec3d(thisEntity.getPos().x, thisEntity.getPos().y + 1, thisEntity.getPos().z)).multiply(EnchantmentHelper.getLevel(ModEnchants.MAGNETIC, thisEntity.getMainHandStack()) * EnchantmentMappings.magneticScalar.getDouble())));
                     }
                 }
             }
@@ -478,8 +490,9 @@ public abstract class LivingEntityMixin implements AttributeModCommons, UUIDComm
     }
 
     private List<ItemEntity> getNearestItems(int level) {
-        List<ItemEntity> list = thisEntity.world.getEntitiesByClass(ItemEntity.class, thisEntity.getBoundingBox().expand(7.0), EntityPredicates.VALID_ENTITY);
-        double squareDist = Math.pow(4.5 + level, 2);
+        double effectiveDistance = EnchantmentMappings.magneticBaseRadius.getDouble() + EnchantmentMappings.magneticAdditionalRadius.getDouble() * (level - 1);
+        List<ItemEntity> list = thisEntity.world.getEntitiesByClass(ItemEntity.class, thisEntity.getBoundingBox().expand(effectiveDistance), EntityPredicates.VALID_ENTITY);
+        double squareDist = Math.pow(effectiveDistance, 2);
         List<ItemEntity> finalList = new ArrayList<>();
         if (!list.isEmpty()) {
             for (ItemEntity entity : list) {
@@ -496,13 +509,15 @@ public abstract class LivingEntityMixin implements AttributeModCommons, UUIDComm
         Vec3d vec1 = new Vec3d(thisEntity.getX(), thisEntity.getY() + 1.0, thisEntity.getZ());
         for (BlockPos pos : BlockPos.iterate(thisEntity.getBlockPos().add(-6, -6, -6), thisEntity.getBlockPos().add(6, 6, 6))) {
             Vec3d vec2 = new Vec3d(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
-            if (thisEntity.world.getBlockState(pos).getBlock() instanceof OreBlock && getSquareDist(vec1, vec2) <= lowestSquareDistance) {
+            Block currentBlock = thisEntity.world.getBlockState(pos).getBlock();
+            if (currentBlock instanceof OreBlock && getSquareDist(vec1, vec2) <= lowestSquareDistance) {
                 vec3d = vec2;
                 lowestSquareDistance = getSquareDist(vec1, vec2);
             }
         }
         return vec3d;
     }
+
     private static double getSquareDist(Vec3d in1, Vec3d in2){
         in2 = in2.subtract(in1);
         return in2.x * in2.x + in2.y * in2.y + in2.z * in2.z;
@@ -516,15 +531,15 @@ public abstract class LivingEntityMixin implements AttributeModCommons, UUIDComm
         return ProjectileUtil.raycast(thisEntity, veceye, vecext, box, (entityx) -> !entityx.isSpectator() && entityx.collides(), 49);
     }
 
-    public void warpTeleport(){
+    public void randomTeleport(int range, int tries){
         double d = thisEntity.getX();
         double e = thisEntity.getY();
         double f = thisEntity.getZ();
 
-        for(int i = 0; i < 16; ++i) {
-            double g = thisEntity.getX() + (thisEntity.getRandom().nextDouble() - 0.5D) * 16.0D;
-            double h = MathHelper.clamp(thisEntity.getY() + (double)(thisEntity.getRandom().nextInt(16) - 8), thisEntity.world.getBottomY(), (thisEntity.world.getBottomY() + (thisEntity.world).getLogicalHeight() - 1));
-            double j = thisEntity.getZ() + (thisEntity.getRandom().nextDouble() - 0.5D) * 16.0D;
+        for(int i = 0; i < tries; ++i) {
+            double g = thisEntity.getX() + (thisEntity.getRandom().nextDouble() - 0.5D) * range;
+            double h = MathHelper.clamp(thisEntity.getY() + (double)(thisEntity.getRandom().nextInt(range) - 8), thisEntity.world.getBottomY(), (thisEntity.world.getBottomY() + (thisEntity.world).getLogicalHeight() - 1));
+            double j = thisEntity.getZ() + (thisEntity.getRandom().nextDouble() - 0.5D) * range;
             if (thisEntity.hasVehicle()) {
                 thisEntity.stopRiding();
             }

@@ -240,7 +240,7 @@ public abstract class PersistentProjectileEntityMixin implements PersistentProje
     protected void inGroundChecks(CallbackInfo info) {
         if(thisEntity instanceof ArrowEntity && this.inGround && (critical || !playerOwner)) {
             if (explosive >= 1) {
-                thisEntity.world.createExplosion(thisEntity, thisEntity.getX(), thisEntity.getY(), thisEntity.getZ(), explosive / 2.0F + 0.5F, Explosion.DestructionType.NONE);
+                thisEntity.world.createExplosion(thisEntity, thisEntity.getX(), thisEntity.getY(), thisEntity.getZ(), explosive * EnchantmentMappings.explosiveInGroundScale.getFloat(), Explosion.DestructionType.NONE);
                 thisEntity.discard();
             }
             else if (ender && thisEntity.getOwner() != null && thisEntity.getOwner().isAlive()) {
@@ -279,7 +279,6 @@ public abstract class PersistentProjectileEntityMixin implements PersistentProje
             if (thisEntity.isCritical() || !playerOwner) {
                 Entity target = hitResult.getEntity();
                 int phase = -1;
-                float decreasePower = 1.0F;
                 if (target instanceof EnderDragonPart dragonTarget) {
                     phase = dragonTarget.owner.getPhaseManager().getCurrent().getType().getTypeId();
                 }
@@ -290,7 +289,7 @@ public abstract class PersistentProjectileEntityMixin implements PersistentProje
                         ((LivingEntityMixinAccess) livingTarget).exposedModify(exposing);
                     }
                     if (phase != 6 && explosive > 0) {
-                        explosionArrow(target, decreasePower);
+                        explosionArrow(target);
                         info.cancel();
                     }
                     else if (ender && thisEntity.getOwner() != null && thisEntity.getOwner().isAlive()) {
@@ -337,8 +336,8 @@ public abstract class PersistentProjectileEntityMixin implements PersistentProje
         }
     }
 
-    public void explosionArrow(Entity target, float powerMod){
-        thisEntity.world.createExplosion(thisEntity, target.getX(), (target.getY() + 2.0F * thisEntity.getY()) / 3.0F, target.getZ(), explosive / powerMod, Explosion.DestructionType.NONE);
+    public void explosionArrow(Entity target){
+        thisEntity.world.createExplosion(thisEntity, target.getX(), (target.getY() + 2.0F * thisEntity.getY()) / 3.0F, target.getZ(), explosive * EnchantmentMappings.explosiveBasePower.getFloat(), Explosion.DestructionType.NONE);
         thisEntity.discard();
     }
 
