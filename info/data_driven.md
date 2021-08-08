@@ -213,7 +213,6 @@ Breath gained on land for a tick is given by the formula `random_int[0, breath_g
 ## *Featherweight*
 
 `fall_speed_scale` - scales the fall speed per level of Featherweight. Lower values = fall slower. Default: 1.0
-``
 
 ---
 [Back to top](#enchantment-list)

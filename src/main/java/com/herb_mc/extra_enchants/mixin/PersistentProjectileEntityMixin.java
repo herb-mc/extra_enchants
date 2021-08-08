@@ -240,7 +240,7 @@ public abstract class PersistentProjectileEntityMixin implements PersistentProje
     protected void inGroundChecks(CallbackInfo info) {
         if(thisEntity instanceof ArrowEntity && this.inGround && (critical || !playerOwner)) {
             if (explosive >= 1) {
-                thisEntity.world.createExplosion(thisEntity, thisEntity.getX(), thisEntity.getY(), thisEntity.getZ(), explosive * EnchantmentMappings.explosiveInGroundScale.getFloat(), Explosion.DestructionType.NONE);
+                thisEntity.world.createExplosion(thisEntity, thisEntity.getX(), thisEntity.getY(), thisEntity.getZ(), explosive * EnchantmentMappings.explosiveInGroundScale.getFloat() * EnchantmentMappings.explosiveBasePower.getFloat(), Explosion.DestructionType.NONE);
                 thisEntity.discard();
             }
             else if (ender && thisEntity.getOwner() != null && thisEntity.getOwner().isAlive()) {

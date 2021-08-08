@@ -246,7 +246,7 @@ public class EnchantmentMappings {
         enchantmentConfig.put("leaping:extra_fall_height", leapingFallHeight);
         enchantmentConfig.put("lifesteal:base_heal_percent", lifestealBasePercent);
         enchantmentConfig.put("lifesteal:max_heal_amount", lifestealMax);
-        enchantmentConfig.put("lunging:jump_velocity_boost", lifestealMax);
+        enchantmentConfig.put("lunging:jump_velocity_boost", lungingJumpVelocityBoost);
         enchantmentConfig.put("magnetic:base_radius", magneticBaseRadius);
         enchantmentConfig.put("magnetic:additional_radius", magneticAdditionalRadius);
         enchantmentConfig.put("magnetic:velocity_scalar", magneticScalar);
