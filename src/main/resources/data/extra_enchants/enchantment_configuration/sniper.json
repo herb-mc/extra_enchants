@@ -1,5 +1,5 @@
 {
   "draw_mult": 1.0,
-  "damage_base": 2.0,
+  "base_damage": 2.0,
   "velocity_mult": 0.1
 }

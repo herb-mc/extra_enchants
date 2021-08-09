@@ -134,14 +134,3 @@ Requires Fabric Loader 0.11.6 and [Fabric API 0.37.1+1.17](https://www.curseforg
 - *Core of the Blood God* (curse) (treasure) - Embody a small portion of an ancient god's strength and vitality, but at a price
 
 - *Core of the Warp* (curse) (treasure) - The power of the warp enhances your mobility and endurance, but your vitality is decreased and you randomly teleport in certain biomes
-
-#### Experimental
-##### *Experimental enchants are disabled normally, and can only be enabled via datapack. Essentially not ready for official release.*
-
-- *Blazing* - Snowballs are turned into blaze fireballs
-
-- *Surface Skimmer* - Allows the user to walk on water
-
-- *Testing* - Some RNG effects become guaranteed while equipped
-
-- *Withering* - Snowballs are turned into wither skulls

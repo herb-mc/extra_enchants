@@ -12,6 +12,10 @@ public class EnchantmentMappings {
     public static Map<String, Enchantment> enchantments;
     public static Map<String, ValueContainer> enchantmentConfig;
 
+    public static ValueContainer exposedArmorMult = new ValueContainer(0.9F);
+    public static ValueContainer exposedDamageMult = new ValueContainer(1.1F);
+    public static ValueContainer exposedLightningDamageMult = new ValueContainer(1.5F);
+
     public static ValueContainer aceDamageReducerMult = new ValueContainer(0.25D);
     public static ValueContainer aceExtraArrowDamage = new ValueContainer(0.5F);
     public static ValueContainer aceExtraMeleeDamage = new ValueContainer(1.0F);
@@ -61,6 +65,7 @@ public class EnchantmentMappings {
     public static ValueContainer instabilityTeleportTries = new ValueContainer(16);
     public static ValueContainer instabilityTeleportRange = new ValueContainer(16);
     public static ValueContainer dextrousAttackSpeedBoost = new ValueContainer(0.1D);
+    public static ValueContainer dwarvenActiveRange = new ValueContainer(5.5D);
     public static ValueContainer dwarvenAlwaysActive = new ValueContainer(true);
     public static ValueContainer explosiveBasePower = new ValueContainer(1.0F);
     public static ValueContainer explosiveInGroundScale = new ValueContainer(0.5F);
@@ -78,12 +83,38 @@ public class EnchantmentMappings {
     public static ValueContainer magneticMaxVelocity = new ValueContainer(5.0D);
     public static ValueContainer nightVisionAlwaysActive = new ValueContainer(false);
     public static ValueContainer nimbleDrawMult = new ValueContainer(-0.1F);
+    public static ValueContainer propellingMinAccelVelocity = new ValueContainer(0.6D);
+    public static ValueContainer propellingAdditionalAccelVelocity = new ValueContainer(0.06D);
+    public static ValueContainer propellingMinAccel = new ValueContainer(0.015D);
+    public static ValueContainer propellingAdditionalAccel = new ValueContainer(0.01D);
+    public static ValueContainer propellingPenaltyStartHeight = new ValueContainer(128.0D);
+    public static ValueContainer propellingPenaltyCriticalHeight = new ValueContainer(256.0D);
+    public static ValueContainer psychicActiveRange = new ValueContainer(6.0D);
+    public static ValueContainer psychicAlwaysActive = new ValueContainer(false);
+    public static ValueContainer reflectingBaseReflectedVelocity = new ValueContainer(0.5D);
+    public static ValueContainer reflectingAdditionalReflectedVelocity = new ValueContainer(0.1D);
+    public static ValueContainer reflexReadyTicks = new ValueContainer(0);
     public static ValueContainer sharpshooterArrowDamage = new ValueContainer(1.0F);
     public static ValueContainer sharpshooterTridentDamage = new ValueContainer(3.0F);
     public static ValueContainer sharpshooterFOVScale = new ValueContainer(0.33F);
     public static ValueContainer sniperDrawMult = new ValueContainer(1.0F);
     public static ValueContainer sniperDamageBase = new ValueContainer(2.0F);
     public static ValueContainer sniperVelocityMult = new ValueContainer(0.1F);
+    public static ValueContainer shockResistBaseMult = new ValueContainer(0.8F);
+    public static ValueContainer shockResistScale = new ValueContainer(1.5F);
+    public static ValueContainer slimeySlipperiness = new ValueContainer(1.0F);
+    public static ValueContainer stalwartCooldown = new ValueContainer(60);
+    public static ValueContainer steadfastSpeedMult = new ValueContainer(1.0D);
+    public static ValueContainer swiftnessSpeedMult = new ValueContainer(0.1D);
+    public static ValueContainer terraformingDropItems = new ValueContainer(false);
+    public static ValueContainer terraformingToolSpeed = new ValueContainer(58);
+    public static ValueContainer toughDamageReduction = new ValueContainer(0.03F);
+    public static ValueContainer turboLifetimeDecrement = new ValueContainer(2);
+    public static ValueContainer turboSpeedMult = new ValueContainer(1.5D);
+    public static ValueContainer wardingRange = new ValueContainer(8.0D);
+    public static ValueContainer weightedAttackDamageIncrease = new ValueContainer(0.2D);
+    public static ValueContainer weightedAttackSpeedPenalty = new ValueContainer(-0.15D);
+    public static ValueContainer windstepHeight = new ValueContainer(0.4F);
 
     static
     {
@@ -177,13 +208,17 @@ public class EnchantmentMappings {
         enchantments.put("thorns", Enchantments.THORNS);
         enchantments.put("unbreaking", Enchantments.UNBREAKING);
 
+        //enchantment config mappings
         enchantmentConfig = new HashMap<>();
         enchantmentConfig.put("general_configuration:directly_enchant_elytra", ModEnchants.CAN_ENCHANT_ELYTRA);
         enchantmentConfig.put("general_configuration:directly_enchant_horse_armor", ModEnchants.CAN_ENCHANT_HORSE_ARMOR);
         enchantmentConfig.put("general_configuration:directly_enchant_shields", ModEnchants.CAN_ENCHANT_SHIELD);
         enchantmentConfig.put("general_configuration:directly_enchant_snowballs", ModEnchants.CAN_ENCHANT_SNOWBALL);
         enchantmentConfig.put("general_configuration:extended_trident_enchants", ModEnchants.EXTENDED_TRIDENT_ENCHANTS);
-        enchantmentConfig.put("ace:damage_reduction_multiplier", aceDamageReducerMult);
+        enchantmentConfig.put("general_configuration:exposed_armor_mult", exposedArmorMult);
+        enchantmentConfig.put("general_configuration:exposed_damage_mult", exposedDamageMult);
+        enchantmentConfig.put("general_configuration:exposed_lightning_damage_mult", exposedLightningDamageMult);
+        enchantmentConfig.put("ace:damage_reduction_mult", aceDamageReducerMult);
         enchantmentConfig.put("ace:arrow_damage_boost", aceExtraArrowDamage);
         enchantmentConfig.put("ace:melee_damage_boost", aceExtraMeleeDamage);
         enchantmentConfig.put("ace:trident_damage_boost", aceExtraTridentDamage);
@@ -232,13 +267,14 @@ public class EnchantmentMappings {
         enchantmentConfig.put("curse_of_instability:teleport_range", instabilityTeleportRange);
         enchantmentConfig.put("curse_of_instability:teleport_tries", instabilityTeleportTries);
         enchantmentConfig.put("dextrous:attack_speed_boost", dextrousAttackSpeedBoost);
+        enchantmentConfig.put("dwarven:active_range", dwarvenActiveRange);
         enchantmentConfig.put("dwarven:always_active", dwarvenAlwaysActive);
         enchantmentConfig.put("explosive:base_explosion_power", explosiveBasePower);
         enchantmentConfig.put("explosive:in_ground_scale", explosiveInGroundScale);
         enchantmentConfig.put("exposing:base_duration", exposingBaseDuration);
         enchantmentConfig.put("featherweight:fall_speed_scale", featherweightFallSpeedScale);
         enchantmentConfig.put("launching:velocity_scale", launchingVelocityScale);
-        enchantmentConfig.put("leaping:base_velocity:", leapingBaseVelocity);
+        enchantmentConfig.put("leaping:base_velocity", leapingBaseVelocity);
         enchantmentConfig.put("leaping:extra_fall_height", leapingFallHeight);
         enchantmentConfig.put("lifesteal:base_heal_percent", lifestealBasePercent);
         enchantmentConfig.put("lifesteal:max_heal_amount", lifestealMax);
@@ -249,12 +285,38 @@ public class EnchantmentMappings {
         enchantmentConfig.put("magnetic:max_velocity", magneticMaxVelocity);
         enchantmentConfig.put("night_vision:always_active", nightVisionAlwaysActive);
         enchantmentConfig.put("nimble:draw_mult", nimbleDrawMult);
+        enchantmentConfig.put("propelling:accel_velocity", propellingMinAccelVelocity);
+        enchantmentConfig.put("propelling:additional_accel_velocity", propellingAdditionalAccelVelocity);
+        enchantmentConfig.put("propelling:min_accel", propellingMinAccel);
+        enchantmentConfig.put("propelling:additional_accel", propellingAdditionalAccel);
+        enchantmentConfig.put("propelling:penalty_start_height", propellingPenaltyStartHeight);
+        enchantmentConfig.put("propelling:critical_height", propellingPenaltyCriticalHeight);
+        enchantmentConfig.put("psychic:active_range", psychicActiveRange);
+        enchantmentConfig.put("psychic:always_active", psychicAlwaysActive);
+        enchantmentConfig.put("reflecting:base_reflected_velocity", reflectingBaseReflectedVelocity);
+        enchantmentConfig.put("reflecting:additional_reflected_velocity", reflectingAdditionalReflectedVelocity);
+        enchantmentConfig.put("reflex:ready_ticks", reflexReadyTicks);
         enchantmentConfig.put("sharpshooter:arrow_damage_boost", sharpshooterArrowDamage);
         enchantmentConfig.put("sharpshooter:trident_damage_boost", sharpshooterTridentDamage);
         enchantmentConfig.put("sharpshooter:fov_mod", sharpshooterFOVScale);
+        enchantmentConfig.put("shock_resistant:base_damage_multiplier", shockResistBaseMult);
+        enchantmentConfig.put("shock_resistant:damage_mult_scale", shockResistScale);
+        enchantmentConfig.put("slimey:slipperiness", slimeySlipperiness);
+        enchantmentConfig.put("stalwart:cooldown", stalwartCooldown);
         enchantmentConfig.put("sniper:draw_mult", sniperDrawMult);
         enchantmentConfig.put("sniper:base_damage", sniperDamageBase);
         enchantmentConfig.put("sniper:velocity_mult", sniperVelocityMult);
+        enchantmentConfig.put("steadfast:speed_mult", steadfastSpeedMult);
+        enchantmentConfig.put("swiftness:speed_mult", swiftnessSpeedMult);
+        enchantmentConfig.put("terraforming:additional_tool_speed", terraformingToolSpeed);
+        enchantmentConfig.put("terraforming:drop_items", terraformingDropItems);
+        enchantmentConfig.put("tough:damage_reduction", toughDamageReduction);
+        enchantmentConfig.put("turbo:lifetime_decrement", turboLifetimeDecrement);
+        enchantmentConfig.put("turbo:speed_mult", turboSpeedMult);
+        enchantmentConfig.put("warding:range", wardingRange);
+        enchantmentConfig.put("weighted:attack_damage_boost", weightedAttackDamageIncrease);
+        enchantmentConfig.put("weighted:attack_speed_penalty", weightedAttackSpeedPenalty);
+        enchantmentConfig.put("windstep:step_height_boost", windstepHeight);
     }
 
     public static Enchantment valueOf(String key) {

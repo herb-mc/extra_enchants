@@ -1,5 +1,6 @@
 package com.herb_mc.extra_enchants.mixin;
 
+import com.herb_mc.extra_enchants.lib.EnchantmentMappings;
 import com.herb_mc.extra_enchants.registry.ModEnchants;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -40,7 +41,7 @@ public class BlockMixin {
     )
     public void handleEnchantsAfterBreak(Args args){
         PlayerEntity player = args.get(4);
-        if(EnchantmentHelper.getLevel(ModEnchants.TERRAFORMING, player.getStackInHand(player.getActiveHand())) > 0)
+        if(EnchantmentHelper.getLevel(ModEnchants.TERRAFORMING, player.getStackInHand(player.getActiveHand())) > 0 && !EnchantmentMappings.terraformingDropItems.getBool())
             args.set(5, ItemStack.EMPTY);
         else
             noGravity(EnchantmentHelper.getLevel(ModEnchants.ANTIGRAVITY, player.getStackInHand(player.getActiveHand())) > 0);

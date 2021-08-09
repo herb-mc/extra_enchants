@@ -99,7 +99,6 @@ public class ReloadListener extends JsonDataLoader implements SimpleSynchronousR
                 EXTRA_ENCHANTS_LOGGER.error("Error occurred while loading resource json " + id.toString(), e);
             }
         }
-        EXTRA_ENCHANTS_LOGGER.info("Loaded {} enchantments, {} disabled", loaded, disabled);
         for (Identifier id : manager.findResources("enchantment_configuration", path -> path.endsWith(".json"))) {
             try (InputStream stream = manager.getResource(id).getInputStream()) {
                 String name = id.toString().replace("extra_enchants:enchantment_configuration/", "").replace(".json", ":");
@@ -126,13 +125,16 @@ public class ReloadListener extends JsonDataLoader implements SimpleSynchronousR
                             EXTRA_ENCHANTS_LOGGER.error("Invalid data type for {}", name + element.getKey());
                         }
                     }
+                    else {
+                        EXTRA_ENCHANTS_LOGGER.error("Unrecognized object {}", name + element.getKey());
+                    }
                 }
             } catch (Exception e) {
                 EXTRA_ENCHANTS_LOGGER.error("Failed to apply enchantment config change at " + id.toString(), e);
             }
             modified++;
         }
-        EXTRA_ENCHANTS_LOGGER.info("Modified {} enchantments", modified);
+        EXTRA_ENCHANTS_LOGGER.info("Loaded {} enchantments, {} modifiable, {} disabled", loaded, modified, disabled);
     }
 
     @Override

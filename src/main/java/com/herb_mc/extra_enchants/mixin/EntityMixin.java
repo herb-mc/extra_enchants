@@ -1,5 +1,6 @@
 package com.herb_mc.extra_enchants.mixin;
 
+import com.herb_mc.extra_enchants.lib.EnchantmentMappings;
 import com.herb_mc.extra_enchants.lib.LivingEntityMixinAccess;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -21,7 +22,7 @@ public class EntityMixin {
             )
     )
     protected float damage(float f) {
-        return (thisEntity instanceof LivingEntity && ((LivingEntityMixinAccess)thisEntity).exposedAccess() > 0) ? f * 1.5F : f;
+        return (thisEntity instanceof LivingEntity && ((LivingEntityMixinAccess)thisEntity).exposedAccess() > 0) ? f * EnchantmentMappings.exposedLightningDamageMult.getFloat() : f;
     }
 
 }

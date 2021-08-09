@@ -1,0 +1,8 @@
+{
+  "accel_velocity": 0.6,
+  "additional_accel_velocity": 0.06,
+  "min_accel": 0.015,
+  "additional_accel": 0.01,
+  "penalty_start_height": 128.0,
+  "critical_height": 256.0
+}

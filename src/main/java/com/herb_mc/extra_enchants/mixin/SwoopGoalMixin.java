@@ -1,5 +1,6 @@
 package com.herb_mc.extra_enchants.mixin;
 
+import com.herb_mc.extra_enchants.lib.EnchantmentMappings;
 import com.herb_mc.extra_enchants.registry.ModEnchants;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.mob.PhantomEntity;
@@ -29,7 +30,7 @@ public abstract class SwoopGoalMixin {
             cancellable = true
     )
     private void scaredOfWarding(CallbackInfoReturnable<Boolean> info){
-        List<HorseEntity> list = field_7333.world.getEntitiesByClass(HorseEntity.class, field_7333.getBoundingBox().expand(8.0D), EntityPredicates.VALID_ENTITY);
+        List<HorseEntity> list = field_7333.world.getEntitiesByClass(HorseEntity.class, field_7333.getBoundingBox().expand(EnchantmentMappings.wardingRange.getDouble()), EntityPredicates.VALID_ENTITY);
         if (!list.isEmpty()) {
             for (HorseEntity horse : list)
                 if (EnchantmentHelper.getEquipmentLevel(ModEnchants.WARDING, horse) > 0) found = true;

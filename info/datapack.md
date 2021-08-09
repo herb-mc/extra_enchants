@@ -5,7 +5,8 @@
 
  - [Datapack structure](#structure)
  - [General configuration](#configuring-general-settings)
- - [Enchantment configuration](#using-the-datapack-to-configure-individual-enchantments)
+ - [Enchantment configuration](#using-the-datapack-to-configure-universal-settings-for-individual-enchantments)
+ - [Individual enchantment attributes]()
 
 ---
 ## Structure
@@ -15,33 +16,37 @@ data
  └ extra_enchants
     └ enchantment_base
        └ COMMON ENCHANTMENT CONFIGS GO HERE
-    └ enchantment_configurations
+    └ enchantment_configuration
        └ INDIVIDUAL ENCHANTMENT AND GENERAL CONFIGS GO HERE
 ```
 ---
 ## Configuring general settings
 
-There are only a few general settings that are configurable at the moment. At some point a large portion of the mod should be data-driven, but this is it for now. Below is the default general configuration file.
+There are only a few general settings that are configurable at the moment. This file is named `general_configuration.json`, and is in `extra_enchants/enchantment_configuration` folder. Below is the default general configuration file.
 ```json
 {
   "directly_enchant_elytra": "true",
   "directly_enchant_horse_armor": "true",
   "directly_enchant_shields": "true",
   "directly_enchant_snowballs": "false",
-  "extended_trident_enchants": "true"
+  "extended_trident_enchants": "true",
+  "exposed_armor_mult": 0.9,
+  "exposed_damage_mult": 1.1,
+  "exposed_lightning_damage_mult": 1.5
 }
 ```
-`directly_enchant_item` allows the item to be enchanted in an enchantment table.</br>
-`extended_trident_enchants` allows tridents to have damaging enchantments such as Sharpness or Smite.
-
-
+`directly_enchant_item` - allows the item to be enchanted in an enchantment table.</br>
+`extended_trident_enchants` - allows tridents to have damaging enchantments such as Sharpness or Smite.</br>
+`exposed_armor_mult` - raw target armor multiplier with exposed applied. Default: 0.9</br>
+`exposed_damage_mult` - raw target incoming damage multiplier with exposed applied. Default: 1.1</br>
+`exposed_lightning_damage_mult` - extra damage multiplier with exposed applied, on lightning strikes. Default: 1.5
 
 ---
 
-## Using the datapack to configure individual enchantments
+## Using the datapack to configure universal settings for individual enchantments
 
-All enchantments in this mod are configurable via datapack. Every enchantment has its own .json file associated with some of its data. </br>
-The `.json` files must be placed in the `extra_enchants/enchantment_configuration` folder. The files are formatted as follows:
+Common attributes, such as type, availability, rarity, level, etc are configurable for each enchantment. Every enchantment has its own .json file associated with this data. </br>
+The `.json` files must be placed in the `extra_enchants/enchantment_base` folder. Unlike individual configuration, all fields are required. The files are formatted as follows:
 ```json
 {
   "type": "scalable/fixed",
@@ -91,3 +96,17 @@ By default, every enchantment, scalable or fixed, will have a maximum power of 5
 `is_curse` specifies whether an enchantment ought to be considered a curse. Curses cannot be removed via any means.</br>
 `is_treasure` specifies whether an enchantment ought to be considered a treasure. Treasure enchantments cannot be obtained via the enchantment table.</br>
 `incompatible_enchants` specifies all enchantments that are not compatible with this enchantment. For two enchantments to be compatible, neither enchantment can have the other in their `incompatible_enchants` field. These take custom strings mapped to enchantments, and a [full list can be found here](enchantment_mappings.md).
+
+---
+
+## Using the datapack to configure attributes for individual enchants
+Specific attributes, such as reach distance for Architect or arrow velocity boost from Arrow Speed, are all configurable. Individual enchantments will be located in the `extra_enchants/enchantment_configuration` folder with the `general_configuration` file. Unlike common enchantment configuration, not all fields need to be included. Here is an example:
+
+```json
+{
+  "base_explosion_power": 1.0,
+  "in_ground_scale": 0.5
+}
+```
+
+A full list of all enchantments and their respective configurable options may be found [here](data_driven.md).

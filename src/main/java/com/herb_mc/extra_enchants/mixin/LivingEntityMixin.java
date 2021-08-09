@@ -82,7 +82,7 @@ public abstract class LivingEntityMixin implements AttributeModCommons, UUIDComm
     )
     private float applyArmorEffects(float armor) {
         armor *= 1.0D - level * EnchantmentMappings.cleavingArmorPierce.getDouble();
-        return armor > 0 ? (EXPOSED > 0) ? armor * 0.9F : armor : 0;
+        return armor > 0 ? (EXPOSED > 0) ? armor * EnchantmentMappings.exposedArmorMult.getFloat() : armor : 0;
     }
 
     @ModifyArg(
@@ -150,7 +150,7 @@ public abstract class LivingEntityMixin implements AttributeModCommons, UUIDComm
             ordinal = 0
     )
     private float applyToughnessDR(float amount) {
-        return (getEquipmentLevel(ModEnchants.TOUGH, thisEntity) > 0) ? amount * (1.0F - 0.03F * getEquipmentLevel(ModEnchants.TOUGH, thisEntity)) : amount;
+        return (getEquipmentLevel(ModEnchants.TOUGH, thisEntity) > 0) ? amount * (1.0F - EnchantmentMappings.toughDamageReduction.getFloat() * getEquipmentLevel(ModEnchants.TOUGH, thisEntity)) : amount;
     }
 
     @ModifyConstant(
@@ -159,7 +159,7 @@ public abstract class LivingEntityMixin implements AttributeModCommons, UUIDComm
     )
     private int applyReflex(int i) {
         if (thisEntity.getMainHandStack() != null & EnchantmentHelper.getLevel(ModEnchants.REFLEX, thisEntity.getMainHandStack()) > 0) {
-            return 0;
+            return EnchantmentMappings.reflexReadyTicks.getInt();
         }
         return i;
     }
@@ -196,7 +196,7 @@ public abstract class LivingEntityMixin implements AttributeModCommons, UUIDComm
             fallDistance /= 2 * i / EnchantmentMappings.featherweightFallSpeedScale.getDouble();
         i = EnchantmentHelper.getEquipmentLevel(ModEnchants.LEAPING, thisEntity);
         if (i > 0)
-            fallDistance -= (float) i - 1.0F;
+            fallDistance -= (float) i - EnchantmentMappings.leapingFallHeight.getFloat();
         return fallDistance;
     }
 
@@ -211,11 +211,11 @@ public abstract class LivingEntityMixin implements AttributeModCommons, UUIDComm
     private float damageCalc(float amount, DamageSource source) {
         int level = EnchantmentHelper.getEquipmentLevel(ModEnchants.SHOCK_RESISTANT, thisEntity);
         if (level > 0 && source == DamageSource.FLY_INTO_WALL)
-            amount *= level <= 4 ? (5F - level) / 5F : 0.2F;
+            amount *= EnchantmentMappings.shockResistBaseMult.getFloat() - 1.0F + 1.0F / (EnchantmentMappings.shockResistScale.getFloat() * Math.log10(EnchantmentHelper.getEquipmentLevel(ModEnchants.SHOCK_RESISTANT, thisEntity)) + 1.0F);
         if (EnchantmentHelper.getEquipmentLevel(ModEnchants.ACE, thisEntity) > 0 && thisEntity.isFallFlying())
             amount *= 1D - Math.log10(EnchantmentHelper.getEquipmentLevel(ModEnchants.ACE, thisEntity) + 1) * EnchantmentMappings.aceDamageReducerMult.getDouble();
         if (EXPOSED > 0)
-            amount *= 1.1;
+            amount *= EnchantmentMappings.exposedDamageMult.getFloat();
         if (source instanceof EntityDamageSource && EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_THE_BLOOD_GOD, thisEntity) > 0 && (rand.nextDouble() < EnchantmentMappings.coreBloodCritChance.getDouble()))
             amount *= EnchantmentMappings.coreBloodCritMult.getDouble();
         if (EnchantmentHelper.getEquipmentLevel(ModEnchants.BLAZE_AFFINITY, thisEntity) > 0 && thisEntity.isOnFire())
@@ -258,8 +258,8 @@ public abstract class LivingEntityMixin implements AttributeModCommons, UUIDComm
                     target = "Lnet/minecraft/block/Block;getSlipperiness()F"
             )
     )
-    private float slimeyFriction(float t) {
-        return (EnchantmentHelper.getEquipmentLevel(ModEnchants.SLIMEY, thisEntity) > 0) ? 1.0F : t;
+    private float slimeySlipperiness(float f) {
+        return (EnchantmentHelper.getEquipmentLevel(ModEnchants.SLIMEY, thisEntity) > 0) ? EnchantmentMappings.slimeySlipperiness.getFloat() : f;
     }
 
     @ModifyVariable(
@@ -315,13 +315,13 @@ public abstract class LivingEntityMixin implements AttributeModCommons, UUIDComm
     )
     private void setMinimumVelocity(Vec3d movementInput, CallbackInfo info) {
         if (EnchantmentHelper.getEquipmentLevel(ModEnchants.PROPELLING, thisEntity) > 0)
-            if (thisEntity.getVelocity().length() < 0.5 + 0.05 * EnchantmentHelper.getEquipmentLevel(ModEnchants.PROPELLING, thisEntity)) {
-                double mult = 0.01 + 0.01 * EnchantmentHelper.getEquipmentLevel(ModEnchants.PROPELLING, thisEntity);
-                if (thisEntity.getBlockY() >= 128)
-                    mult *= (256 - thisEntity.getBlockY()) / 128D;
+            if (thisEntity.getVelocity().length() < EnchantmentMappings.propellingMinAccelVelocity.getDouble() + EnchantmentMappings.propellingAdditionalAccelVelocity.getDouble() * (EnchantmentHelper.getEquipmentLevel(ModEnchants.PROPELLING, thisEntity) - 1)) {
+                double mult = EnchantmentMappings.propellingAdditionalAccel.getDouble() * EnchantmentHelper.getEquipmentLevel(ModEnchants.PROPELLING, thisEntity);
+                if (thisEntity.getBlockY() >= EnchantmentMappings.propellingPenaltyStartHeight.getDouble())
+                    mult *= (EnchantmentMappings.propellingPenaltyCriticalHeight.getDouble() - thisEntity.getBlockY()) / EnchantmentMappings.propellingPenaltyStartHeight.getDouble();
                 if (mult < 0)
                     mult = 0;
-                mult += 0.005;
+                mult += EnchantmentMappings.propellingMinAccel.getDouble();
                 thisEntity.setVelocity(thisEntity.getVelocity().add(thisEntity.getRotationVector().multiply(mult)));
             }
     }
@@ -350,7 +350,7 @@ public abstract class LivingEntityMixin implements AttributeModCommons, UUIDComm
             int i = getEquipmentLevel(ModEnchants.WINDSTEP, thisEntity);
             thisEntity.stepHeight = STEP_HEIGHT;
             if (i > 0)
-                thisEntity.stepHeight += i * 0.4F;
+                thisEntity.stepHeight += i * EnchantmentMappings.windstepHeight.getFloat();
             removeAttribute(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, ACE_ATTRIBUTE_ID);
             i = getEquipmentLevel(ModEnchants.ACE, thisEntity);
             if (i > 0 && thisEntity.isFallFlying())
@@ -393,7 +393,7 @@ public abstract class LivingEntityMixin implements AttributeModCommons, UUIDComm
                 SPRINT_BOOST++;
             i = getEquipmentLevel(ModEnchants.DWARVEN, thisEntity);
             if (i > 0 && (thisEntity.isSneaking() || EnchantmentMappings.dwarvenAlwaysActive.getBool())) {
-                Vec3d vec = getNearestOre();
+                Vec3d vec = getNearestOre(EnchantmentMappings.dwarvenActiveRange.getDouble());
                 double sneak = 0;
                 if (thisEntity.isInSwimmingPose())
                     sneak = 0.8;
@@ -436,8 +436,8 @@ public abstract class LivingEntityMixin implements AttributeModCommons, UUIDComm
                 if (Objects.requireNonNull(thisEntity.getStatusEffect(StatusEffects.NIGHT_VISION)).getAmplifier() == 100)
                     thisEntity.removeStatusEffect(StatusEffects.NIGHT_VISION);
             i = getEquipmentLevel(ModEnchants.PSYCHIC, thisEntity);
-            if (i > 0 && thisEntity.isSneaking()) {
-                EntityHitResult result = raycast();
+            if (i > 0 && (thisEntity.isSneaking() || EnchantmentMappings.psychicAlwaysActive.getBool())) {
+                EntityHitResult result = raycast(EnchantmentMappings.psychicActiveRange.getDouble());
                 if (result != null)
                     if (result.getEntity() instanceof LivingEntity)
                         ((LivingEntity) result.getEntity()).addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 2, 20, true, false, false));
@@ -458,7 +458,7 @@ public abstract class LivingEntityMixin implements AttributeModCommons, UUIDComm
                 i = getEquipmentLevel(ModEnchants.SWIFTNESS, thisEntity);
                 removeAttribute(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, SWIFTNESS_ATTRIBUTE_ID);
                 if (i > 0)
-                    modAttributeBase(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, i, SWIFTNESS_ATTRIBUTE_ID, "swift_speed_boost", 0.1, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+                    modAttributeBase(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, i, SWIFTNESS_ATTRIBUTE_ID, "swift_speed_boost", EnchantmentMappings.swiftnessSpeedMult.getDouble(), EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
                 i = getEquipmentLevel(ModEnchants.BOUNDING, thisEntity);
                 removeAttribute(thisEntity, EntityAttributes.HORSE_JUMP_STRENGTH, BOUNDING_JUMP_BOOST_ID);
                 if (i > 0)
@@ -494,11 +494,11 @@ public abstract class LivingEntityMixin implements AttributeModCommons, UUIDComm
         return finalList;
     }
 
-    private Vec3d getNearestOre() {
+    private Vec3d getNearestOre(double range) {
         Vec3d vec3d = null;
-        double lowestSquareDistance = 30.25;
+        double lowestSquareDistance = Math.pow(range, 2);
         Vec3d vec1 = new Vec3d(thisEntity.getX(), thisEntity.getY() + 1.0, thisEntity.getZ());
-        for (BlockPos pos : BlockPos.iterate(thisEntity.getBlockPos().add(-6, -6, -6), thisEntity.getBlockPos().add(6, 6, 6))) {
+        for (BlockPos pos : BlockPos.iterate(thisEntity.getBlockPos().add(-(range + 1), -(range + 1), -(range + 1)), thisEntity.getBlockPos().add(range + 1, range + 1, range + 1))) {
             Vec3d vec2 = new Vec3d(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
             Block currentBlock = thisEntity.world.getBlockState(pos).getBlock();
             if (currentBlock instanceof OreBlock && getSquareDist(vec1, vec2) <= lowestSquareDistance) {
@@ -514,12 +514,12 @@ public abstract class LivingEntityMixin implements AttributeModCommons, UUIDComm
         return in2.x * in2.x + in2.y * in2.y + in2.z * in2.z;
     }
 
-    public EntityHitResult raycast() {
+    public EntityHitResult raycast(double range) {
         Vec3d veceye = thisEntity.getEyePos();
         Vec3d vecdir = thisEntity.getRotationVec(1.0F);
-        Vec3d vecext = veceye.add(vecdir.x * 6, vecdir.y * 6, vecdir.z * 6);
-        Box box = thisEntity.getBoundingBox().stretch(vecdir.multiply(6)).expand(0.0D, 0.0D, 0.0D);
-        return ProjectileUtil.raycast(thisEntity, veceye, vecext, box, (entityx) -> !entityx.isSpectator() && entityx.collides(), 49);
+        Vec3d vecext = veceye.add(vecdir.x * range, vecdir.y * range, vecdir.z * range);
+        Box box = thisEntity.getBoundingBox().stretch(vecdir.multiply(range)).expand(0.0D, 0.0D, 0.0D);
+        return ProjectileUtil.raycast(thisEntity, veceye, vecext, box, (entityx) -> !entityx.isSpectator() && entityx.collides(), Math.pow(range + 1, 2));
     }
 
     public void randomTeleport(int range, int tries){

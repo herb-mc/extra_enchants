@@ -149,7 +149,7 @@ public abstract class PersistentProjectileEntityMixin implements PersistentProje
     private void setReflectedVelocity(PersistentProjectileEntity persistentProjectileEntity, Vec3d velocity) {
         if (hitResult instanceof LivingEntity && ((LivingEntity) hitResult).isBlocking() && ((LivingEntity) hitResult).getActiveItem() != null && EnchantmentHelper.getLevel(ModEnchants.REFLECTING, ((LivingEntity) hitResult).getActiveItem()) > 0) {
             double absSpeed = persistentProjectileEntity.getVelocity().length();
-            persistentProjectileEntity.setVelocity(hitResult.getRotationVector().multiply(absSpeed * (0.4 + 0.1 * EnchantmentHelper.getLevel(ModEnchants.REFLECTING, ((LivingEntity) hitResult).getActiveItem()))));
+            persistentProjectileEntity.setVelocity(hitResult.getRotationVector().multiply(absSpeed * (EnchantmentMappings.reflectingBaseReflectedVelocity.getDouble() + EnchantmentMappings.reflectingAdditionalReflectedVelocity.getDouble() * (EnchantmentHelper.getLevel(ModEnchants.REFLECTING, ((LivingEntity) hitResult).getActiveItem()) - 1))));
         }
         else
             persistentProjectileEntity.setVelocity(velocity);

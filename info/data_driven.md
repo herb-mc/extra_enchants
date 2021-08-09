@@ -16,6 +16,7 @@
 - [Core of the Warp](#core-of-the-warp)
 - [Curse of Instability](#curse-of-instability)
 - [Dextrous](#dextrous)
+- [Dwarven](#dwarven)
 - [Explosive](#explosive)
 - [Exposing](#exposing)
 - [Featherweight](#featherweight)
@@ -34,14 +35,10 @@
 - [Shock Resistant](#shock-resistant)
 - [Slimey](#slimey)
 - [Sniper](#sniper)
-- [Soulbound](#soulbound)
 - [Stalwart](#stalwart)
 - [Steadfast](#steadfast)
-- [Surface Skimmer](#surface-skimmer)
 - [Swiftness](#swiftness)
 - [Terraforming](#terraforming)
-- [Testing](#testing)
-- [Thunderbolt](#thunderbolt)
 - [Tough](#tough)
 - [Turbo](#turbo)
 - [Warding](#warding)
@@ -190,6 +187,7 @@ Breath gained on land for a tick is given by the formula `random_int[0, breath_g
 
 ## *Dwarven*
 
+`active_range` - distance within which ores will be searched for. Default: 5.5</br>
 `always_active` - if true, enchantment is active all the time. If false, only active on sneak. Default: true
 
 ---
@@ -272,18 +270,37 @@ Breath gained on land for a tick is given by the formula `random_int[0, breath_g
 [Back to top](#enchantment-list)
 
 ## *Propelling*
+
+`accel_velocity` - base velocity at which propelling will begin accelerating. Default: 0.6</br>
+`additional_accel_velocity` - additional minimum acceleration velocity. Default: 0.06</br>
+`min_accel` - absolute minimum acceleration multiplier. Default: 0.015</br>
+`additional_accel` - acceleration to be added per level. First level will also add this amount. Default: 0.01</br>
+`penalty_start_height` - height at which additional acceleration penalties start to be applied. Default: 128.0</br>
+`critical_height` - height above which the only acceleration applied is the minimum acceleration. Default: 256.0
+
 ---
 [Back to top](#enchantment-list)
 
 ## *Psychic*
+
+`active_range` - base distance to apply the exposed effect. Default: 6.0</br>
+`always_active` - if true, enchantment is active all the time. If false, only active on sneak. Default: false
+
 ---
 [Back to top](#enchantment-list)
 
 ## *Reflecting*
+
+`base_reflected_velocity` - multiplier for reflected projectile velocity at level 1. Default: 0.5</br>
+`additional_reflected_velocity` - additional velocity multiplier per level. Default: 0.1
+
 ---
 [Back to top](#enchantment-list)
 
 ## *Reflex*
+
+`ready_ticks` - amount of time to ready a shield with reflex, in ticks. Default: 0
+
 ---
 [Back to top](#enchantment-list)
 
@@ -298,55 +315,87 @@ Breath gained on land for a tick is given by the formula `random_int[0, breath_g
 
 ## *Shock Resistant*
 
+`base_damage_multiplier` - base multiplier for elytra damage at level 1. Default: 0.8 </br>
+`damage_mult_scale` - scales the damage reduction function. Higher values cause damage reduction to increase faster with level. Default: 1.5
+
 ---
 [Back to top](#enchantment-list)
 
 ## *Slimey*
 
+`slipperiness` - slipperiness value while equipped. Lower values results in higher friction. Defualt: 1.0</br>
+
 ---
 [Back to top](#enchantment-list)
 
 ## *Sniper*
----
-[Back to top](#enchantment-list)
 
-## *Soulbound*
+`draw_mult` - proportional increase in draw speed per level. Default: 1.0</br>
+`base_damage` - extra damage per level. Default: 2.0</br>
+`velocity_mult` - proportion of extra velocity per level. Default: 0.1
+
 ---
 [Back to top](#enchantment-list)
 
 ## *Stalwart*
+
+`cooldown` - shield cooldown, in ticks. Default: 60
+
 ---
 [Back to top](#enchantment-list)
 
 ## *Steadfast*
+
+`speed_mult` - proportional speed increase per level while drawing bow/crossbow. Default: 1.0
+
 ---
 [Back to top](#enchantment-list)
 
 ## *Swiftness*
+
+`speed_mult` - proportional speed increase per level. Default: 0.1
+
 ---
 [Back to top](#enchantment-list)
 
 ## *Terraforming*
+
+`additional_tool_speed` - amount of additional tool speed. Default: 58</br>
+`drop_items` - whether items should drop from mined blocks. Default: false
+
 ---
 [Back to top](#enchantment-list)
 
 ## *Tough*
+
+`damage_reduction` - amount of damage reduction per level. Default: 0.03
+
 ---
 [Back to top](#enchantment-list)
 
 ## *Turbo*
+
+`lifetime_decrement` - additional amount lifetime is decreased per tick. Default: 2</br>
+`speed_mult` - multiplier for velocity provided by fireworks. Default: 1.5
+
 ---
 [Back to top](#enchantment-list)
 
 ## *Warding*
+
+`range` - range in which phantoms will be scared away. Default: 8.0
+
 ---
 [Back to top](#enchantment-list)
 
 ## *Weighted*
+
+`attack_damage_boost` - proportion of attack damage increase per level. Default: 0.2</br>
+`attack_speed_penalty` - proportion of attack speed decrease per level. Default: -0.15
+
 ---
 [Back to top](#enchantment-list)
 
 ## *Windstep*
----
-  [Back to top](#enchantment-list)
-## *Withering*
+
+`step_height_boost` - extra step height per level. Default: 0.4

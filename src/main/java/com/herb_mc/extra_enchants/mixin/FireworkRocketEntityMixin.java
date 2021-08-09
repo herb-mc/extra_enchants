@@ -1,5 +1,6 @@
 package com.herb_mc.extra_enchants.mixin;
 
+import com.herb_mc.extra_enchants.lib.EnchantmentMappings;
 import com.herb_mc.extra_enchants.registry.ModEnchants;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.projectile.FireworkRocketEntity;
@@ -24,7 +25,7 @@ public abstract class FireworkRocketEntityMixin implements FireworkRocketEntityI
             )
     )
     protected Vec3d turboBoost(Vec3d vec) {
-        return (EnchantmentHelper.getEquipmentLevel(ModEnchants.TURBO, this.shooter()) > 0) ? vec.multiply(1.5) : vec;
+        return (EnchantmentHelper.getEquipmentLevel(ModEnchants.TURBO, this.shooter()) > 0) ? vec.multiply(EnchantmentMappings.turboSpeedMult.getDouble()) : vec;
     }
 
     @Inject(
@@ -33,7 +34,7 @@ public abstract class FireworkRocketEntityMixin implements FireworkRocketEntityI
     )
     protected void decreaseLifetime(CallbackInfo info) {
         if (this.shooter() != null && EnchantmentHelper.getEquipmentLevel(ModEnchants.TURBO, this.shooter()) > 0 && this.shooter().isFallFlying() && this.wasShotByEntity())
-            this.life(this.getLife() + 2);
+            this.life(this.getLife() + EnchantmentMappings.turboLifetimeDecrement.getInt());
     }
 
 }

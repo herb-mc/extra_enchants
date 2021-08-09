@@ -30,7 +30,7 @@ public abstract class PlayerEntityMixin implements AttributeModCommons, UUIDComm
             )
     )
     private int decreaseShieldCooldown(int i) {
-        return thisEntity.getActiveItem() != null && EnchantmentHelper.getLevel(ModEnchants.STALWART, thisEntity.getActiveItem()) > 0 ? i - 40 : i;
+        return thisEntity.getActiveItem() != null && EnchantmentHelper.getLevel(ModEnchants.STALWART, thisEntity.getActiveItem()) > 0 ? EnchantmentMappings.stalwartCooldown.getInt() : i;
     }
 
     @ModifyVariable(
@@ -41,7 +41,7 @@ public abstract class PlayerEntityMixin implements AttributeModCommons, UUIDComm
             )
     )
     private float addTerraformingSpeed(float f) {
-        return (thisEntity.getActiveHand() != null && EnchantmentHelper.getLevel(ModEnchants.TERRAFORMING, thisEntity.getStackInHand(thisEntity.getActiveHand())) > 0 && f > 1.0) ? f + 58 : f;
+        return (thisEntity.getActiveHand() != null && EnchantmentHelper.getLevel(ModEnchants.TERRAFORMING, thisEntity.getStackInHand(thisEntity.getActiveHand())) > 0 && f > 1.0) ? f + EnchantmentMappings.terraformingToolSpeed.getInt() : f;
     }
 
     @Inject(
@@ -57,8 +57,8 @@ public abstract class PlayerEntityMixin implements AttributeModCommons, UUIDComm
         removeAttribute(thisEntity, EntityAttributes.GENERIC_ATTACK_SPEED, WEIGHTED_ATTRIBUTE_ID);
         removeAttribute(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, WEIGHTED_ATTRIBUTE_ID);
         if (i > 0) {
-            modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_SPEED, i, WEIGHTED_ATTRIBUTE_ID, "wei_attack_speed", -0.15D, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
-            modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, i, WEIGHTED_ATTRIBUTE_ID, "wei_attack_damage", 0.2D, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+            modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_SPEED, i, WEIGHTED_ATTRIBUTE_ID, "wei_attack_speed", EnchantmentMappings.weightedAttackSpeedPenalty.getDouble(), EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+            modAttributeBase(thisEntity, EntityAttributes.GENERIC_ATTACK_DAMAGE, i, WEIGHTED_ATTRIBUTE_ID, "wei_attack_damage", EnchantmentMappings.weightedAttackDamageIncrease.getDouble(), EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
         }
         i = EnchantmentHelper.getEquipmentLevel(ModEnchants.ARCHITECT, thisEntity);
         removeAttribute(thisEntity, ReachEntityAttributes.REACH, ARCHITECT_ATTRIBUTE_ID);
@@ -69,7 +69,7 @@ public abstract class PlayerEntityMixin implements AttributeModCommons, UUIDComm
             ItemStack itemStack = thisEntity.getActiveItem();
             removeAttribute(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, STEADFAST_ATTRIBUTE_ID);
             if (thisEntity.isUsingItem() && (itemStack.isOf(Items.BOW) || itemStack.isOf(Items.CROSSBOW) || itemStack.isOf(Items.TRIDENT))) {
-                modAttributeBase(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, i, STEADFAST_ATTRIBUTE_ID, "steadfast_movement_speed", 1.0D, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+                modAttributeBase(thisEntity, EntityAttributes.GENERIC_MOVEMENT_SPEED, i, STEADFAST_ATTRIBUTE_ID, "steadfast_movement_speed", EnchantmentMappings.steadfastSpeedMult.getDouble(), EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
             }
         }
     }

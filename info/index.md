@@ -453,7 +453,10 @@ All of the information here is only applicable to unmodified enchantments. Most 
 - Max level: 2
 - Rarity: Uncommon
 ### Technical description:
-- (20 * level)% reduction on elytra ramming damage
+- Elytra ramming damage is multiplied by the following multiplier:
+
+![mult](https://latex.codecogs.com/gif.latex?multiplier%20%3D%20%5Cfrac%7B1%7D%7B1.5*%5Clog%20%28level%29&plus;1%7D&plus;0.2)
+
 ---
 [Back to top](#enchantment-list)
 

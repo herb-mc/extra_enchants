@@ -3,5 +3,8 @@
   "directly_enchant_horse_armor": "true",
   "directly_enchant_shields": "true",
   "directly_enchant_snowballs": "false",
-  "extended_trident_enchants": "true"
+  "extended_trident_enchants": "true",
+  "exposed_armor_mult": 0.9,
+  "exposed_damage_mult": 1.1,
+  "exposed_lightning_damage_mult": 1.5
 }

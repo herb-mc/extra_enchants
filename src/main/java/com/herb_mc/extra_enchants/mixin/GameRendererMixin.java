@@ -33,9 +33,9 @@ public abstract class GameRendererMixin implements UUIDCommons {
     )
     public float removeFOVModFromSteadfast(float f) {
         if (renderer.getClient().getCameraEntity() instanceof AbstractClientPlayerEntity player) {
-            int i = EnchantmentHelper.getEquipmentLevel(ModEnchants.STEADFAST, player);
+            float i = (float) ((EnchantmentHelper.getEquipmentLevel(ModEnchants.STEADFAST, player) + 1) * EnchantmentMappings.steadfastSpeedMult.getDouble());
             if (Objects.requireNonNull(player.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).getModifier(STEADFAST_ATTRIBUTE_ID) != null)
-                f = (player.isSprinting()) ? (float) (((f - 1) * 2 + 1) / (1.15 * i + 1.15)) : ((f - 1) * 2 + 1) / (i + 1);
+                f = (player.isSprinting()) ? (float) (((f - 1) * 2 + 1) / 1.15 * i) : ((f - 1) * 2 + 1) / i;
         }
         return f;
     }
