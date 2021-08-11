@@ -26,7 +26,6 @@ import java.util.function.Supplier;
 public class BlockMixin {
 
     @Unique private static boolean noGravity = false;
-    @Unique private static Random rand;
 
     private static void noGravity(boolean g) {
         noGravity = g;
@@ -48,19 +47,6 @@ public class BlockMixin {
     }
 
     @Inject(
-            method = "dropStack(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/item/ItemStack;)V",
-            at = @At(
-                    value = "INVOKE_ASSIGN",
-                    target = "Lnet/minecraft/util/math/MathHelper;nextDouble(Ljava/util/Random;DD)D",
-                    ordinal = 0
-            ),
-            locals = LocalCapture.CAPTURE_FAILSOFT
-    )
-    private static void getLocals(World world, BlockPos pos, ItemStack stack, CallbackInfo ci) {
-        rand = world.random;
-    }
-
-    @Inject(
             method = "dropStack(Lnet/minecraft/world/World;Ljava/util/function/Supplier;Lnet/minecraft/item/ItemStack;)V",
             at = @At(
                     value = "INVOKE",
@@ -71,7 +57,7 @@ public class BlockMixin {
     private static void setStackGravity(World world, Supplier<ItemEntity> itemEntitySupplier, ItemStack stack, CallbackInfo info, ItemEntity itemEntity) {
         if (noGravity) {
             itemEntity.setNoGravity(true);
-            itemEntity.setVelocity(MathHelper.nextDouble(rand, -0.0125D, 0.0125D), MathHelper.nextDouble(rand, -0.0125D, 0.0125D), MathHelper.nextDouble(rand, -0.0125D, 0.0125D));
+            itemEntity.setVelocity(MathHelper.nextDouble(world.random, -0.0125D, 0.0125D), MathHelper.nextDouble(world.random, -0.0125D, 0.0125D), MathHelper.nextDouble(world.random, -0.0125D, 0.0125D));
         }
     }
 

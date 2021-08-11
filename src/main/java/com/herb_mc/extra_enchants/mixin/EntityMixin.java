@@ -12,8 +12,6 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 @Mixin(Entity.class)
 public class EntityMixin {
 
-    @Unique Entity thisEntity = (Entity) (Object) this;
-
     @ModifyArg(
             method = "onStruckByLightning",
             at = @At(
@@ -22,6 +20,7 @@ public class EntityMixin {
             )
     )
     protected float damage(float f) {
+        Entity thisEntity = (Entity) (Object) this;
         return (thisEntity instanceof LivingEntity && ((LivingEntityMixinAccess)thisEntity).exposedAccess() > 0) ? f * EnchantmentMappings.exposedLightningDamageMult.getFloat() : f;
     }
 

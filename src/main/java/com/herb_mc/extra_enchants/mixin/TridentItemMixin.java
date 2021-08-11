@@ -22,7 +22,6 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 @Mixin(TridentItem.class)
 public class TridentItemMixin {
 
-    @Unique TridentItem thisItem = (TridentItem) (Object) this;
     @Unique Vec3d velocity;
 
     @Inject(
@@ -30,6 +29,7 @@ public class TridentItemMixin {
             at = @At("HEAD")
     )
     public void addLaunchingVelocity(ItemStack stack, World world, LivingEntity user, int remainingUseTicks, CallbackInfo info) {
+        TridentItem thisItem = (TridentItem) (Object) this;
         int i = thisItem.getMaxUseTime(stack) - remainingUseTicks;
         velocity = user.getRotationVector().multiply(EnchantmentHelper.getLevel(ModEnchants.LAUNCHING, stack)).multiply(EnchantmentMappings.launchingVelocityScale.getDouble());
         if (EnchantmentHelper.getLevel(ModEnchants.LAUNCHING, stack) > 0 && i >= 10 && EnchantmentHelper.getLevel(Enchantments.RIPTIDE, stack) <= 0) {

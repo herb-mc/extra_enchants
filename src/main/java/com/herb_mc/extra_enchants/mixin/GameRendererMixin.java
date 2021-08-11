@@ -22,8 +22,6 @@ import java.util.Objects;
 @Mixin(GameRenderer.class)
 public abstract class GameRendererMixin implements UUIDCommons {
 
-    @Unique GameRenderer renderer =  (GameRenderer) (Object) this;
-
     @ModifyVariable(
             method = "updateMovementFovMultiplier",
             at = @At(
@@ -32,7 +30,7 @@ public abstract class GameRendererMixin implements UUIDCommons {
             )
     )
     public float removeFOVModFromSteadfast(float f) {
-        if (renderer.getClient().getCameraEntity() instanceof AbstractClientPlayerEntity player) {
+        if (((GameRenderer) (Object) this).getClient().getCameraEntity() instanceof AbstractClientPlayerEntity player) {
             float i = (float) ((EnchantmentHelper.getEquipmentLevel(ModEnchants.STEADFAST, player) + 1) * EnchantmentMappings.steadfastSpeedMult.getDouble());
             if (Objects.requireNonNull(player.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).getModifier(STEADFAST_ATTRIBUTE_ID) != null)
                 f = (player.isSprinting()) ? (float) (((f - 1) * 2 + 1) / 1.15 * i) : ((f - 1) * 2 + 1) / i;
@@ -47,8 +45,8 @@ public abstract class GameRendererMixin implements UUIDCommons {
     )
     public void sharpShooterFOVMod(CallbackInfoReturnable<Double> callbackInfo) {
         MinecraftClient.getInstance().options.smoothCameraEnabled = false;
-        if (renderer.getClient().getCameraEntity() instanceof AbstractClientPlayerEntity)
-            if((EnchantmentHelper.getEquipmentLevel(ModEnchants.SHARPSHOOTER, (AbstractClientPlayerEntity)renderer.getClient().getCameraEntity()) > 0 && (Objects.requireNonNull(renderer.getClient().getCameraEntity())).isSneaking())) {
+        if (((GameRenderer) (Object) this).getClient().getCameraEntity() instanceof AbstractClientPlayerEntity player)
+            if((EnchantmentHelper.getEquipmentLevel(ModEnchants.SHARPSHOOTER, player) > 0 && (player.isSneaking()))) {
                 MinecraftClient.getInstance().options.smoothCameraEnabled = true;
                 double fov = callbackInfo.getReturnValue();
                 callbackInfo.setReturnValue(fov * EnchantmentMappings.sharpshooterFOVScale.getFloat());

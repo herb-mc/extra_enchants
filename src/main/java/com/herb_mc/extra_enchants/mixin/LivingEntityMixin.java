@@ -5,8 +5,6 @@ import com.herb_mc.extra_enchants.lib.EnchantmentMappings;
 import com.herb_mc.extra_enchants.lib.LivingEntityMixinAccess;
 import com.herb_mc.extra_enchants.registry.ModEnchants;
 import com.herb_mc.extra_enchants.lib.UUIDCommons;
-import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
-import net.fabricmc.fabric.impl.tool.attribute.ToolManagerImpl;
 import net.minecraft.block.Block;
 import net.minecraft.block.OreBlock;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -21,8 +19,6 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.passive.FoxEntity;
 import net.minecraft.entity.passive.HorseEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.predicate.entity.EntityPredicates;
@@ -52,15 +48,13 @@ public abstract class LivingEntityMixin implements AttributeModCommons, UUIDComm
 
     @Shadow public abstract int getArmor();
 
-    @Shadow public abstract void heal(float amount);
-
     @Unique private final LivingEntity thisEntity = (LivingEntity) (Object) this;
     @Unique private int EXPOSED;
     @Unique private float STEP_HEIGHT = 0F;
     @Unique private int SPRINT_BOOST = 0;
     @Unique private final LivingEntity entityStatic = (LivingEntity) (Object) this;
     @Unique private final Random rand = entityStatic.getRandom();
-    @Unique int level = 0;
+    @Unique private int level = 0;
 
     @Override
     public int exposedAccess() {

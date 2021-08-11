@@ -11,14 +11,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(ItemEntity.class)
 public class ItemEntityMixin {
 
-    ItemEntity thisEntity = (ItemEntity) (Object) this;
-
     @Inject(
             method = "isFireImmune",
             at = @At("RETURN"),
             cancellable = true
     )
     public void setFireproof(CallbackInfoReturnable<Boolean> info) {
+        ItemEntity thisEntity = (ItemEntity) (Object) this;
         if (EnchantmentHelper.getLevel(ModEnchants.FIREPROOF, thisEntity.getStack()) > 0)
             info.setReturnValue(true);
     }
