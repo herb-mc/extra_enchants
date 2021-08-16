@@ -69,6 +69,8 @@ Requires Fabric Loader 0.11.6 and [Fabric API 0.37.1+1.17](https://www.curseforg
 
 - *Dextrous* - Increases attack speed
 
+- *Magic Guard* - Immune to indirect damage
+
 - *Weighted* - Decreases attack speed but increases attack damage
 
 #### Leggings

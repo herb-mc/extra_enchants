@@ -11,8 +11,8 @@
   "is_treasure": "false",
   "incompatible_enchants": [
     "thorns",
-    "weighted",
     "dextrous",
-    "berserk"
+    "magic_guard",
+    "weighted"
   ]
 }

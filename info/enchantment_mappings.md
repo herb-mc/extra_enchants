@@ -33,6 +33,7 @@ These mappings are used for the configuration datapack.
 `"lifesteal"`- `extra_enchants:lifesteal`</br>
 `"lunging"`- `extra_enchants:lunging`</br>
 `"magnetic"`- `extra_enchants:magnetic`</br>
+`"magic_guard"`- `extra_enchants:magic_guard`</br>
 `"night_vision"`- `extra_enchants:night_vision`</br>
 `"nimble"`- `extra_enchants:nimble`</br>
 `"propelling"`- `extra_enchants:propelling`</br>

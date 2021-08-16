@@ -30,6 +30,7 @@ All of the information here is only applicable to unmodified enchantments. Most 
 - [Lifesteal](#lifesteal)
 - [Lunging](#lunging)
 - [Magnetic](#magnetic)
+- [Magic Guard](#magic-guard)
 - [Night Vision](#night-vision)
 - [Nimble](#nimble)
 - [Propelling](#propelling)
@@ -242,7 +243,7 @@ All of the information here is only applicable to unmodified enchantments. Most 
 ## *Dextrous*
 - Increases attack speed.
 - Compatible equipment: Chestplates
-- Incompatible enchantments: Weighted, Thorns
+- Incompatible enchantments: Weighted, Thorns, Magic Guard
 - Max level: 2
 - Rarity: Rare
 ### Technical description:
@@ -355,6 +356,18 @@ All of the information here is only applicable to unmodified enchantments. Most 
 - Rarity: Uncommon
 ### Technical description:
 - 15% increase per level to horizontal velocities on jump.
+---
+[Back to top](#enchantment-list)
+
+## *Magic Guard*
+- The user can only be damaged directly
+- Compatible equipment: Chestplates
+- Incompatible enchantments: Weighted, Thorns, Weighted
+- Max level: 1
+- Rarity: Rare
+- Type: Treasure
+### Technical description:
+- Any damage that did not originate from an entity will be nullified. This includes fire damage, lava damage, etc. but excludes cramming, drowning, falling, starving, and void damage.
 ---
 [Back to top](#enchantment-list)
 
@@ -586,7 +599,7 @@ All of the information here is only applicable to unmodified enchantments. Most 
 ## *Weighted*
 - Decreases attack speed, increases attack damage.
 - Compatible equipment: Chestplates
-- Incompatible enchantments: Dextrous, Thorns
+- Incompatible enchantments: Dextrous, Thorns, Magic Guard
 - Max level: 2
 - Rarity: Rare
 ### Technical description:

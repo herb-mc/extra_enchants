@@ -13,9 +13,6 @@
     "protection",
     "blast_protection",
     "fire_protection",
-    "projectile_protection",
-    "weighted",
-    "dextrous",
-    "berserk"
+    "projectile_protection"
   ]
 }

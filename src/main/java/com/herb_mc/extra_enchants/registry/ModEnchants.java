@@ -106,7 +106,7 @@ public class ModEnchants {
             3,
             false,
             false,
-            new Enchantment[]{Enchantments.PROTECTION, Enchantments.BLAST_PROTECTION, Enchantments.FIRE_PROTECTION, Enchantments.PROJECTILE_PROTECTION, ModEnchants.WEIGHTED, ModEnchants.DEXTROUS, ModEnchants.BERSERK}
+            new Enchantment[]{Enchantments.PROTECTION, Enchantments.BLAST_PROTECTION, Enchantments.FIRE_PROTECTION, Enchantments.PROJECTILE_PROTECTION, ModEnchants.WEIGHTED, ModEnchants.DEXTROUS, ModEnchants.BERSERK, ModEnchants.MAGIC_GUARD}
     );
     // Blaze Affinity
     public static Enchantment BLAZE_AFFINITY = new EnchantBuilder(
@@ -369,6 +369,18 @@ public class ModEnchants {
             false,
             false,
             new Enchantment[]{ModEnchants.LEAPING, ModEnchants.LUNGING, ModEnchants.WINDSTEP, ModEnchants.SLIMEY}
+    );
+    // Magic Guard
+    public static Enchantment MAGIC_GUARD = new EnchantBuilder(
+            Enchantment.Rarity.RARE,
+            EnchantmentTarget.ARMOR_CHEST,
+            new EquipmentSlot[]{EquipmentSlot.CHEST},
+            30,
+            50,
+            1,
+            false,
+            false,
+            new Enchantment[]{Enchantments.THORNS, ModEnchants.WEIGHTED, ModEnchants.DEXTROUS, ModEnchants.BERSERK, ModEnchants.MAGIC_GUARD}
     );
     // Magnetic
     public static Enchantment MAGNETIC = new ScalableEnchantBuilder(
@@ -640,7 +652,7 @@ public class ModEnchants {
             2,
             false,
             false,
-            new Enchantment[]{Enchantments.THORNS, ModEnchants.WEIGHTED, ModEnchants.DEXTROUS, ModEnchants.BERSERK}
+            new Enchantment[]{Enchantments.THORNS, ModEnchants.WEIGHTED, ModEnchants.DEXTROUS, ModEnchants.BERSERK, ModEnchants.MAGIC_GUARD}
     );
     // Windstep
     public static Enchantment WINDSTEP = new EnchantBuilder(
@@ -690,6 +702,7 @@ public class ModEnchants {
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "leaping"), LEAPING);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "lifesteal"), LIFESTEAL);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "lunging"), LUNGING);
+        Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "magic_guard"), MAGIC_GUARD);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "magnetic"), MAGNETIC);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "night_vision"), NIGHT_VISION);
         Registry.register(Registry.ENCHANTMENT, new Identifier(ExtraEnchantsMod.MOD_ID, "nimble"), NIMBLE);

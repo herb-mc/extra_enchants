@@ -146,6 +146,7 @@ public class EnchantmentMappings {
         enchantments.put("leaping", ModEnchants.LEAPING);
         enchantments.put("lifesteal", ModEnchants.LIFESTEAL);
         enchantments.put("lunging", ModEnchants.LUNGING);
+        enchantments.put("magic_guard", ModEnchants.MAGIC_GUARD);
         enchantments.put("magnetic", ModEnchants.MAGNETIC);
         enchantments.put("night_vision", ModEnchants.NIGHT_VISION);
         enchantments.put("nimble", ModEnchants.NIMBLE);
