@@ -62,7 +62,7 @@ public abstract class PersistentProjectileEntityMixin implements PersistentProje
     @Unique public boolean neptune = false;
     @Unique public int ace = 0;
     @Unique private final Random rand = new Random();
-    private Entity hitResult;
+    @Unique private Entity hitResult;
 
     @Override
     public void setAce(int i) {
@@ -139,20 +139,22 @@ public abstract class PersistentProjectileEntityMixin implements PersistentProje
         }
     }
 
-    @Redirect(
+    @ModifyArg(
             method = "onEntityHit",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/entity/projectile/PersistentProjectileEntity;setVelocity(Lnet/minecraft/util/math/Vec3d;)V"
             )
     )
-    private void setReflectedVelocity(PersistentProjectileEntity persistentProjectileEntity, Vec3d velocity) {
+    private Vec3d setReflected(Vec3d vec) {
+        vec = vec.multiply(10D);
         if (hitResult instanceof LivingEntity && ((LivingEntity) hitResult).isBlocking() && ((LivingEntity) hitResult).getActiveItem() != null && EnchantmentHelper.getLevel(ModEnchants.REFLECTING, ((LivingEntity) hitResult).getActiveItem()) > 0) {
-            double absSpeed = persistentProjectileEntity.getVelocity().length();
-            persistentProjectileEntity.setVelocity(hitResult.getRotationVector().multiply(absSpeed * (EnchantmentMappings.reflectingBaseReflectedVelocity.getDouble() + EnchantmentMappings.reflectingAdditionalReflectedVelocity.getDouble() * (EnchantmentHelper.getLevel(ModEnchants.REFLECTING, ((LivingEntity) hitResult).getActiveItem()) - 1))));
+            double absSpeed = vec.length();
+            vec = vec.multiply(absSpeed * (EnchantmentMappings.reflectingBaseReflectedVelocity.getDouble() + EnchantmentMappings.reflectingAdditionalReflectedVelocity.getDouble() * (EnchantmentHelper.getLevel(ModEnchants.REFLECTING, ((LivingEntity) hitResult).getActiveItem()) - 1)));
         }
         else
-            persistentProjectileEntity.setVelocity(velocity);
+            vec = vec.multiply(0.1D);
+        return vec;
     }
 
     @Inject(

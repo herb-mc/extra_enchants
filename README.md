@@ -4,7 +4,7 @@ Adds 48 obtainable equipment enchants with functions ranging from utility to off
 
 Latest: [v0.1.2 for Minecraft 1.17.1](https://github.com/herb-mc/extra_enchants/releases/tag/v0.1.2)
 <br>
-Latest alpha: [v0.1.3a-1 for Minecraft 1.17.1](https://github.com/herb-mc/extra_enchants/releases/tag/v0.1.3a-1)
+Latest alpha: [v0.1.3a-2 for Minecraft 1.17.1](https://github.com/herb-mc/extra_enchants/releases/tag/v0.1.3a-2)
 <br>
 Requires Fabric Loader 0.11.6 and [Fabric API 0.37.1+1.17](https://www.curseforge.com/minecraft/mc-mods/fabric-api)
 

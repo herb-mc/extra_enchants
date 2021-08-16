@@ -29,20 +29,6 @@ public class HeldItemRendererMixin {
         this.player = player;
     }
 
-    @ModifyConstant(
-            method = "renderFirstPersonItem",
-            constant = @Constant(floatValue = 20.0F)
-    )
-    private float bowDrawProgress(float f) {
-//        int strongDrawLevel = EnchantmentHelper.getLevel(ModEnchants.SNIPER, player.getActiveItem());
-//        int nimbleLevel = EnchantmentHelper.getLevel(ModEnchants.NIMBLE, player.getActiveItem());
-//        if (strongDrawLevel > 0)
-//            f = f + f * EnchantmentMappings.sniperDrawMult.getFloat() * strongDrawLevel;
-//        else if (nimbleLevel > 0)
-//            f = f + f * nimbleLevel * EnchantmentMappings.nimbleDrawMult.getFloat();
-        return Math.max(f, 1F);
-    }
-
     @ModifyVariable(
             method = "renderFirstPersonItem",
             at = @At(
