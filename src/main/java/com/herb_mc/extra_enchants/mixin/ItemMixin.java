@@ -11,8 +11,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin({Item.class})
 public class ItemMixin {
 
-    @Unique
-
     @Inject(at = @At("HEAD"), method = "getEnchantability", cancellable = true)
     private void getEnchantability(CallbackInfoReturnable<Integer> info) {
         Item item = (Item) (Object) this;

@@ -19,6 +19,7 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.passive.FoxEntity;
 import net.minecraft.entity.passive.HorseEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
+import net.minecraft.item.Item;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.predicate.entity.EntityPredicates;
@@ -120,19 +121,25 @@ public abstract class LivingEntityMixin implements AttributeModCommons, UUIDComm
         }
     }
 
-    @ModifyConstant(
+    @ModifyVariable(
             method = "travel",
-            constant = @Constant(doubleValue = 0.08D)
+            at = @At("STORE"),
+            index = 2
     )
-    private double featherweightFallSpeed(double d){
+    private double featherweightFallSpeed(double d) {
         return (EnchantmentHelper.getEquipmentLevel(ModEnchants.FEATHERWEIGHT, thisEntity) > 0 && thisEntity.getVelocity().y < 0 && !thisEntity.isSneaking()) ? d / (EnchantmentHelper.getEquipmentLevel(ModEnchants.FEATHERWEIGHT, thisEntity) + 1) * EnchantmentMappings.featherweightFallSpeedScale.getDouble() : d;
     }
 
-    @ModifyConstant(
+    @ModifyArg(
             method = "getNextAirOnLand",
-            constant = @Constant(intValue = 4))
+            at = @At(
+                    value = "INVOKE",
+                    target = "Ljava/lang/Math;min(II)I"
+            ),
+            index = 0
+    )
     private int neptuneModAir(int air) {
-        return (EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_NEPTUNE, thisEntity) > 0) ? rand.nextInt(EnchantmentMappings.coreNeptuneBreathGainRand.getInt()) % EnchantmentMappings.coreNeptuneBreathGainMod.getInt() : air;
+        return (EnchantmentHelper.getEquipmentLevel(ModEnchants.CORE_OF_NEPTUNE, thisEntity) > 0) ? air - 4 + rand.nextInt(EnchantmentMappings.coreNeptuneBreathGainRand.getInt()) % EnchantmentMappings.coreNeptuneBreathGainMod.getInt() : air;
     }
 
     @ModifyVariable(
@@ -147,15 +154,18 @@ public abstract class LivingEntityMixin implements AttributeModCommons, UUIDComm
         return (getEquipmentLevel(ModEnchants.TOUGH, thisEntity) > 0) ? amount * (1.0F - EnchantmentMappings.toughDamageReduction.getFloat() * getEquipmentLevel(ModEnchants.TOUGH, thisEntity)) : amount;
     }
 
-    @ModifyConstant(
+    @Inject(
             method = "isBlocking",
-            constant = @Constant(intValue = 5)
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/item/Item;getMaxUseTime(Lnet/minecraft/item/ItemStack;)I"
+            ),
+            locals = LocalCapture.CAPTURE_FAILSOFT,
+            cancellable = true
     )
-    private int applyReflex(int i) {
-        if (thisEntity.getMainHandStack() != null & EnchantmentHelper.getLevel(ModEnchants.REFLEX, thisEntity.getMainHandStack()) > 0) {
-            return EnchantmentMappings.reflexReadyTicks.getInt();
-        }
-        return i;
+    protected void applyReflex(CallbackInfoReturnable<Boolean> info, Item item) {
+        if (thisEntity.getActiveItem() != null & EnchantmentHelper.getLevel(ModEnchants.REFLEX, thisEntity.getActiveItem()) > 0)
+            info.setReturnValue(item.getMaxUseTime(thisEntity.getActiveItem()) - thisEntity.getItemUseTimeLeft() >= EnchantmentMappings.reflexReadyTicks.getInt());
     }
 
     @ModifyVariable(

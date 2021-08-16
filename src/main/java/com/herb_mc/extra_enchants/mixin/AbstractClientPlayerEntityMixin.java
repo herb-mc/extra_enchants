@@ -7,27 +7,38 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.enchantment.EnchantmentHelper;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 @Environment(EnvType.CLIENT)
 @Mixin(AbstractClientPlayerEntity.class)
 public class AbstractClientPlayerEntityMixin {
 
-    @ModifyConstant(
+    @ModifyVariable(
             method = "getSpeed",
-            constant = @Constant(floatValue = 20.0F)
+            at = @At(
+                    value = "STORE",
+                    ordinal = 0
+            ),
+            index = 4
     )
-    private float FOVMod(float f) {
+    private float FOV(float f) {
         if (((Object) this) instanceof AbstractClientPlayerEntity thisEntity) {
+            f *= 20.0F;
+            float div = 20.0F;
             int strongDrawLevel = EnchantmentHelper.getLevel(ModEnchants.SNIPER, thisEntity.getActiveItem());
             int nimbleLevel = EnchantmentHelper.getLevel(ModEnchants.NIMBLE, thisEntity.getActiveItem());
             if (strongDrawLevel > 0)
-                f = f + f * EnchantmentMappings.sniperDrawMult.getFloat() * strongDrawLevel;
+                div = div + div * EnchantmentMappings.sniperDrawMult.getFloat() * strongDrawLevel;
             else if (nimbleLevel > 0)
-                f = f + f * nimbleLevel * EnchantmentMappings.nimbleDrawMult.getFloat();
+                div = div + div * nimbleLevel * EnchantmentMappings.nimbleDrawMult.getFloat();
+            if (div <= 0)
+                div = 1F;
+            f /= div;
         }
-        return Math.max(f, 1F);
+        return f;
     }
 
 }

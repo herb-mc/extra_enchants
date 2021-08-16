@@ -12,10 +12,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Constant;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyConstant;
+import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Environment(EnvType.CLIENT)
@@ -37,13 +34,37 @@ public class HeldItemRendererMixin {
             constant = @Constant(floatValue = 20.0F)
     )
     private float bowDrawProgress(float f) {
+//        int strongDrawLevel = EnchantmentHelper.getLevel(ModEnchants.SNIPER, player.getActiveItem());
+//        int nimbleLevel = EnchantmentHelper.getLevel(ModEnchants.NIMBLE, player.getActiveItem());
+//        if (strongDrawLevel > 0)
+//            f = f + f * EnchantmentMappings.sniperDrawMult.getFloat() * strongDrawLevel;
+//        else if (nimbleLevel > 0)
+//            f = f + f * nimbleLevel * EnchantmentMappings.nimbleDrawMult.getFloat();
+        return Math.max(f, 1F);
+    }
+
+    @ModifyVariable(
+            method = "renderFirstPersonItem",
+            at = @At(
+                    value = "STORE",
+                    ordinal = 2
+            ),
+            index = 16
+    )
+    private float bowGUIModelEffects(float f){
         int strongDrawLevel = EnchantmentHelper.getLevel(ModEnchants.SNIPER, player.getActiveItem());
         int nimbleLevel = EnchantmentHelper.getLevel(ModEnchants.NIMBLE, player.getActiveItem());
-        if (strongDrawLevel > 0)
-            f = f + f * EnchantmentMappings.sniperDrawMult.getFloat() * strongDrawLevel;
-        else if (nimbleLevel > 0)
-            f = f + f * nimbleLevel * EnchantmentMappings.nimbleDrawMult.getFloat();
-        return Math.max(f, 1F);
+        f *= 20F;
+        float div = 20.0F;
+        if (strongDrawLevel > 0) {
+            div = div + div * EnchantmentMappings.sniperDrawMult.getFloat() * strongDrawLevel;
+        }
+        else if (nimbleLevel > 0) {
+            div = div + div * nimbleLevel * EnchantmentMappings.nimbleDrawMult.getFloat();
+            if (div <= 1F)
+                div = 1F;
+        }
+        return f / div;
     }
 
 }

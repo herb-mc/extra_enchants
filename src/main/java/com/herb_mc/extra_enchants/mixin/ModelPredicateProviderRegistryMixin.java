@@ -33,16 +33,26 @@ public class ModelPredicateProviderRegistryMixin {
         nimbleLevel = EnchantmentHelper.getLevel(ModEnchants.NIMBLE, stack);
     }
 
-    @ModifyConstant(
+    @Inject(
             method = "method_27890(Lnet/minecraft/item/ItemStack;Lnet/minecraft/client/world/ClientWorld;Lnet/minecraft/entity/LivingEntity;I)F",
-            constant = @Constant(floatValue = 20.0F)
-    )
-    private static float modifyDrawSpeed(float f) {
-        if (strongDrawLevel > 0)
-            f = f + f * EnchantmentMappings.sniperDrawMult.getFloat() * strongDrawLevel;
-        else if (nimbleLevel > 0)
-            f = f + f * nimbleLevel * EnchantmentMappings.nimbleDrawMult.getFloat();
-        return Math.max(f, 1F);
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/entity/LivingEntity;getActiveItem()Lnet/minecraft/item/ItemStack;"
+            ),
+            cancellable = true)
+    private static void bowModelEffects(ItemStack stack, ClientWorld world, LivingEntity livingEntity, int seed, CallbackInfoReturnable<Float> info) {
+        float f  = (float)(stack.getMaxUseTime() - livingEntity.getItemUseTimeLeft());
+        float div = 20.0F;
+        if (strongDrawLevel > 0) {
+            div = div + div * EnchantmentMappings.sniperDrawMult.getFloat() * strongDrawLevel;
+            info.setReturnValue(f / div);
+        }
+        else if (nimbleLevel > 0) {
+            div = div + div * nimbleLevel * EnchantmentMappings.nimbleDrawMult.getFloat();
+            if (div <= 1F)
+                div = 1F;
+            info.setReturnValue(f / div);
+        }
     }
 
 }
