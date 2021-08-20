@@ -55,9 +55,10 @@ public class BlockMixin {
             locals = LocalCapture.CAPTURE_FAILSOFT
     )
     private static void setStackGravity(World world, Supplier<ItemEntity> itemEntitySupplier, ItemStack stack, CallbackInfo info, ItemEntity itemEntity) {
+        Random rand = new Random();
         if (noGravity) {
             itemEntity.setNoGravity(true);
-            itemEntity.setVelocity(MathHelper.nextDouble(world.random, -0.0125D, 0.0125D), MathHelper.nextDouble(world.random, -0.0125D, 0.0125D), MathHelper.nextDouble(world.random, -0.0125D, 0.0125D));
+            itemEntity.setVelocity(MathHelper.nextDouble(rand, -0.0125D, 0.0125D), MathHelper.nextDouble(rand, -0.0125D, 0.0125D), MathHelper.nextDouble(rand, -0.0125D, 0.0125D));
         }
     }
 
