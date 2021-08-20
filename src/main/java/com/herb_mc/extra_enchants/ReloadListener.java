@@ -94,6 +94,16 @@ public class ReloadListener extends JsonDataLoader implements SimpleSynchronousR
                     ((ScalableEnchantBuilder) EnchantmentMappings.enchantments.get(name)).setAttributes(enabled, rarity, minPower, minPowerDelta, maxPower, maxPowerDelta, maxLevel, isCurse, isTreasure, incompatibleEnchantments);
                 else
                     ((EnchantBuilder) EnchantmentMappings.enchantments.get(name)).setAttributes(enabled, rarity, minPower, maxPower, maxLevel, isCurse, isTreasure, incompatibleEnchantments);
+                try {
+                    JsonElement applyToAny = file.get("can_apply_with_anvil");
+                    if (applyToAny != null) {
+                        if (scalable)
+                            ((ScalableEnchantBuilder) EnchantmentMappings.enchantments.get(name)).setApplyToAny(applyToAny.getAsBoolean());
+                        else
+                            ((EnchantBuilder) EnchantmentMappings.enchantments.get(name)).setApplyToAny(applyToAny.getAsBoolean());
+                    }
+                }
+                catch(Exception ignored) {}
                 loaded++;
             } catch (Exception e) {
                 EXTRA_ENCHANTS_LOGGER.error("Error occurred while loading resource json " + id.toString(), e);

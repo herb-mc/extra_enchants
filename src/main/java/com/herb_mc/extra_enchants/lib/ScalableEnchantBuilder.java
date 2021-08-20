@@ -19,6 +19,7 @@ public class ScalableEnchantBuilder extends Enchantment {
     boolean isTreasure;
     Enchantment[] incompatibleEnchantments;
     boolean enabled;
+    boolean applyToAny = false;
     static Rarity NULL = ClassTinkerers.getEnum(Enchantment.Rarity.class, "NULL");
 
     public ScalableEnchantBuilder(Rarity weight, EnchantmentTarget type, EquipmentSlot[] equipmentSlots, int minPower, int minPowerDelta, int maxPower, int maxPowerDelta, int maxLevel, boolean isCursed, boolean isTreasure, Enchantment[] incompatibleEnchantments) {
@@ -59,7 +60,7 @@ public class ScalableEnchantBuilder extends Enchantment {
 
     @Override
     public boolean isAcceptableItem(ItemStack stack) {
-        return enabled && super.isAcceptableItem(stack);
+        return enabled && (super.isAcceptableItem(stack) || applyToAny);
     }
 
     @Override
@@ -102,6 +103,10 @@ public class ScalableEnchantBuilder extends Enchantment {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public void setApplyToAny(boolean b) {
+        this.applyToAny = true;
     }
 
     public void setRarity(Rarity weight) {
