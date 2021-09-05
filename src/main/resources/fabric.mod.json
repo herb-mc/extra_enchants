@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "extra_enchants",
-  "version": "0.1.3a-2",
+  "version": "0.1.3",
   "accessWidener" : "aw.accesswidener",
   "name": "Extra Enchants",
   "description": "Lots of new enchantments",
@@ -9,8 +9,7 @@
     "herb#7066"
   ],
   "contact": {
-    "homepage": "",
-    "sources": ""
+    "homepage": "https://github.com/herb-mc/extra_enchants"
   },
 
   "license": "MIT",
@@ -28,7 +27,6 @@
   "mixins": [
     "extra_enchants.mixins.json"
   ],
-
   "depends": {
     "fabricloader": ">=0.11.3",
     "fabric": "*",
@@ -36,7 +34,6 @@
     "java": ">=16"
   },
   "suggests": {
-    "another-mod": "*"
   },
   "jars": [
   ]
