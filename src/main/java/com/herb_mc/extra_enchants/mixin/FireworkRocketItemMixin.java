@@ -26,7 +26,7 @@ public class FireworkRocketItemMixin {
             ),
             cancellable = true)
     public void propellingDisablesFireworks(World world, PlayerEntity user, Hand hand, CallbackInfoReturnable<TypedActionResult<ItemStack>> info) {
-        if (user.isFallFlying() && !(EnchantmentHelper.getLevel(ModEnchants.PROPELLING, user.getEquippedStack(EquipmentSlot.CHEST)) > 0))
+        if (user.isFallFlying() && EnchantmentHelper.getLevel(ModEnchants.PROPELLING, user.getEquippedStack(EquipmentSlot.CHEST)) > 0)
             info.setReturnValue(TypedActionResult.pass(user.getStackInHand(hand)));
     }
 
